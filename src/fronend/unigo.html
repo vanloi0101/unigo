@@ -1,0 +1,517 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+  <title>Món Nhỏ Handmade – Vòng Tay Thiết Kế Dành Cho Gen Z</title>
+  <meta name="description" content="Thương hiệu vòng tay handmade thiết kế riêng. Chất liệu cao cấp, không gỉ sét, freesize. Miễn phí vận chuyển toàn quốc. Xem bộ sưu tập mới nhất ngay!">
+  <meta name="keywords" content="vòng tay handmade, vòng tay nữ, phụ kiện handmade, vòng tay sinh viên, quà tặng bạn gái, trang sức gen z">
+  <meta name="author" content="Món Nhỏ Handmade">
+  <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1">
+  <link rel="canonical" href="https://unigo.id.vn/">
+  
+  <!-- Open Graph / Facebook -->
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://unigo.id.vn/">
+  <meta property="og:title" content="Món Nhỏ Handmade – Vòng Tay Thiết Kế">
+  <meta property="og:description" content="Thương hiệu vòng tay handmade thiết kế riêng, freesize, chất liệu an toàn. Freeship toàn quốc từ 150k.">
+  <meta property="og:image" content="https://placehold.co/1200x630/FFEBEE/9B7BAE?text=Món+Nhỏ+Handmade">
+  
+  <!-- Preconnect & Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Playfair+Display:ital,wght@0,500;0,600;0,700;1,500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  
+  <!-- Tailwind CSS + Alpine.js -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@alpinejs/collapse@3.x.x/dist/cdn.min.js"></script>
+
+  <!-- Tailwind Config Custom Colors -->
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            brand: {
+              light: '#fffaf7',
+              pink: '#ffcdc2',
+              purple: '#9b7bae',
+              dark: '#5e4b6e',
+              text: '#4a4a4a'
+            }
+          },
+          fontFamily: {
+            sans: ['Inter', 'sans-serif'],
+            serif: ['Playfair Display', 'serif'],
+          }
+        }
+      }
+    }
+  </script>
+
+  <style>
+    /* Premium Animations & Utilities */
+    html { scroll-behavior: smooth; }
+    .glass-nav { background: rgba(255, 255, 255, 0.85); backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px); }
+    .text-gradient { background: linear-gradient(135deg, #9b7bae 0%, #e2948a 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+    
+    .product-card { transition: all 0.4s cubic-bezier(0.2, 0, 0, 1); }
+    .product-card:hover { transform: translateY(-8px); box-shadow: 0 25px 30px -15px rgba(155, 123, 174, 0.15); }
+    
+    .img-zoom { transition: transform 0.6s cubic-bezier(0.2, 0, 0, 1); }
+    .product-card:hover .img-zoom { transform: scale(1.08); }
+    
+    .fade-up { opacity: 0; transform: translateY(30px); transition: all 0.8s cubic-bezier(0.16, 1, 0.3, 1); }
+    .fade-up.visible { opacity: 1; transform: translateY(0); }
+    
+    .no-scroll { overflow: hidden; }
+    
+    /* Scrollbar */
+    ::-webkit-scrollbar { width: 6px; }
+    ::-webkit-scrollbar-track { background: #fdfdfd; }
+    ::-webkit-scrollbar-thumb { background: #e2948a; border-radius: 10px; }
+  </style>
+
+  <!-- Schema JSON-LD: LocalBusiness & Products (SEO) -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "LocalBusiness",
+        "@id": "https://unigo.id.vn/#organization",
+        "name": "Món Nhỏ Handmade",
+        "url": "https://unigo.id.vn/",
+        "logo": "https://placehold.co/400x400/FFEBEE/9B7BAE?text=Logo",
+        "telephone": "0346450546",
+        "priceRange": "79.000₫ - 149.000₫",
+        "address": { "@type": "PostalAddress", "addressLocality": "Hồ Chí Minh", "addressCountry": "VN" }
+      },
+      {
+        "@type": "Product",
+        "name": "Vòng Hoa Nhài Handmade Cao Cấp",
+        "image": "https://placehold.co/600x600/FADADD/DD99AA?text=Hoa+Nhài",
+        "description": "Vòng tay handmade thiết kế hoa nhài trắng tinh khiết. Dây không gỉ, độ bền cao.",
+        "brand": { "@type": "Brand", "name": "Món Nhỏ" },
+        "offers": { "@type": "Offer", "priceCurrency": "VND", "price": "89000", "availability": "https://schema.org/InStock" }
+      }
+    ]
+  }
+  </script>
+</head>
+
+<body x-data="app()" x-init="initApp()" class="bg-brand-light text-brand-text antialiased">
+
+  <!-- Header / Navigation (Sticky Glassmorphism) -->
+  <header :class="{'shadow-md glass-nav py-3': scrolled, 'bg-transparent py-5': !scrolled}" class="fixed w-full top-0 z-40 transition-all duration-300">
+    <div class="max-w-7xl mx-auto px-6 flex justify-between items-center">
+      <a href="#" class="font-serif font-bold text-2xl text-brand-purple flex items-center gap-2">
+        <i class="fas fa-gem text-xl text-brand-pink"></i> Món Nhỏ
+      </a>
+      
+      <!-- Desktop Menu -->
+      <nav class="hidden md:flex gap-8 font-medium text-brand-dark">
+        <a href="#hero" class="hover:text-brand-pink transition-colors">Trang chủ</a>
+        <a href="#about" class="hover:text-brand-pink transition-colors">Về Mận</a>
+        <a href="#products" class="hover:text-brand-pink transition-colors">Sản phẩm</a>
+      </nav>
+
+      <!-- CTA Button -->
+      <div class="hidden md:block">
+        <a href="https://zalo.me/0346450546" target="_blank" class="bg-brand-purple text-white px-5 py-2.5 rounded-full font-medium hover:bg-brand-dark transition-colors shadow-lg shadow-brand-purple/30">
+          <i class="fas fa-comment-dots mr-2"></i>Tư vấn Zalo
+        </a>
+      </div>
+
+      <!-- Mobile Menu Button -->
+      <button class="md:hidden text-2xl text-brand-dark" aria-label="Mở menu">
+        <i class="fas fa-bars"></i>
+      </button>
+    </div>
+  </header>
+
+  <main>
+    <!-- Hero Section -->
+    <section id="hero" class="relative pt-32 pb-20 md:pt-40 md:pb-28 px-6 overflow-hidden">
+      <!-- Decorative Blobs -->
+      <div class="absolute top-0 left-0 w-96 h-96 bg-brand-pink/30 rounded-full mix-blend-multiply filter blur-3xl opacity-70 animate-blob"></div>
+      <div class="absolute top-0 right-0 w-96 h-96 bg-purple-200/40 rounded-full mix-blend-multiply filter blur-3xl opacity-70 animate-blob animation-delay-2000"></div>
+      
+      <div class="max-w-7xl mx-auto flex flex-col md:flex-row items-center gap-12 relative z-10">
+        <div class="flex-1 text-center md:text-left">
+          <span class="inline-block py-1 px-3 rounded-full bg-white border border-brand-pink text-brand-purple text-sm font-semibold mb-6 shadow-sm">
+            ✨ Collection 2026 Đã Ra Mắt
+          </span>
+          <h1 class="font-serif text-5xl md:text-7xl font-bold mb-6 text-brand-dark leading-tight">
+            Vòng tay xinh <br><span class="text-gradient">Chạm đến trái tim</span>
+          </h1>
+          <p class="text-lg md:text-xl text-gray-600 mb-10 max-w-lg mx-auto md:mx-0 leading-relaxed">
+            Trang sức handmade thiết kế riêng. Chất liệu an toàn, không gỉ sét. Món quà nhỏ bé mang ngàn ý nghĩa cho ngày thêm vui.
+          </p>
+          <div class="flex flex-col sm:flex-row gap-4 justify-center md:justify-start">
+            <a href="#products" class="bg-brand-dark text-white px-8 py-4 rounded-full font-semibold text-lg hover:bg-black transition-all shadow-xl shadow-brand-dark/20 flex items-center justify-center gap-2">
+              Xem Bộ Sưu Tập <i class="fas fa-arrow-right text-sm"></i>
+            </a>
+            <a href="#about" class="bg-white text-brand-dark border-2 border-brand-dark/10 px-8 py-4 rounded-full font-semibold text-lg hover:border-brand-dark transition-all flex items-center justify-center">
+              Câu chuyện của Mận
+            </a>
+          </div>
+        </div>
+        
+        <div class="flex-1 relative">
+          <!-- Main Hero Image -->
+          <div class="relative rounded-[2.5rem] overflow-hidden shadow-2xl border-8 border-white transform rotate-3 hover:rotate-0 transition-transform duration-500">
+            <img src="https://placehold.co/800x1000/FFE5DD/9B7BAE?text=Hero+Image" alt="Vòng tay handmade Món Nhỏ" class="w-full object-cover">
+          </div>
+          <!-- Floating Badge -->
+          <div class="absolute -bottom-6 -left-6 bg-white p-4 rounded-2xl shadow-xl flex items-center gap-4 animate-bounce" style="animation-duration: 3s;">
+            <div class="bg-brand-pink/30 p-3 rounded-full text-brand-purple"><i class="fas fa-star"></i></div>
+            <div>
+              <p class="font-bold text-brand-dark">4.9/5 Sao</p>
+              <p class="text-xs text-gray-500">Từ +2,800 khách hàng</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Trust Badges (Tín hiệu SEO E-E-A-T) -->
+    <section class="py-10 border-y border-gray-100 bg-white">
+      <div class="max-w-7xl mx-auto px-6 grid grid-cols-2 md:grid-cols-4 gap-6 text-center">
+        <div class="flex flex-col items-center gap-2 fade-up">
+          <i class="fas fa-hand-sparkles text-3xl text-brand-purple mb-2"></i>
+          <h3 class="font-semibold text-brand-dark">100% Thủ Công</h3>
+          <p class="text-sm text-gray-500">Chăm chút từng hạt cườm</p>
+        </div>
+        <div class="flex flex-col items-center gap-2 fade-up">
+          <i class="fas fa-truck-fast text-3xl text-brand-purple mb-2"></i>
+          <h3 class="font-semibold text-brand-dark">Freeship Toàn Quốc</h3>
+          <p class="text-sm text-gray-500">Cho đơn hàng từ 150k</p>
+        </div>
+        <div class="flex flex-col items-center gap-2 fade-up">
+          <i class="fas fa-ruler-horizontal text-3xl text-brand-purple mb-2"></i>
+          <h3 class="font-semibold text-brand-dark">Size Tùy Chỉnh</h3>
+          <p class="text-sm text-gray-500">Vừa vặn mọi cổ tay</p>
+        </div>
+        <div class="flex flex-col items-center gap-2 fade-up">
+          <i class="fas fa-box-open text-3xl text-brand-purple mb-2"></i>
+          <h3 class="font-semibold text-brand-dark">Hộp Quà Xinh Xắn</h3>
+          <p class="text-sm text-gray-500">Tặng kèm thiệp viết tay</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- Products Section -->
+    <section id="products" class="py-24 px-6 relative">
+      <div class="max-w-7xl mx-auto">
+        <div class="text-center mb-16 fade-up">
+          <h2 class="font-serif text-4xl md:text-5xl font-bold text-brand-dark mb-4">Sản Phẩm Nổi Bật</h2>
+          <p class="text-gray-500 max-w-2xl mx-auto text-lg">Khám phá những mẫu vòng tay được yêu thích nhất. Thiết kế độc quyền từ Món Nhỏ.</p>
+        </div>
+
+        <!-- Filter & Search (Professional Layout) -->
+        <div class="flex flex-col md:flex-row justify-between items-center gap-6 mb-12 fade-up">
+          <div class="flex flex-wrap gap-2 justify-center bg-white p-2 rounded-full shadow-sm border border-gray-100">
+            <button @click="currentCategory = 'all'" :class="currentCategory === 'all' ? 'bg-brand-dark text-white' : 'text-gray-600 hover:bg-gray-50'" class="px-6 py-2.5 rounded-full font-medium transition-all text-sm">Tất cả</button>
+            <button @click="currentCategory = 'dihoc'" :class="currentCategory === 'dihoc' ? 'bg-brand-dark text-white' : 'text-gray-600 hover:bg-gray-50'" class="px-6 py-2.5 rounded-full font-medium transition-all text-sm">Thanh Lịch</button>
+            <button @click="currentCategory = 'tinhban'" :class="currentCategory === 'tinhban' ? 'bg-brand-dark text-white' : 'text-gray-600 hover:bg-gray-50'" class="px-6 py-2.5 rounded-full font-medium transition-all text-sm">Tình Bạn</button>
+            <button @click="currentCategory = 'pastel'" :class="currentCategory === 'pastel' ? 'bg-brand-dark text-white' : 'text-gray-600 hover:bg-gray-50'" class="px-6 py-2.5 rounded-full font-medium transition-all text-sm">Pastel Năng Động</button>
+          </div>
+          <div class="relative w-full md:w-72">
+            <i class="fas fa-search absolute left-4 top-1/2 transform -translate-y-1/2 text-gray-400"></i>
+            <input type="text" x-model="searchQuery" placeholder="Tìm kiếm sản phẩm..." class="w-full pl-11 pr-4 py-3 rounded-full border border-gray-200 focus:border-brand-purple focus:ring-1 focus:ring-brand-purple outline-none transition-all bg-white shadow-sm text-sm">
+          </div>
+        </div>
+
+        <!-- Static HTML Grid for SEO -->
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
+          
+          <!-- Card 1 -->
+          <article x-show="matches('dihoc', 'Vòng Hoa Nhài Tinh Khiết')" 
+               class="group product-card bg-white rounded-3xl p-3 border border-gray-100 relative">
+            <div class="absolute top-6 left-6 z-10 bg-white/90 backdrop-blur text-xs font-bold px-3 py-1 rounded-full text-red-500 shadow-sm">HOT</div>
+            <div class="overflow-hidden rounded-2xl relative aspect-[4/5] bg-gray-50 cursor-pointer" @click="openLightbox('Vòng Hoa Nhài Tinh Khiết', '89.000₫', 'Charm hoa nhài trắng, dây thép không gỉ. Tôn da, thanh lịch.', 'https://placehold.co/600x750/FADADD/DD99AA?text=Hoa+Nhài')">
+              <img src="https://placehold.co/600x750/FADADD/DD99AA?text=Hoa+Nhài" alt="Vòng tay handmade Hoa Nhài" class="w-full h-full object-cover img-zoom" loading="lazy">
+              <!-- Quick view overlay -->
+              <div class="absolute inset-0 bg-brand-dark/20 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
+                <span class="bg-white text-brand-dark px-4 py-2 rounded-full font-semibold text-sm transform translate-y-4 group-hover:translate-y-0 transition-all duration-300 shadow-lg"><i class="fas fa-eye mr-2"></i>Xem nhanh</span>
+              </div>
+            </div>
+            <div class="pt-5 pb-3 px-2 text-center">
+              <h3 class="font-serif font-bold text-lg text-brand-dark mb-1">Vòng Hoa Nhài Tinh Khiết</h3>
+              <p class="text-[#e2948a] font-bold text-lg mb-4">89.000₫</p>
+              <a href="https://zalo.me/0346450546?text=Mình muốn đặt Vòng Hoa Nhài Tinh Khiết - 89.000₫" target="_blank" class="block w-full bg-brand-light border border-brand-pink text-brand-purple hover:bg-brand-purple hover:text-white hover:border-brand-purple font-semibold py-2.5 rounded-full transition-colors text-sm">
+                Thêm vào giỏ
+              </a>
+            </div>
+          </article>
+
+          <!-- Card 2 -->
+          <article x-show="matches('pastel', 'Vòng Dâu Tây Ngọt Ngào')" 
+               class="group product-card bg-white rounded-3xl p-3 border border-gray-100 relative">
+            <div class="absolute top-6 left-6 z-10 bg-white/90 backdrop-blur text-xs font-bold px-3 py-1 rounded-full text-brand-purple shadow-sm">NEW</div>
+            <div class="overflow-hidden rounded-2xl relative aspect-[4/5] bg-gray-50 cursor-pointer" @click="openLightbox('Vòng Dâu Tây Ngọt Ngào', '99.000₫', 'Hạt cườm pastel Nhật Bản, charm dâu tây tráng men.', 'https://placehold.co/600x750/FFE0F0/DD99AA?text=Dâu+Tây')">
+              <img src="https://placehold.co/600x750/FFE0F0/DD99AA?text=Dâu+Tây" alt="Vòng tay handmade Dâu Tây" class="w-full h-full object-cover img-zoom" loading="lazy">
+              <div class="absolute inset-0 bg-brand-dark/20 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
+                <span class="bg-white text-brand-dark px-4 py-2 rounded-full font-semibold text-sm transform translate-y-4 group-hover:translate-y-0 transition-all duration-300 shadow-lg"><i class="fas fa-eye mr-2"></i>Xem nhanh</span>
+              </div>
+            </div>
+            <div class="pt-5 pb-3 px-2 text-center">
+              <h3 class="font-serif font-bold text-lg text-brand-dark mb-1">Vòng Dâu Tây Ngọt Ngào</h3>
+              <p class="text-[#e2948a] font-bold text-lg mb-4">99.000₫</p>
+              <a href="https://zalo.me/0346450546?text=Mình muốn đặt Vòng Dâu Tây Ngọt Ngào - 99.000₫" target="_blank" class="block w-full bg-brand-light border border-brand-pink text-brand-purple hover:bg-brand-purple hover:text-white hover:border-brand-purple font-semibold py-2.5 rounded-full transition-colors text-sm">
+                Thêm vào giỏ
+              </a>
+            </div>
+          </article>
+
+          <!-- Card 3 -->
+          <article x-show="matches('tinhban', 'Set Vòng Best Friend')" 
+               class="group product-card bg-white rounded-3xl p-3 border border-gray-100 relative">
+            <div class="overflow-hidden rounded-2xl relative aspect-[4/5] bg-gray-50 cursor-pointer" @click="openLightbox('Set Vòng Best Friend', '149.000₫', 'Set 2 vòng kết nối. Mua chung giảm giá. Thép titanium.', 'https://placehold.co/600x750/CFD9FF/9F9FCC?text=Set+BFF')">
+              <img src="https://placehold.co/600x750/CFD9FF/9F9FCC?text=Set+BFF" alt="Set Vòng tay đôi BFF" class="w-full h-full object-cover img-zoom" loading="lazy">
+              <div class="absolute inset-0 bg-brand-dark/20 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
+                <span class="bg-white text-brand-dark px-4 py-2 rounded-full font-semibold text-sm transform translate-y-4 group-hover:translate-y-0 transition-all duration-300 shadow-lg"><i class="fas fa-eye mr-2"></i>Xem nhanh</span>
+              </div>
+            </div>
+            <div class="pt-5 pb-3 px-2 text-center">
+              <h3 class="font-serif font-bold text-lg text-brand-dark mb-1">Set Vòng Best Friend</h3>
+              <p class="text-[#e2948a] font-bold text-lg mb-4"><span class="text-sm text-gray-400 line-through font-normal mr-2">180.000₫</span>149.000₫</p>
+              <a href="https://zalo.me/0346450546?text=Mình muốn đặt Set Vòng Best Friend - 149.000₫" target="_blank" class="block w-full bg-brand-light border border-brand-pink text-brand-purple hover:bg-brand-purple hover:text-white hover:border-brand-purple font-semibold py-2.5 rounded-full transition-colors text-sm">
+                Thêm vào giỏ
+              </a>
+            </div>
+          </article>
+
+          <!-- Card 4 -->
+          <article x-show="matches('dihoc', 'Vòng Bạc Khắc Tên')" 
+               class="group product-card bg-white rounded-3xl p-3 border border-gray-100 relative">
+            <div class="absolute top-6 left-6 z-10 bg-white/90 backdrop-blur text-xs font-bold px-3 py-1 rounded-full text-brand-dark shadow-sm">CUSTOM</div>
+            <div class="overflow-hidden rounded-2xl relative aspect-[4/5] bg-gray-50 cursor-pointer" @click="openLightbox('Vòng Bạc Khắc Tên', '129.000₫', 'Nhận khắc chữ cái theo yêu cầu. Làm quà tặng sinh nhật cực ý nghĩa.', 'https://placehold.co/600x750/EAEAEA/888888?text=Khắc+Tên')">
+              <img src="https://placehold.co/600x750/EAEAEA/888888?text=Khắc+Tên" alt="Vòng bạc khắc tên theo yêu cầu" class="w-full h-full object-cover img-zoom" loading="lazy">
+              <div class="absolute inset-0 bg-brand-dark/20 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
+                <span class="bg-white text-brand-dark px-4 py-2 rounded-full font-semibold text-sm transform translate-y-4 group-hover:translate-y-0 transition-all duration-300 shadow-lg"><i class="fas fa-eye mr-2"></i>Xem nhanh</span>
+              </div>
+            </div>
+            <div class="pt-5 pb-3 px-2 text-center">
+              <h3 class="font-serif font-bold text-lg text-brand-dark mb-1">Vòng Bạc Khắc Tên</h3>
+              <p class="text-[#e2948a] font-bold text-lg mb-4">129.000₫</p>
+              <a href="https://zalo.me/0346450546?text=Mình muốn đặt Vòng Bạc Khắc Tên - 129.000₫" target="_blank" class="block w-full bg-brand-light border border-brand-pink text-brand-purple hover:bg-brand-purple hover:text-white hover:border-brand-purple font-semibold py-2.5 rounded-full transition-colors text-sm">
+                Thiết kế ngay
+              </a>
+            </div>
+          </article>
+
+        </div>
+
+        <!-- No Results -->
+        <div x-show="!['nhài', 'dâu', 'friend', 'khắc'].some(k => searchQuery.toLowerCase().includes(k)) && searchQuery !== ''" class="text-center py-20 bg-white rounded-3xl border border-dashed border-brand-pink mt-8" style="display: none;">
+          <i class="fas fa-box-open text-4xl text-brand-pink mb-4"></i>
+          <h3 class="text-xl font-bold text-brand-dark mb-2">Không tìm thấy sản phẩm</h3>
+          <p class="text-gray-500">Mẫu bạn tìm hiện chưa có sẵn. Inbox Mận để thiết kế riêng nhé!</p>
+          <a href="https://zalo.me/0346450546" class="mt-6 inline-block bg-brand-purple text-white px-6 py-2 rounded-full font-medium">Nhắn tin cho Mận</a>
+        </div>
+      </div>
+    </section>
+
+    <!-- Professional Lightbox (Modal) -->
+    <div x-show="lightboxOpen" x-cloak class="fixed inset-0 z-50 flex items-center justify-center p-4 sm:p-6" aria-modal="true" role="dialog">
+      <!-- Backdrop -->
+      <div x-show="lightboxOpen" x-transition.opacity.duration.300ms class="absolute inset-0 bg-brand-dark/60 backdrop-blur-sm" @click="closeLightbox"></div>
+      
+      <!-- Modal Content -->
+      <div x-show="lightboxOpen" 
+           x-transition:enter="transition ease-out duration-300"
+           x-transition:enter-start="opacity-0 translate-y-8 scale-95"
+           x-transition:enter-end="opacity-100 translate-y-0 scale-100"
+           x-transition:leave="transition ease-in duration-200"
+           x-transition:leave-start="opacity-100 translate-y-0 scale-100"
+           x-transition:leave-end="opacity-0 translate-y-8 scale-95"
+           class="relative w-full max-w-4xl bg-white rounded-[2rem] shadow-2xl overflow-hidden flex flex-col md:flex-row max-h-[90vh]">
+        
+        <button @click="closeLightbox" class="absolute top-4 right-4 z-10 w-10 h-10 bg-white/80 backdrop-blur text-brand-dark rounded-full flex items-center justify-center hover:bg-brand-pink transition-colors" aria-label="Đóng">
+          <i class="fas fa-times text-xl"></i>
+        </button>
+
+        <!-- Product Image (Left) -->
+        <div class="md:w-1/2 bg-gray-50 flex-shrink-0">
+          <img :src="selectedProduct.image" :alt="selectedProduct.name" class="w-full h-full object-cover max-h-[50vh] md:max-h-none">
+        </div>
+        
+        <!-- Product Details (Right) -->
+        <div class="md:w-1/2 p-8 md:p-10 flex flex-col justify-center overflow-y-auto">
+          <div class="uppercase tracking-widest text-xs font-bold text-brand-purple mb-2">Món Nhỏ Handmade</div>
+          <h2 class="font-serif text-3xl md:text-4xl font-bold text-brand-dark mb-2" x-text="selectedProduct.name"></h2>
+          <div class="flex items-center gap-4 mb-6">
+            <p class="text-2xl font-bold text-[#e2948a]" x-text="selectedProduct.price"></p>
+            <span class="bg-green-100 text-green-700 text-xs font-bold px-2 py-1 rounded">Còn hàng</span>
+          </div>
+          
+          <p class="text-gray-600 mb-8 leading-relaxed text-lg" x-text="selectedProduct.desc"></p>
+          
+          <div class="space-y-4 border-t border-gray-100 pt-8">
+            <div class="flex items-center gap-3 text-sm text-gray-600">
+              <i class="fas fa-check-circle text-brand-purple"></i> Miễn phí ship đơn từ 150k
+            </div>
+            <div class="flex items-center gap-3 text-sm text-gray-600">
+              <i class="fas fa-check-circle text-brand-purple"></i> Bảo hành dây 1 tháng
+            </div>
+          </div>
+
+          <div class="mt-8 flex gap-4">
+            <a :href="'https://zalo.me/0346450546?text=Mình muốn đặt ' + encodeURIComponent(selectedProduct.name) + ' giá ' + selectedProduct.price" target="_blank" class="flex-1 bg-brand-dark text-white text-center py-4 rounded-full font-bold hover:bg-black transition-colors shadow-lg shadow-brand-dark/20">
+              Đặt hàng qua Zalo
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- About/Story Section -->
+    <section id="about" class="py-24 px-6 bg-white border-t border-gray-100">
+      <div class="max-w-6xl mx-auto flex flex-col-reverse md:flex-row items-center gap-16">
+        <div class="flex-1 relative fade-up">
+          <div class="absolute -inset-4 bg-brand-pink/20 rounded-[3rem] transform -rotate-3"></div>
+          <img src="https://placehold.co/600x600/FFE5DD/9B7BAE?text=Mận+Làm+Đồ" alt="Câu chuyện Món Nhỏ" class="relative rounded-[2.5rem] shadow-xl w-full object-cover aspect-square">
+        </div>
+        <div class="flex-1 fade-up">
+          <h2 class="font-serif text-4xl md:text-5xl font-bold text-brand-dark mb-6">Mỗi chiếc vòng,<br>một câu chuyện.</h2>
+          <p class="text-lg text-gray-600 mb-6 leading-relaxed">
+            Chào cậu, mình là Mận. Bắt đầu từ sở thích xỏ hạt lúc rảnh rỗi năm lớp 11, "Món Nhỏ" ra đời với mong muốn mang lại những niềm vui bé xíu nhưng ý nghĩa cho mọi người.
+          </p>
+          <p class="text-lg text-gray-600 mb-8 leading-relaxed">
+            Tất cả nguyên liệu đều được mình tự tay chọn lọc: thép titanium không gỉ, cườm Nhật chuẩn size, charm tráng men tinh xảo. Vì mình tin rằng, dù là món đồ nhỏ, cũng cần được làm bằng sự tử tế lớn.
+          </p>
+          <div class="grid grid-cols-2 gap-6 pt-6 border-t border-gray-100">
+            <div>
+              <p class="text-4xl font-serif font-bold text-brand-purple mb-1">2,800+</p>
+              <p class="text-gray-500 font-medium">Sản phẩm đã trao</p>
+            </div>
+            <div>
+              <p class="text-4xl font-serif font-bold text-brand-purple mb-1">100%</p>
+              <p class="text-gray-500 font-medium">Làm thủ công</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- Professional Footer -->
+  <footer class="bg-[#2a2432] text-gray-300 pt-20 pb-10 px-6">
+    <div class="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-4 gap-12 mb-16">
+      <div class="md:col-span-2">
+        <a href="#" class="font-serif font-bold text-3xl text-white mb-6 block">Món Nhỏ ♡</a>
+        <p class="text-gray-400 max-w-sm mb-8 leading-relaxed">
+          Thương hiệu trang sức handmade dành riêng cho thế hệ trẻ. Mang thiết kế thanh lịch, chất liệu bền bỉ và giá thành hợp lý.
+        </p>
+        <div class="flex gap-4">
+          <a href="https://www.facebook.com/van.loi.01012004" class="w-10 h-10 rounded-full bg-white/10 flex items-center justify-center text-white hover:bg-brand-pink hover:text-brand-dark transition-all"><i class="fab fa-facebook-f"></i></a>
+          <a href="#" class="w-10 h-10 rounded-full bg-white/10 flex items-center justify-center text-white hover:bg-brand-pink hover:text-brand-dark transition-all"><i class="fab fa-instagram"></i></a>
+          <a href="#" class="w-10 h-10 rounded-full bg-white/10 flex items-center justify-center text-white hover:bg-brand-pink hover:text-brand-dark transition-all"><i class="fab fa-tiktok"></i></a>
+        </div>
+      </div>
+      
+      <div>
+        <h4 class="text-white font-bold text-lg mb-6 uppercase tracking-wider text-sm">Chính sách</h4>
+        <ul class="space-y-4 text-gray-400 font-medium">
+          <li><a href="#" class="hover:text-white transition-colors">Hướng dẫn đo size</a></li>
+          <li><a href="#" class="hover:text-white transition-colors">Chính sách vận chuyển</a></li>
+          <li><a href="#" class="hover:text-white transition-colors">Chính sách đổi trả</a></li>
+          <li><a href="#" class="hover:text-white transition-colors">Bảo hành sản phẩm</a></li>
+        </ul>
+      </div>
+
+      <div>
+        <h4 class="text-white font-bold text-lg mb-6 uppercase tracking-wider text-sm">Liên hệ</h4>
+        <ul class="space-y-4 text-gray-400 font-medium">
+          <li class="flex items-start gap-3">
+            <i class="fas fa-map-marker-alt mt-1 text-brand-pink"></i>
+            <span>Quận Bình Thạnh, TP. Hồ Chí Minh (Chỉ bán Online)</span>
+          </li>
+          <li class="flex items-center gap-3">
+            <i class="fas fa-phone-alt text-brand-pink"></i>
+            <a href="tel:0346450546" class="hover:text-white transition-colors">0346.450.546</a>
+          </li>
+        </ul>
+      </div>
+    </div>
+    
+    <div class="max-w-7xl mx-auto pt-8 border-t border-white/10 flex flex-col md:flex-row justify-between items-center gap-4 text-sm text-gray-500 font-medium">
+      <p>© 2026 Món Nhỏ Handmade. All rights reserved.</p>
+      <p>Designed with <i class="fas fa-heart text-brand-pink mx-1"></i> for Gen Z</p>
+    </div>
+  </footer>
+
+  <!-- Floating Buttons -->
+  <div class="fixed bottom-6 right-6 z-40 flex flex-col gap-3">
+    <!-- Back to top (hiển thị khi scroll) -->
+    <button x-show="scrolled" @click="window.scrollTo({top: 0, behavior: 'smooth'})" x-transition.opacity 
+            class="w-12 h-12 bg-white text-brand-dark rounded-full shadow-lg border border-gray-100 flex items-center justify-center hover:bg-gray-50 transition-all" aria-label="Lên đầu trang">
+      <i class="fas fa-arrow-up"></i>
+    </button>
+    <!-- Zalo floating -->
+    <a href="https://zalo.me/0346450546" target="_blank" class="w-12 h-12 bg-[#0068FF] text-white rounded-full shadow-lg flex items-center justify-center hover:scale-110 transition-transform animate-bounce" style="animation-duration: 2s;" aria-label="Chat Zalo">
+      <i class="fas fa-comment-dots text-xl"></i>
+    </a>
+  </div>
+
+  <!-- Alpine.js Application Logic -->
+  <script>
+    function app() {
+      return {
+        scrolled: false,
+        searchQuery: '',
+        currentCategory: 'all',
+        lightboxOpen: false,
+        selectedProduct: { name: '', price: '', desc: '', image: '' },
+        
+        initApp() {
+          // Xử lý scroll cho Navbar và nút Back to top
+          window.addEventListener('scroll', () => {
+            this.scrolled = window.scrollY > 50;
+          });
+
+          // Xử lý hiệu ứng Fade-up khi cuộn trang (Intersection Observer)
+          const observerOptions = { root: null, rootMargin: '0px', threshold: 0.15 };
+          const observer = new IntersectionObserver((entries, observer) => {
+            entries.forEach(entry => {
+              if (entry.isIntersecting) {
+                entry.target.classList.add('visible');
+                observer.unobserve(entry.target); // Chỉ chạy 1 lần
+              }
+            });
+          }, observerOptions);
+          
+          document.querySelectorAll('.fade-up').forEach(el => observer.observe(el));
+        },
+
+        // Logic Filter sản phẩm
+        matches(category, text) {
+          const matchCat = this.currentCategory === 'all' || category === this.currentCategory;
+          const matchSearch = text.toLowerCase().includes(this.searchQuery.toLowerCase());
+          return matchCat && matchSearch;
+        },
+
+        // Xử lý mở Modal (Lightbox)
+        openLightbox(name, price, desc, image) {
+          this.selectedProduct = { name, price, desc, image };
+          this.lightboxOpen = true;
+          document.body.classList.add('no-scroll');
+        },
+
+        // Đóng Modal
+        closeLightbox() {
+          this.lightboxOpen = false;
+          // Đợi animation xong mới gỡ class
+          setTimeout(() => {
+            document.body.classList.remove('no-scroll');
+          }, 300);
+        }
+      }
+    }
+  </script>
+</body>
+</html>

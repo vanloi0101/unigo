@@ -1,0 +1,20 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Custom styles from original HTML */
+html { scroll-behavior: smooth; }
+.glass-nav { background: rgba(255, 255, 255, 0.85); backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px); }
+.text-gradient { background: linear-gradient(135deg, #9b7bae 0%, #e2948a 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+.product-card { transition: all 0.4s cubic-bezier(0.2, 0, 0, 1); }
+.product-card:hover { transform: translateY(-8px); box-shadow: 0 25px 30px -15px rgba(155, 123, 174, 0.15); }
+.img-zoom { transition: transform 0.6s cubic-bezier(0.2, 0, 0, 1); }
+.product-card:hover .img-zoom { transform: scale(1.08); }
+.fade-up { opacity: 0; transform: translateY(30px); transition: all 0.8s cubic-bezier(0.16, 1, 0.3, 1); }
+.fade-up.visible { opacity: 1; transform: translateY(0); }
+.no-scroll { overflow: hidden; }
+
+/* Scrollbar */
+::-webkit-scrollbar { width: 6px; }
+::-webkit-scrollbar-track { background: #fdfdfd; }
+::-webkit-scrollbar-thumb { background: #e2948a; border-radius: 10px; }
