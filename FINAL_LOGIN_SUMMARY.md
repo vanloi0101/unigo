@@ -1,4 +1,4 @@
-# 🎉 SUMMARY: GIAO DIỆN LOGIN & AUTH CẬP NHẬT
+﻿# 🎉 SUMMARY: GIAO DIỆN LOGIN & AUTH CẬP NHẬT
 
 **Ngày:** April 5, 2026  
 **Status:** ✅ **HOÀN THIỆN**
@@ -29,7 +29,7 @@
 
 ### **1. Login.jsx** 
 **Status:** ✅ **Redesigned**  
-**Path:** `src/fronend/src/pages/Login.jsx`
+**Path:** `src/frontend/src/pages/Login.jsx`
 
 **Changes:**
 - ✨ New gradient background (purple → white → pink)
@@ -70,7 +70,7 @@ defaultValues: {
 
 ### **2. Header.jsx**
 **Status:** ✅ **Updated**  
-**Path:** `src/fronend/src/components/Header.jsx`
+**Path:** `src/frontend/src/components/Header.jsx`
 
 **Changes:**
 - 🔐 Thêm auth logic
@@ -120,7 +120,7 @@ Logout Button:
 
 ### **3. Hero.jsx**
 **Status:** ✅ **Updated**  
-**Path:** `src/fronend/src/components/Hero.jsx`
+**Path:** `src/frontend/src/components/Hero.jsx`
 
 **Changes:**
 - ➕ Thêm conditional "Đăng Nhập Admin" / "Vào Admin"
@@ -359,7 +359,7 @@ const navigate = useNavigate();
 
 ### **Start Frontend:**
 ```bash
-cd C:\Users\vanlo\all\webapp\unigo\src\fronend
+cd C:\Users\vanlo\all\webapp\unigo\src\frontend
 npm run dev
 ```
 

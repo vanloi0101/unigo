@@ -1,4 +1,4 @@
-version: '3.9'
+﻿version: '3.9'
 
 services:
   # PostgreSQL Database
@@ -57,7 +57,7 @@ services:
   # React + Nginx Frontend
   frontend:
     build:
-      context: ./src/fronend
+      context: ./src/frontend
       dockerfile: Dockerfile
     container_name: unigo-frontend
     environment:

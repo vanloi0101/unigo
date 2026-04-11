@@ -1,4 +1,4 @@
-# Docker Compose Setup Guide - Unigo
+﻿# Docker Compose Setup Guide - Unigo
 
 ## Yêu cầu
 - Docker Desktop 4.0+
@@ -20,7 +20,7 @@
 - Environment: DATABASE_URL kết nối tới db service
 
 ### 3. **frontend** - React + Nginx
-- Build từ: `./src/fronend`
+- Build từ: `./src/frontend`
 - Port mapping: `8080:80`
 - Depends on: `backend`
 

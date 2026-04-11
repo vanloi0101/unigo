@@ -1,4 +1,4 @@
-# 🚀 Unigo - Setup & Deployment Guide
+﻿# 🚀 Unigo - Setup & Deployment Guide
 
 ## **Backend Setup (Node.js + Express + PostgreSQL)**
 
@@ -77,7 +77,7 @@ curl http://localhost:5000/api/products
 ### 1️⃣ Environment Setup
 
 ```bash
-cd src/fronend
+cd src/frontend
 
 # Copy environment file
 cp .env.example .env
@@ -263,7 +263,7 @@ npm run prisma:migrate
 
 ### Frontend Development
 ```bash
-cd src/fronend
+cd src/frontend
 
 # Terminal 1: Dev server
 npm run dev

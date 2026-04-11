@@ -1,4 +1,4 @@
-# 🚀 UNIGO PROJECT - FINAL STARTUP REPORT (April 5, 2026)
+﻿# 🚀 UNIGO PROJECT - FINAL STARTUP REPORT (April 5, 2026)
 
 ## ✅ Services Running Successfully
 
@@ -152,7 +152,7 @@ docker exec unigo_postgres psql -U postgres -d unigo_db -c "\dt"
    │   ├── ✅ Prisma migrations (applied)
    │   └── ✅ Docker container (running)
    │
-   ├── ✅ src/fronend/
+   ├── ✅ src/frontend/
    │   ├── ✅ Running on port 5173
    │   ├── ✅ React components ready
    │   └── ✅ Vite build configured
@@ -193,7 +193,7 @@ docker exec unigo_postgres psql -U postgres -d unigo_db -c "\dt"
 
 4. **Start frontend** (in new terminal)
    ```powershell
-   cd src/fronend
+   cd src/frontend
    npm run dev
    # Should see: ➜ Local: http://localhost:5173/
    ```
@@ -307,7 +307,7 @@ When everything is working:
 1. Close all terminals
 2. Restart computer
 3. Run backend: `npm run dev` in `src/backend`
-4. Run frontend: `npm run dev` in `src/fronend`
+4. Run frontend: `npm run dev` in `src/frontend`
 5. Open http://localhost:5173
 
 Good luck! 🚀

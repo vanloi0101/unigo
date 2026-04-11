@@ -22,7 +22,7 @@ export const authAPI = {
 
 // ==================== PRODUCT SERVICES ====================
 export const productAPI = {
-  getAll: (page = 1, limit = 10, category = null) => {
+  getAll: (page = 1, limit = 50, category = null) => {
     const params = { page, limit };
     if (category) params.category = category;
     return axiosClient.get('/products', { params });

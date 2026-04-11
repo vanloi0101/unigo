@@ -1,4 +1,4 @@
-# 🔑 JWT Token Generation - jsonwebtoken Library
+﻿# 🔑 JWT Token Generation - jsonwebtoken Library
 
 ## 📍 Location: `src/backends/src/controllers/authController.js` (Lines 109-127)
 

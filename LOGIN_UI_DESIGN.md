@@ -1,4 +1,4 @@
-# 🎨 HƯỚNG DẪN GIAO DIỆN LOGIN & ADMIN MỚI
+﻿# 🎨 HƯỚNG DẪN GIAO DIỆN LOGIN & ADMIN MỚI
 
 **Ngày cập nhật:** April 5, 2026
 
@@ -90,7 +90,7 @@ LOGIC:
 - Responsive mobile menu
 ```
 
-**File:** `src/fronend/src/pages/Login.jsx`
+**File:** `src/frontend/src/pages/Login.jsx`
 
 ### **2. Header.jsx** ✅
 ```javascript
@@ -102,7 +102,7 @@ LOGIC:
 - Show user name khi login
 ```
 
-**File:** `src/fronend/src/components/Header.jsx`
+**File:** `src/frontend/src/components/Header.jsx`
 
 ### **3. Hero.jsx** ✅
 ```javascript
@@ -114,7 +114,7 @@ LOGIC:
 - Gradient button style
 ```
 
-**File:** `src/fronend/src/components/Hero.jsx`
+**File:** `src/frontend/src/components/Hero.jsx`
 
 ---
 
@@ -300,7 +300,7 @@ AFTER:
 
 ### **Start Frontend:**
 ```bash
-cd C:\Users\vanlo\all\webapp\unigo\src\fronend
+cd C:\Users\vanlo\all\webapp\unigo\src\frontend
 npm run dev
 ```
 

@@ -1,4 +1,4 @@
-@echo off
+﻿@echo off
 REM Kill all Node processes
 taskkill /F /IM node.exe >nul 2>&1
 echo Waiting 3 seconds...

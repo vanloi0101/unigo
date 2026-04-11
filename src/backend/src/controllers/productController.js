@@ -35,12 +35,12 @@ export const getAllProducts = async (req, res) => {
       minPrice = 0,
       maxPrice = 999999999,
       page = 1,
-      limit = 10,
+      limit = 50,
     } = req.query;
 
     // Convert to appropriate types
     const pageNum = Math.max(1, parseInt(page) || 1);
-    const limitNum = Math.max(1, parseInt(limit) || 10);
+    const limitNum = Math.max(1, parseInt(limit) || 50);
     const skip = (pageNum - 1) * limitNum;
     const minPriceNum = parseFloat(minPrice) || 0;
     const maxPriceNum = parseFloat(maxPrice) || 999999999;

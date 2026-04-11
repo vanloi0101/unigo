@@ -1,4 +1,4 @@
-# 🎉 UNIGO PROJECT - STARTUP SUCCESS! 
+﻿# 🎉 UNIGO PROJECT - STARTUP SUCCESS! 
 
 **Date:** April 5, 2026  
 **Status:** ✅ **FULLY OPERATIONAL**
@@ -99,10 +99,10 @@ npm run dev
 ### **Frontend (Port 5173)**
 ```batch
 REM Run this batch file:
-C:\Users\vanlo\all\webapp\unigo\src\fronend\run-frontend.bat
+C:\Users\vanlo\all\webapp\unigo\src\frontend\run-frontend.bat
 
 REM Or manually:
-cd C:\Users\vanlo\all\webapp\unigo\src\fronend
+cd C:\Users\vanlo\all\webapp\unigo\src\frontend
 npm run dev
 ```
 **Output should show:**
@@ -166,7 +166,7 @@ curl http://localhost:4000/api/products
 
 **Batch Files (Double-click to run):**
 - `src/backend/run-backend.bat` - Start backend server
-- `src/fronend/run-frontend.bat` - Start frontend server
+- `src/frontend/run-frontend.bat` - Start frontend server
 
 **Configuration:**
 - `.env` updated with PORT=4000
@@ -185,7 +185,7 @@ curl http://localhost:4000/api/products
 
 2. **Start Frontend (new terminal):**
    ```
-   Double-click: src/fronend/run-frontend.bat
+   Double-click: src/frontend/run-frontend.bat
    ```
 
 3. **Open Browser:**

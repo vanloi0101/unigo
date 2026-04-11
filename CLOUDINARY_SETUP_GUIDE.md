@@ -1,4 +1,4 @@
-# 🔧 Hướng Dẫn Sửa Lỗi Cloudinary
+﻿# 🔧 Hướng Dẫn Sửa Lỗi Cloudinary
 
 ## ❌ Vấn đề
 API báo lỗi: **"Invalid Signature"** 

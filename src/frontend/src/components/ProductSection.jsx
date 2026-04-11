@@ -33,6 +33,12 @@ export default function ProductSection({ onOpen }) {
       productsList: products.map(p => ({id: p.id, name: p.name, category: p.category}))
     });
     
+    // 📦 Log the first product structure to verify data format
+    if (products.length > 0) {
+      console.log('📦 First product structure:', JSON.stringify(products[0], null, 2));
+      console.log('📦 Product properties available:', Object.keys(products[0]));
+    }
+    
     const result = products.filter((p) => {
       const matchCat = currentCategory === 'all' || p.category === currentCategory;
       const matchSearch = p.name.toLowerCase().includes(searchQuery.toLowerCase());

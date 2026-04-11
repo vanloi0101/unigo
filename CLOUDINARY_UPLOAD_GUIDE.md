@@ -1,4 +1,4 @@
-# 📸 Cloudinary Image Upload Integration - Setup Guide
+﻿# 📸 Cloudinary Image Upload Integration - Setup Guide
 
 ## **1. Cloudinary Account Setup**
 

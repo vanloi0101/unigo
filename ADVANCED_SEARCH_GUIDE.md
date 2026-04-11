@@ -1,4 +1,4 @@
-# 🔍 Advanced Product Search & Filtering API Guide
+﻿# 🔍 Advanced Product Search & Filtering API Guide
 
 ## **Overview**
 

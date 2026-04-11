@@ -1,4 +1,4 @@
-# Quick Test Guide - API Integration Fix
+﻿# Quick Test Guide - API Integration Fix
 
 ## 🎯 Mục Tiêu
 Verify rằng Frontend hiển thị đầy đủ sản phẩm từ API và tự động update khi có thay đổi

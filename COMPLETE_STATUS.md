@@ -1,4 +1,4 @@
-# ✅ UNIGO - Complete Implementation Status
+﻿# ✅ UNIGO - Complete Implementation Status
 
 **Project:** Mon Nho Handmade E-Commerce Platform  
 **Date:** April 2024  
@@ -52,20 +52,20 @@
 | # | Feature | Status | Location | Notes |
 |---|---------|--------|----------|-------|
 | 1 | React + Vite Setup | ✅ 100% | Root level | Fast dev server |
-| 2 | Zustand Auth Store | ✅ 100% | `src/fronend/src/store/useAuthStore.js` | Login/logout/register |
-| 3 | Zustand Cart Store | ✅ 100% | `src/fronend/src/store/useCartStore.js` | Add/remove/update items |
-| 4 | Zustand Product Store | ✅ 100% | `src/fronend/src/store/useProductStore.js` | Fetch/create/update/delete |
-| 5 | Zustand Order Store | ✅ 100% | `src/fronend/src/store/useOrderStore.js` | Order management |
-| 6 | Login Page | ✅ 100% | `src/fronend/src/pages/Login.jsx` | Real API + validation |
-| 7 | Home Page | ⚠️ 70% | `src/fronend/src/pages/Home.jsx` | Basic layout, needs products display |
-| 8 | Admin Dashboard | ✅ 100% | `src/fronend/src/pages/AdminDashboard.jsx` | Panel with nav |
-| 9 | Admin Products Page | ✅ 100% | `src/fronend/src/pages/AdminProducts.jsx` | Full CRUD with form |
-| 10 | Admin Orders Page | ⚠️ 50% | `src/fronend/src/pages/AdminOrders.jsx` | Needs implementation |
+| 2 | Zustand Auth Store | ✅ 100% | `src/frontend/src/store/useAuthStore.js` | Login/logout/register |
+| 3 | Zustand Cart Store | ✅ 100% | `src/frontend/src/store/useCartStore.js` | Add/remove/update items |
+| 4 | Zustand Product Store | ✅ 100% | `src/frontend/src/store/useProductStore.js` | Fetch/create/update/delete |
+| 5 | Zustand Order Store | ✅ 100% | `src/frontend/src/store/useOrderStore.js` | Order management |
+| 6 | Login Page | ✅ 100% | `src/frontend/src/pages/Login.jsx` | Real API + validation |
+| 7 | Home Page | ⚠️ 70% | `src/frontend/src/pages/Home.jsx` | Basic layout, needs products display |
+| 8 | Admin Dashboard | ✅ 100% | `src/frontend/src/pages/AdminDashboard.jsx` | Panel with nav |
+| 9 | Admin Products Page | ✅ 100% | `src/frontend/src/pages/AdminProducts.jsx` | Full CRUD with form |
+| 10 | Admin Orders Page | ⚠️ 50% | `src/frontend/src/pages/AdminOrders.jsx` | Needs implementation |
 | 11 | Product Search | ✅ 100% | `AdminProducts.jsx` | Text + filters |
 | 12 | Image Preview | ⚠️ 30% | Form component | Needs file input + preview |
-| 13 | Axios Client | ✅ 100% | `src/fronend/src/api/axiosClient.js` | Interceptors + token |
-| 14 | API Services | ✅ 100% | `src/fronend/src/api/apiServices.js` | All endpoints |
-| 15 | Route Protection | ✅ 100% | `src/fronend/src/components/common/ProtectedRoute.jsx` | Admin check |
+| 13 | Axios Client | ✅ 100% | `src/frontend/src/api/axiosClient.js` | Interceptors + token |
+| 14 | API Services | ✅ 100% | `src/frontend/src/api/apiServices.js` | All endpoints |
+| 15 | Route Protection | ✅ 100% | `src/frontend/src/components/common/ProtectedRoute.jsx` | Admin check |
 | 16 | Toast Notifications | ✅ 100% | All pages | Success & errors |
 | 17 | Loading States | ✅ 100% | All forms | Spinner + disable |
 | 18 | Form Validation | ✅ 100% | Login + AdminProducts | React Hook Form + Zod |
@@ -148,7 +148,7 @@ src/
 │   │       └── orderRoutes.js     ✅ Order endpoints
 │   └── .env.example               ✅ Template
 │
-├── fronend/
+├── frontend/
 │   ├── package.json               ✅ Configured
 │   ├── vite.config.js             ✅ Build config
 │   ├── src/
@@ -431,7 +431,7 @@ npm run dev
 ### Frontend
 ```bash
 # Navigate to frontend
-cd src/fronend
+cd src/frontend
 
 # Install dependencies (if not already done)
 npm install

@@ -1,4 +1,4 @@
-import 'dotenv/config.js';
+﻿import 'dotenv/config.js';
 import { PrismaClient } from '@prisma/client';
 import bcrypt from 'bcryptjs';
 

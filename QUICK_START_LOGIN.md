@@ -1,11 +1,11 @@
-# 🚀 QUICK START: TÌM HIỂU CÁC THAY ĐỔI
+﻿# 🚀 QUICK START: TÌM HIỂU CÁC THAY ĐỔI
 
 ---
 
 ## 📁 Files Được Cập Nhật (3 files)
 
 ### **1. 🔐 Login Page (Thiết Kế Lại)**
-**File:** `src/fronend/src/pages/Login.jsx`
+**File:** `src/frontend/src/pages/Login.jsx`
 
 **Thay Đổi:**
 - ✨ Gradient animated background
@@ -26,7 +26,7 @@ Password: admin123
 ---
 
 ### **2. 👤 Header (Add Auth Logic)**
-**File:** `src/fronend/src/components/Header.jsx`
+**File:** `src/frontend/src/components/Header.jsx`
 
 **Thay Đổi:**
 - 🔐 Login button (not logged in)
@@ -45,7 +45,7 @@ ELSE:
 ---
 
 ### **3. 🏠 Hero/Home (Add CTA Button)**
-**File:** `src/fronend/src/components/Hero.jsx`
+**File:** `src/frontend/src/components/Hero.jsx`
 
 **Thay Đổi:**
 - ➕ New button: "Đăng Nhập Admin" (if not logged in)
@@ -203,7 +203,7 @@ npm run dev
 
 ### **Terminal 2 - Frontend:**
 ```bash
-cd C:\Users\vanlo\all\webapp\unigo\src\fronend
+cd C:\Users\vanlo\all\webapp\unigo\src\frontend
 npm run dev
 ```
 

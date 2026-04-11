@@ -1,4 +1,4 @@
-# 🚀 UNIGO PROJECT STATUS & STARTUP GUIDE (April 5, 2026)
+﻿# 🚀 UNIGO PROJECT STATUS & STARTUP GUIDE (April 5, 2026)
 
 ## ✅ Current Status
 
@@ -133,7 +133,7 @@ C:\Users\vanlo\all\webapp\unigo\
 │   │       ├── routes/
 │   │       └── middlewares/
 │   │
-│   └── fronend/           ← React + Vite (running on 5174)
+│   └── frontend/           ← React + Vite (running on 5174)
 │       ├── .env.example
 │       └── src/
 │           ├── pages/

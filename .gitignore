@@ -1,4 +1,4 @@
-# Environment variables - NEVER commit sensitive data
+﻿# Environment variables - NEVER commit sensitive data
 .env
 .env.local
 .env.*.local

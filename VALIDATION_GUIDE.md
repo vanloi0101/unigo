@@ -1,4 +1,4 @@
-# 🔐 API Validation Middleware - Login & Register
+﻿# 🔐 API Validation Middleware - Login & Register
 
 ## 📋 Tổng Quan
 

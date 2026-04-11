@@ -1,4 +1,4 @@
-# Fix Tích Hợp API Frontend - Backend
+﻿# Fix Tích Hợp API Frontend - Backend
 
 ## 🐛 Vấn Đề Gốc
 1. Frontend chỉ hiển thị 1 sản phẩm thay vì toàn bộ danh sách
@@ -237,12 +237,12 @@ useEffect(() => {
 ## 📝 Files Modified
 
 ```
-✅ src/fronend/src/hooks/useProducts.js
-✅ src/fronend/src/store/useProductStore.js
-✅ src/fronend/src/pages/AdminProducts.jsx
-✅ src/fronend/src/components/ProductSection.jsx
-✅ src/fronend/src/pages/Products.jsx
-✅ src/fronend/src/utils/queryClient.js (NEW - for future query invalidation)
+✅ src/frontend/src/hooks/useProducts.js
+✅ src/frontend/src/store/useProductStore.js
+✅ src/frontend/src/pages/AdminProducts.jsx
+✅ src/frontend/src/components/ProductSection.jsx
+✅ src/frontend/src/pages/Products.jsx
+✅ src/frontend/src/utils/queryClient.js (NEW - for future query invalidation)
 ```
 
 ## 🎯 Kết Quả

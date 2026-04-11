@@ -1,4 +1,4 @@
-# Task 2.1 - API Integration & Product Listing Implementation Report
+﻿# Task 2.1 - API Integration & Product Listing Implementation Report
 
 **Status**: ✅ **COMPLETED**
 **Date**: April 11, 2026
@@ -20,7 +20,7 @@ Task 2.1 has been **successfully completed** with all required components implem
 ## 1. Store Implementation - `useProductStore.js` ✅
 
 ### Location
-`src/fronend/src/store/useProductStore.js`
+`src/frontend/src/store/useProductStore.js`
 
 ### Features Implemented
 
@@ -68,7 +68,7 @@ Task 2.1 has been **successfully completed** with all required components implem
 ## 2. Component Implementation - ProductCard.jsx ✅
 
 ### Location
-`src/fronend/src/components/ProductCard.jsx`
+`src/frontend/src/components/ProductCard.jsx`
 
 ### Features Implemented
 
@@ -130,7 +130,7 @@ Format: Intl.NumberFormat('vi-VN', {
 ## 3. Component Implementation - CategorySidebar.jsx ✅
 
 ### Location
-`src/fronend/src/components/CategorySidebar.jsx`
+`src/frontend/src/components/CategorySidebar.jsx`
 
 ### Features Implemented
 
@@ -192,7 +192,7 @@ const categories = useMemo(() => {
 ## 4. Page Implementation - Products.jsx (ProductList) ✅
 
 ### Location
-`src/fronend/src/pages/Products.jsx`
+`src/frontend/src/pages/Products.jsx`
 
 ### Features Implemented
 
@@ -309,7 +309,7 @@ Grid breakpoints:
 ## 5. Utility Implementation - formatPrice.js ✅
 
 ### Location
-`src/fronend/src/utils/formatPrice.js`
+`src/frontend/src/utils/formatPrice.js`
 
 ### Implementation
 ```javascript
@@ -344,7 +344,7 @@ export const formatPrice = (price) => {
 ## 6. API Integration - axiosClient.js ✅
 
 ### Location
-`src/fronend/src/api/axiosClient.js`
+`src/frontend/src/api/axiosClient.js`
 
 ### Response Interceptor
 ```javascript
@@ -374,7 +374,7 @@ axiosClient.interceptors.response.use(
 ## 7. Routing Configuration ✅
 
 ### Location
-`src/fronend/src/App.jsx`
+`src/frontend/src/App.jsx`
 
 ### Route Setup
 ```javascript
@@ -490,7 +490,7 @@ Response Structure:
 
 ```
 src/
-  fronend/
+  frontend/
     src/
       store/
         useProductStore.js ✅

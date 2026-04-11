@@ -1,4 +1,4 @@
-# 🚨 ISSUE RESOLVED - Action Items
+﻿# 🚨 ISSUE RESOLVED - Action Items
 
 ## ✅ What Was Done
 
@@ -34,7 +34,7 @@ npm run dev
 # (wait 3-5 seconds for it to start)
 
 # 4. Restart Frontend
-cd src/fronend
+cd src/frontend
 npm run dev
 # (wait for "Local: http://localhost:5173" message)
 ```
@@ -65,12 +65,12 @@ npm run dev
 ## 📁 Files Changed
 
 **Deleted:**
-- ❌ `src/fronend/.env.local` (was causing override)
+- ❌ `src/frontend/.env.local` (was causing override)
 
 **Verified & Correct:**
-- ✅ `src/fronend/.env` (has port 5000)
-- ✅ `src/fronend/src/api/axiosClient.js` (uses VITE_API_URL)
-- ✅ `src/fronend/src/pages/Login.jsx` (uses axiosClient)
+- ✅ `src/frontend/.env` (has port 5000)
+- ✅ `src/frontend/src/api/axiosClient.js` (uses VITE_API_URL)
+- ✅ `src/frontend/src/pages/Login.jsx` (uses axiosClient)
 
 ---
 
@@ -92,11 +92,11 @@ netstat -ano | Select-String ":5000"
 # Should show: LISTENING
 
 # Check .env.local is deleted:
-Get-ChildItem "src/fronend\.env*"
+Get-ChildItem "src/frontend\.env*"
 # Should only show: .env (and .env.example)
 
 # Check .env has correct URL:
-Get-Content "src/fronend\.env" | Select-String "5000"
+Get-Content "src/frontend\.env" | Select-String "5000"
 # Should show: VITE_API_URL=http://localhost:5000/api
 ```
 

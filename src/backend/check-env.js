@@ -1,4 +1,4 @@
-#!/usr/bin/env node
+﻿#!/usr/bin/env node
 /**
  * Environment Variables Checker
  * Script to verify all required environment variables are properly loaded

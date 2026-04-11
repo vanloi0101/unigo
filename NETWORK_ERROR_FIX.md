@@ -1,4 +1,4 @@
-# 🔧 Network Error Fix Guide (localhost:4000 vs 5000)
+﻿# 🔧 Network Error Fix Guide (localhost:4000 vs 5000)
 
 **Status**: Configuration is ✅ CORRECT, but dev server needs reload  
 **Issue**: `net::ERR_CONNECTION_REFUSED` when calling `http://localhost:4000/api/auth/login`  
@@ -27,7 +27,7 @@ Ctrl + Shift + Delete  (or Cmd + Shift + Delete on Mac)
 
 ### Step 3: Clear node_modules & reinstall
 ```bash
-cd src/fronend
+cd src/frontend
 
 # Remove node_modules & lock files
 rm -r node_modules
@@ -46,7 +46,7 @@ npm run dev
 # Wait 3-5 seconds for backend to start...
 
 # Terminal 2: Frontend (MUST be port 5173)
-cd src/fronend
+cd src/frontend
 npm run dev
 
 # Wait for Vite to start and show:
@@ -105,13 +105,13 @@ import('http://localhost:5173/src/api/axiosClient.js?t=' + Date.now())
 
 ### Current Configuration Status
 
-**✅ File: src/fronend/.env**
+**✅ File: src/frontend/.env**
 ```
 VITE_API_URL=http://localhost:5000/api
 ```
 Status: ✅ CORRECT
 
-**✅ File: src/fronend/src/api/axiosClient.js**
+**✅ File: src/frontend/src/api/axiosClient.js**
 ```javascript
 const axiosClient = axios.create({
   baseURL: import.meta.env.VITE_API_URL || 'http://localhost:5000/api',
@@ -120,7 +120,7 @@ const axiosClient = axios.create({
 ```
 Status: ✅ CORRECT (reads from .env, falls back to 5000)
 
-**✅ File: src/fronend/src/pages/Login.jsx**
+**✅ File: src/frontend/src/pages/Login.jsx**
 ```javascript
 const response = await axiosClient.post('/auth/login', {
   email: data.email,
@@ -129,7 +129,7 @@ const response = await axiosClient.post('/auth/login', {
 ```
 Status: ✅ CORRECT (uses axiosClient instance)
 
-**✅ File: src/fronend/src/api/apiServices.js**
+**✅ File: src/frontend/src/api/apiServices.js**
 ```javascript
 login: (email, password) =>
   axiosClient.post('/auth/login', { email, password }),
@@ -183,24 +183,24 @@ Run this in browser console to diagnose issues:
 **Scenario A: Old .env.local or build**
 ```bash
 # Check for multiple env files
-ls src/fronend/.env*
+ls src/frontend/.env*
 
 # If .env.local exists and has old URL:
-cat src/fronend/.env.local
+cat src/frontend/.env.local
 # Delete if wrong:
-rm src/fronend/.env.local
+rm src/frontend/.env.local
 ```
 
 **Scenario B: Vite cache**
 ```bash
-cd src/fronend
+cd src/frontend
 rm -rf .vite
 npm run dev
 ```
 
 **Scenario C: Built version is old**
 ```bash
-cd src/fronend
+cd src/frontend
 rm -rf dist
 npm run dev  # Fresh dev server
 ```
@@ -263,7 +263,7 @@ If above steps don't work, do full nuclear reset:
 taskkill /F /IM node.exe  # Windows
 
 # 2. Clean frontend
-cd src/fronend
+cd src/frontend
 rm -rf node_modules package-lock.json .vite dist
 
 # 3. Reinstall
@@ -282,7 +282,7 @@ cd src/backend && npm run dev
 # Wait 5 seconds...
 
 # Terminal 2:
-cd src/fronend && npm run dev
+cd src/frontend && npm run dev
 ```
 
 ---
@@ -291,13 +291,13 @@ cd src/fronend && npm run dev
 
 ### Step 1: Confirm .env Content
 ```bash
-cat src/fronend/.env | grep VITE_API_URL
+cat src/frontend/.env | grep VITE_API_URL
 ```
 Should output: `VITE_API_URL=http://localhost:5000/api`
 
 ### Step 2: Check axiosClient.js
 ```bash
-grep -A 2 "baseURL:" src/fronend/src/api/axiosClient.js
+grep -A 2 "baseURL:" src/frontend/src/api/axiosClient.js
 ```
 Should show:
 ```
@@ -306,7 +306,7 @@ baseURL: import.meta.env.VITE_API_URL || 'http://localhost:5000/api',
 
 ### Step 3: Confirm No Hardcoded 4000
 ```bash
-grep -r "4000" src/fronend/src/
+grep -r "4000" src/frontend/src/
 ```
 Should return: **Nothing** (no matches)
 
@@ -388,7 +388,7 @@ cd src/backend && npm run dev
 # Should see: Server running on port 5000
 
 # Terminal 2: Start Frontend (wait 3 seconds)
-cd src/fronend && npm run dev
+cd src/frontend && npm run dev
 # Should see: ➜  Local: http://localhost:5173/
 
 # Terminal 3: Test API

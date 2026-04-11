@@ -1,4 +1,4 @@
-# 🚀 Frontend-Backend Integration Guide
+﻿# 🚀 Frontend-Backend Integration Guide
 
 **Status**: ✅ Complete & Ready for Testing  
 **Date**: April 11, 2025  
@@ -401,7 +401,7 @@ src/
 ### .env File (Frontend)
 
 ```bash
-# Located: src/fronend/.env
+# Located: src/frontend/.env
 VITE_API_URL=http://localhost:5000/api
 VITE_APP_NAME=Món Nhỏ Handmade
 VITE_APP_DESCRIPTION=Thương hiệu trang sức handmade
@@ -437,7 +437,7 @@ npm run dev  # or node src/index.js
 curl http://localhost:5000/api/health
 
 # Verify .env
-cat src/fronend/.env  # Should show VITE_API_URL=http://localhost:5000/api
+cat src/frontend/.env  # Should show VITE_API_URL=http://localhost:5000/api
 
 # Seed admin user if needed
 cd src/backend && node create-admin.js

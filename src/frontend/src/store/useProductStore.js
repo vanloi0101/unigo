@@ -11,7 +11,7 @@ const useProductStore = create((set) => ({
   totalProducts: 0,
 
   // Fetch all products
-  fetchProducts: async (page = 1, limit = 10, category = null) => {
+  fetchProducts: async (page = 1, limit = 50, category = null) => {
     set({ isLoading: true, error: null });
     try {
       const params = { page, limit };
@@ -20,10 +20,10 @@ const useProductStore = create((set) => ({
       const response = await axiosClient.get('/products', { params });
 
       set({
-        products: response.products,
-        currentPage: response.pagination.page,
-        totalPages: response.pagination.pages,
-        totalProducts: response.pagination.total,
+        products: response.data?.products || response.products,
+        currentPage: response.data?.pagination?.currentPage || response.pagination?.currentPage || 1,
+        totalPages: response.data?.pagination?.totalPages || response.pagination?.totalPages || 1,
+        totalProducts: response.data?.pagination?.totalItems || response.pagination?.totalItems || 0,
         isLoading: false,
       });
     } catch (error) {

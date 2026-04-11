@@ -1,4 +1,4 @@
-# 🚀 QUICK NAVIGATION GUIDE
+﻿# 🚀 QUICK NAVIGATION GUIDE
 
 ## 📍 Current Structure
 
@@ -6,7 +6,7 @@
 C:\Users\vanlo\all\webapp\unigo\
 ├── src\
 │   ├── backend\      ← Node.js + Express (Port 4000)
-│   └── fronend\      ← React + Vite (Port 5174)
+│   └── frontend\      ← React + Vite (Port 5174)
 ├── .git\
 ├── README.md
 └── ... (docs)
@@ -25,17 +25,17 @@ cd C:\Users\vanlo\all\webapp\unigo\src\backend
 
 ### **From Unigo Root → Frontend**
 ```powershell
-cd src/fronend
+cd src/frontend
 # OR full path:
-cd C:\Users\vanlo\all\webapp\unigo\src\fronend
+cd C:\Users\vanlo\all\webapp\unigo\src\frontend
 ```
 
 ### **From Backend → Frontend**
 ```powershell
-cd ../fronend
+cd ../frontend
 # OR from root:
 cd ..
-cd src/fronend
+cd src/frontend
 ```
 
 ### **From Frontend → Backend**
@@ -66,7 +66,7 @@ npm run dev
 
 **Terminal 2 - Frontend:**
 ```powershell
-cd C:\Users\vanlo\all\webapp\unigo\src\fronend
+cd C:\Users\vanlo\all\webapp\unigo\src\frontend
 npm run dev
 # Runs on port 5174
 ```
@@ -79,7 +79,7 @@ cd C:\Users\vanlo\all\webapp\unigo\src\backend
 Start-Process -NoNewWindow npm -ArgumentList "run dev"
 
 # Then start frontend
-cd ..\fronend
+cd ..\frontend
 npm run dev
 ```
 
@@ -115,9 +115,9 @@ Expected: Show 2 node.exe processes (backend + frontend)
 | Task | Command | Location |
 |------|---------|----------|
 | **Start Backend** | `npm run dev` | `src/backend` |
-| **Start Frontend** | `npm run dev` | `src/fronend` |
-| **Install Depends** | `npm install` | `src/backend` or `src/fronend` |
-| **Build Frontend** | `npm run build` | `src/fronend` |
+| **Start Frontend** | `npm run dev` | `src/frontend` |
+| **Install Depends** | `npm install` | `src/backend` or `src/frontend` |
+| **Build Frontend** | `npm run build` | `src/frontend` |
 | **Kill All Node** | `taskkill /F /IM node.exe` | Any |
 | **Create Admin** | `node create-admin.js` | `src/backend` |
 

@@ -1,4 +1,4 @@
-# 🎯 Frontend-Backend Integration - Implementation Summary
+﻿# 🎯 Frontend-Backend Integration - Implementation Summary
 
 **Status**: ✅ **COMPLETE & READY FOR TESTING**  
 **Date Completed**: April 11, 2025  
@@ -24,7 +24,7 @@
 config.headers.Authorization = `Bearer ${token}`;
 ```
 
-**File**: [src/fronend/src/api/axiosClient.js](src/fronend/src/api/axiosClient.js)
+**File**: [src/frontend/src/api/axiosClient.js](src/frontend/src/api/axiosClient.js)
 
 ---
 
@@ -46,7 +46,7 @@ if (response?.data?.user && response?.data?.token) {
 }
 ```
 
-**File**: [src/fronend/src/pages/Login.jsx](src/fronend/src/pages/Login.jsx)
+**File**: [src/frontend/src/pages/Login.jsx](src/frontend/src/pages/Login.jsx)
 
 ---
 
@@ -60,7 +60,7 @@ if (response?.data?.user && response?.data?.token) {
 - isAuthenticated flag for route protection
 - Fallback to localStorage on app init
 
-**File**: [src/fronend/src/store/useAuthStore.js](src/fronend/src/store/useAuthStore.js)
+**File**: [src/frontend/src/store/useAuthStore.js](src/frontend/src/store/useAuthStore.js)
 
 ---
 
@@ -74,7 +74,7 @@ if (response?.data?.user && response?.data?.token) {
 - Preserves redirect destination for post-login navigation
 - Uses Zustand isAuthenticated flag
 
-**File**: [src/fronend/src/components/common/ProtectedRoute.jsx](src/fronend/src/components/common/ProtectedRoute.jsx)
+**File**: [src/frontend/src/components/common/ProtectedRoute.jsx](src/frontend/src/components/common/ProtectedRoute.jsx)
 
 ---
 
@@ -99,7 +99,7 @@ const config = isFormData
 const response = await axiosClient.post('/products', productData, config);
 ```
 
-**File**: [src/fronend/src/store/useProductStore.js](src/fronend/src/store/useProductStore.js)
+**File**: [src/frontend/src/store/useProductStore.js](src/frontend/src/store/useProductStore.js)
 
 ---
 
@@ -123,13 +123,13 @@ formData.append('image', file);  // ← Field name MUST be 'image'
 await createProduct(formData);
 ```
 
-**File**: [src/fronend/src/pages/AdminProducts.jsx](src/fronend/src/pages/AdminProducts.jsx)
+**File**: [src/frontend/src/pages/AdminProducts.jsx](src/frontend/src/pages/AdminProducts.jsx)
 
 ---
 
 ## 🔧 Changes Made
 
-### File 1: src/fronend/src/api/axiosClient.js
+### File 1: src/frontend/src/api/axiosClient.js
 
 ```diff
 - baseURL: import.meta.env.VITE_API_URL || 'http://localhost:4000/api',
@@ -143,7 +143,7 @@ await createProduct(formData);
 + // Also removes token from localStorage on 401
 ```
 
-### File 2: src/fronend/src/pages/Login.jsx
+### File 2: src/frontend/src/pages/Login.jsx
 
 ```diff
   const onSubmit = async (data) => {
@@ -201,7 +201,7 @@ cd src/backend
 npm run dev
 
 # Terminal 2: Start Frontend (Port 5173)
-cd src/fronend
+cd src/frontend
 npm run dev
 ```
 
@@ -251,7 +251,7 @@ Headers tab should show:
 ## 📁 Project Structure
 
 ```
-src/fronend/
+src/frontend/
 ├── .env                          ← ✅ VITE_API_URL=http://localhost:5000/api
 ├── src/
 │   ├── api/

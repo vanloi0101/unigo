@@ -1,4 +1,4 @@
-# ✅ FRONTEND API CONNECTION STATUS
+﻿# ✅ FRONTEND API CONNECTION STATUS
 
 **Date:** April 5, 2026  
 **Status:** ✅ **CONFIGURED & READY**
@@ -187,7 +187,7 @@ npm run dev
 
 ### **Terminal 2 - Frontend (Port 5173)**
 ```bash
-cd C:\Users\vanlo\all\webapp\unigo\src\fronend
+cd C:\Users\vanlo\all\webapp\unigo\src\frontend
 npm run dev
 ```
 
@@ -317,7 +317,7 @@ const response = await orderAPI.create([
 
 2. **Start Frontend** (in new terminal):
    ```bash
-   cd src/fronend
+   cd src/frontend
    npm run dev  # Port 5173
    ```
 
