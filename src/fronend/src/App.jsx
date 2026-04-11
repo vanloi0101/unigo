@@ -9,6 +9,7 @@ import AdminLayout from './layouts/AdminLayout';
 
 // Pages
 import Home from './pages/Home';
+import Products from './pages/Products';
 import Login from './pages/Login'; // <--- Thêm Login Page
 import CartPage from './pages/CartPage'; // <--- Thêm Cart Page
 import AdminDashboard from './pages/AdminDashboard';
@@ -25,6 +26,7 @@ export default function App() {
         {/* Public Routes */}
         <Route element={<PublicLayout />}>
           <Route path="/" element={<Home />} />
+          <Route path="/products" element={<Products />} />
           <Route path="/cart" element={<CartPage />} />
         </Route>
         

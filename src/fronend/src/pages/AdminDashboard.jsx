@@ -65,7 +65,7 @@ export default function AdminDashboard() {
                 <tr key={product.id} className="hover:bg-gray-50 transition">
                   <td className="px-6 py-4">
                     <div className="flex items-center gap-3">
-                      <img src={product.image} alt={product.name} className="w-10 h-10 rounded object-cover" />
+                      <img src={product.imageUrl || product.image} alt={product.name} className="w-10 h-10 rounded object-cover" />
                       <span className="font-medium text-gray-800">{product.name}</span>
                     </div>
                   </td>

@@ -1,5 +1,5 @@
-import React, { useMemo, useState } from 'react';
-import useProducts from '../hooks/useProducts';
+import React, { useMemo, useState, useEffect } from 'react';
+import useProductStore from '../store/useProductStore';
 import ProductCard from './ProductCard';
 import ProductSkeleton from './common/ProductSkeleton';
 
@@ -7,18 +7,46 @@ export default function ProductSection({ onOpen }) {
   const [currentCategory, setCurrentCategory] = useState('all');
   const [searchQuery, setSearchQuery] = useState('');
   
-  // Dùng React Query lấy dữ liệu.
-  const { data: productsData, isLoading, isError, error, refetch } = useProducts();
+  // Dùng Zustand store để lấy dữ liệu (shared state)
+  const { products, isLoading, error, fetchProducts } = useProductStore();
+
+  // Fetch dữ liệu khi component mount (chỉ 1 lần)
+  useEffect(() => {
+    if (products.length === 0) {
+      fetchProducts(1, 100);
+    }
+    // Dependency chỉ tracking products.length để tránh infinite loop
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   const filtered = useMemo(() => {
-    // productsData có thể null lúc ban đầu nếu không có fallback
-    if (!productsData) return [];
-    return productsData.filter((p) => {
+    // products là mảng từ store
+    if (!Array.isArray(products)) {
+      console.log('❌ ProductSection: products không phải array', products);
+      return [];
+    }
+    
+    console.log('🔍 ProductSection DEBUG:', {
+      totalProducts: products.length,
+      currentCategory,
+      searchQuery,
+      productsList: products.map(p => ({id: p.id, name: p.name, category: p.category}))
+    });
+    
+    const result = products.filter((p) => {
       const matchCat = currentCategory === 'all' || p.category === currentCategory;
       const matchSearch = p.name.toLowerCase().includes(searchQuery.toLowerCase());
-      return matchCat && matchSearch;
+      const passes = matchCat && matchSearch;
+      
+      console.log(`  - Product ID ${p.id} (${p.name}): cat=${p.category} matchCat=${matchCat}, matchSearch=${matchSearch}, passes=${passes}`);
+      
+      return passes;
     });
-  }, [currentCategory, searchQuery, productsData]);
+    
+    console.log('✅ ProductSection: filtered count =', result.length);
+    
+    return result;
+  }, [currentCategory, searchQuery, products]);
 
   return (
     <section id="products" className="py-24 px-6 relative">
@@ -46,7 +74,7 @@ export default function ProductSection({ onOpen }) {
             Array.from({ length: 8 }).map((_, index) => (
               <ProductSkeleton key={index} />
             ))
-          ) : isError ? (
+          ) : error ? (
             <div className="col-span-full text-center py-16">
               <div className="inline-block">
                 <div className="text-5xl mb-4">😞</div>
@@ -54,13 +82,13 @@ export default function ProductSection({ onOpen }) {
                 <p className="text-gray-500 mb-6">
                   Không thể tải sản phẩm lúc này. Vui lòng thử lại sau.
                 </p>
-                {error?.message && (
+                {error && (
                   <p className="text-sm text-gray-400 mb-4">
-                    ({error.message})
+                    ({error})
                   </p>
                 )}
                 <button
-                  onClick={() => refetch()}
+                  onClick={() => fetchProducts(1, 100)}
                   className="bg-brand-purple text-white px-6 py-3 rounded-full font-semibold hover:bg-brand-dark transition-colors"
                 >
                   🔄 Thử lại

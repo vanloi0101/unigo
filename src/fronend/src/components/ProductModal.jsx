@@ -14,7 +14,7 @@ export default function ProductModal({ open, product, onClose }) {
         </button>
 
         <div className="md:w-1/2 bg-gray-50 flex-shrink-0">
-          <img src={product.image} alt={product.name} className="w-full h-full object-cover max-h-[50vh] md:max-h-none" />
+          <img src={product.imageUrl || product.image} alt={product.name} className="w-full h-full object-cover max-h-[50vh] md:max-h-none" />
         </div>
 
         <div className="md:w-1/2 p-8 md:p-10 flex flex-col justify-center overflow-y-auto">
@@ -25,7 +25,7 @@ export default function ProductModal({ open, product, onClose }) {
             <span className="bg-green-100 text-green-700 text-xs font-bold px-2 py-1 rounded">Còn hàng</span>
           </div>
 
-          <p className="text-gray-600 mb-8 leading-relaxed text-lg">{product.desc}</p>
+          <p className="text-gray-600 mb-8 leading-relaxed text-lg">{product.description || product.desc}</p>
 
           <div className="mt-8 flex gap-4">
             <a href={`https://zalo.me/0346450546?text=Mình muốn đặt ${encodeURIComponent(product.name)} giá ${product.price}`} target="_blank" rel="noreferrer" className="flex-1 bg-brand-dark text-white text-center py-4 rounded-full font-bold hover:bg-black transition-colors shadow-lg shadow-brand-dark/20">Đặt hàng qua Zalo</a>

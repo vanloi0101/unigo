@@ -20,4 +20,19 @@ if (!config.DATABASE_URL) {
   process.exit(1);
 }
 
+// Validate Cloudinary configuration for image uploads
+if (!config.CLOUDINARY_CLOUD_NAME || !config.CLOUDINARY_API_KEY || !config.CLOUDINARY_API_SECRET) {
+  console.warn("⚠️  WARNING: Cloudinary credentials are incomplete!");
+  console.warn(`   CLOUDINARY_CLOUD_NAME: ${config.CLOUDINARY_CLOUD_NAME ? "✓" : "❌ Missing"}`);  
+  console.warn(`   CLOUDINARY_API_KEY: ${config.CLOUDINARY_API_KEY ? "✓" : "❌ Missing"}`);
+  console.warn(`   CLOUDINARY_API_SECRET: ${config.CLOUDINARY_API_SECRET ? "✓" : "❌ Missing"}`);
+  console.warn("   Image upload will fail until Cloudinary is properly configured in .env");
+}
+
+// Log Cloudinary setup on startup (without exposing secrets)
+console.log("🔧 Cloudinary Setup:");
+console.log(`   Cloud Name: ${config.CLOUDINARY_CLOUD_NAME || "NOT SET"}`);
+console.log(`   API Key: ${config.CLOUDINARY_API_KEY ? "✓ Configured" : "❌ NOT SET"}`);
+console.log(`   API Secret: ${config.CLOUDINARY_API_SECRET ? "✓ Configured" : "❌ NOT SET"}`);
+
 export default config;

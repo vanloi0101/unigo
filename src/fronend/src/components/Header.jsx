@@ -44,7 +44,8 @@ export default function Header() {
         <nav className="hidden md:flex gap-8 font-medium text-brand-dark">
           <a href="#hero" className="hover:text-brand-pink transition-colors">Trang chủ</a>
           <a href="#about" className="hover:text-brand-pink transition-colors">Về Mận</a>
-          <a href="#products" className="hover:text-brand-pink transition-colors">Sản phẩm</a>
+          <a href="#products" className="hover:text-brand-pink transition-colors">Nổi bật</a>
+          <Link to="/products" className="hover:text-brand-pink transition-colors">Sản Phẩm</Link>
         </nav>
 
         <div className="hidden md:flex items-center gap-3">
@@ -108,7 +109,8 @@ export default function Header() {
         <div className="md:hidden bg-white shadow-lg mt-2 mx-6 rounded-lg p-4 space-y-3">
           <a href="#hero" className="block text-brand-dark hover:text-brand-pink font-medium py-2">Trang chủ</a>
           <a href="#about" className="block text-brand-dark hover:text-brand-pink font-medium py-2">Về Mận</a>
-          <a href="#products" className="block text-brand-dark hover:text-brand-pink font-medium py-2">Sản phẩm</a>
+          <a href="#products" className="block text-brand-dark hover:text-brand-pink font-medium py-2">Nổi bật</a>
+          <Link to="/products" className="block text-brand-dark hover:text-brand-pink font-medium py-2">Sản Phẩm</Link>
           <Link to="/cart" className="relative block text-brand-purple hover:text-brand-dark font-medium py-2 flex items-center gap-2">
             <FaShoppingCart /> Giỏ hàng
             {cartCount > 0 && (

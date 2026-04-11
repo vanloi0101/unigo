@@ -11,7 +11,7 @@ const productSchema = z.object({
   name: z.string().min(3, { message: "Tên sản phẩm phải ít nhất 3 ký tự" }),
   description: z.string().optional(),
   price: z.number().positive({ message: "Giá phải lớn hơn 0" }),
-  imageUrl: z.string().url({ message: "URL hình ảnh không hợp lệ" }).optional(),
+  imageFile: z.any().optional(), // file input (FormData)
   stock: z.number().nonnegative({ message: "Kho phải >= 0" }),
   category: z.string().optional(),
 });
@@ -43,19 +43,40 @@ export default function AdminProducts() {
 
   // Fetch products on component mount
   useEffect(() => {
-    fetchProducts();
-  }, [fetchProducts]);
+    fetchProducts(1, 100); // Lấy tối đa 100 sản phẩm
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   // Handle form submission
   const onSubmit = async (data) => {
     try {
+      // If a file was provided, build FormData to send multipart/form-data
+      let payload = data;
+      const file = data.imageFile && data.imageFile.length ? data.imageFile[0] : null;
+
+      if (file) {
+        const formData = new FormData();
+        formData.append('name', data.name);
+        formData.append('description', data.description || '');
+        formData.append('price', String(data.price));
+        formData.append('stock', String(data.stock || 0));
+        formData.append('category', data.category || '');
+        // Multer middleware expects field name 'image'
+        formData.append('image', file);
+        payload = formData;
+      }
+
       if (editingId) {
-        await updateProduct(editingId, data);
+        await updateProduct(editingId, payload);
         toast.success('Cập nhật sản phẩm thành công!');
       } else {
-        await createProduct(data);
+        await createProduct(payload);
         toast.success('Thêm sản phẩm thành công!');
       }
+
+      // Refetch danh sách sản phẩm sau khi tạo/cập nhật
+      await fetchProducts(1, 100);
+
       reset();
       setShowForm(false);
       setEditingId(null);
@@ -75,6 +96,8 @@ export default function AdminProducts() {
       const success = await deleteProduct(productId);
       if (success) {
         toast.success('Xóa sản phẩm thành công!');
+        // Refetch danh sách sản phẩm sau khi xóa
+        await fetchProducts(1, 100);
       }
     }
   };
@@ -176,17 +199,17 @@ export default function AdminProducts() {
                 </select>
               </div>
 
-              {/* Image URL */}
+              {/* Image file input (replace URL input) */}
               <div className="md:col-span-2">
-                <label className="block text-sm font-medium text-gray-700">URL Hình Ảnh</label>
+                <label className="block text-sm font-medium text-gray-700">Ảnh Sản Phẩm</label>
                 <input
-                  type="url"
-                  {...register('imageUrl')}
+                  type="file"
+                  accept="image/*"
+                  {...register('imageFile')}
                   className="mt-1 w-full px-4 py-2 border border-gray-300 rounded-lg focus:border-brand-purple focus:ring-1"
-                  placeholder="https://example.com/image.jpg"
                 />
-                {errors.imageUrl && (
-                  <p className="text-red-500 text-sm mt-1">{errors.imageUrl.message}</p>
+                {errors.imageFile && (
+                  <p className="text-red-500 text-sm mt-1">{errors.imageFile.message}</p>
                 )}
               </div>
 

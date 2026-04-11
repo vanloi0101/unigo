@@ -51,30 +51,30 @@ export const getAllProducts = async (req, res) => {
         // Search by name or description
         search
           ? {
-              OR: [
-                {
-                  name: {
-                    contains: search,
-                    mode: "insensitive",
-                  },
+            OR: [
+              {
+                name: {
+                  contains: search,
+                  mode: "insensitive",
                 },
-                {
-                  description: {
-                    contains: search,
-                    mode: "insensitive",
-                  },
+              },
+              {
+                description: {
+                  contains: search,
+                  mode: "insensitive",
                 },
-              ],
-            }
+              },
+            ],
+          }
           : {},
         // Filter by category
         category
           ? {
-              category: {
-                equals: category,
-                mode: "insensitive",
-              },
-            }
+            category: {
+              equals: category,
+              mode: "insensitive",
+            },
+          }
           : {},
         // Filter by price range
         {

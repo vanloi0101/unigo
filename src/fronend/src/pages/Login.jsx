@@ -46,10 +46,13 @@ export default function Login() {
         password: data.password,
       });
 
-      if (response.data?.success) {
+      // Response structure: { status, message, data: { user, token } }
+      if (response?.data?.user && response?.data?.token) {
         login(response.data.user, response.data.token);
         toast.success("✅ Đăng nhập thành công!");
         navigate(from, { replace: true });
+      } else {
+        throw new Error('Invalid login response');
       }
     } catch (error) {
       const errorMessage = error?.response?.data?.message || "Sai Email hoặc mật khẩu.";

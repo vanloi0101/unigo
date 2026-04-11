@@ -16,9 +16,9 @@ const useProductStore = create((set) => ({
     try {
       const params = { page, limit };
       if (category) params.category = category;
-      
+
       const response = await axiosClient.get('/products', { params });
-      
+
       set({
         products: response.products,
         currentPage: response.pagination.page,

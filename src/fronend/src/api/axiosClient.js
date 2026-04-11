@@ -1,13 +1,15 @@
 import axios from 'axios';
 
 const axiosClient = axios.create({
-  baseURL: import.meta.env.VITE_API_URL || 'http://localhost:4000/api',
+  baseURL: import.meta.env.VITE_API_URL || 'http://localhost:5000/api',
   headers: {
     'Content-Type': 'application/json',
   },
+  withCredentials: true,
 });
 
-// Interceptor cho Request: Đính kèm token nếu có
+// ==================== REQUEST INTERCEPTOR ====================
+// Tự động thêm Authorization Bearer token từ localStorage nếu có
 axiosClient.interceptors.request.use(
   (config) => {
     const token = localStorage.getItem('token');
@@ -21,18 +23,22 @@ axiosClient.interceptors.request.use(
   }
 );
 
-// Interceptor cho Response: Xử lý lỗi toàn cục
+// ==================== RESPONSE INTERCEPTOR ====================
+// Xử lý response và lỗi toàn cục
 axiosClient.interceptors.response.use(
   (response) => {
+    // Trả về data từ response, bỏ wrapping axios
     return response.data;
   },
   (error) => {
-    // Xử lý chung các lỗi authorization (ví dụ: token hết hạn)
+    // Xử lý token hết hạn: xóa token và redirect
     if (error.response?.status === 401) {
       localStorage.removeItem('token');
-      // Tùy chọn redirect về trang login hoặc bắn event
-      // window.location.href = '/login';
+      localStorage.removeItem('user');
+      // window.location.href = '/login';  // Optional: uncomment để auto redirect
     }
+    
+    // Trả về error cho consumer
     return Promise.reject(error);
   }
 );
