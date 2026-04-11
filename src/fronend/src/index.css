@@ -14,6 +14,14 @@ html { scroll-behavior: smooth; }
 .fade-up.visible { opacity: 1; transform: translateY(0); }
 .no-scroll { overflow: hidden; }
 
+/* Cart Badge Animation */
+@keyframes bounce-pop {
+  0% { transform: scale(0.8); opacity: 0; }
+  50% { transform: scale(1.1); }
+  100% { transform: scale(1); opacity: 1; }
+}
+.animate-bounce-pop { animation: bounce-pop 0.4s cubic-bezier(0.34, 1.56, 0.64, 1); }
+
 /* Scrollbar */
 ::-webkit-scrollbar { width: 6px; }
 ::-webkit-scrollbar-track { background: #fdfdfd; }

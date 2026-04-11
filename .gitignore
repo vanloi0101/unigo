@@ -1,7 +1,30 @@
-# Environment variables
+# Environment variables - NEVER commit sensitive data
 .env
 .env.local
 .env.*.local
+.env.development
+.env.production
+.env.test
+.env.*.development.local
+.env.*.production.local
+.env.*.test.local
+!.env.example
+!.env.*.example
+
+# Secrets and keys
+.env.*.key
+.env.*.secret
+keys/
+secrets/
+credentials/
+certs/
+.ssh/
+*.pem
+*.key
+*.cert
+*.crt
+*.p12
+*.pfx
 
 # Dependencies
 node_modules/

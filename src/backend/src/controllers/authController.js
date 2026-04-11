@@ -113,15 +113,21 @@ export const login = async (req, res) => {
       { expiresIn: config.JWT_EXPIRE }
     );
 
+    // Loại bỏ password trước khi trả về
+    const userResponse = {
+      id: user.id,
+      email: user.email,
+      name: user.name,
+      role: user.role,
+      createdAt: user.createdAt,
+    };
+
     res.status(200).json({
-      success: true,
+      status: "success",
       message: "Đăng nhập thành công",
-      token,
-      user: {
-        id: user.id,
-        email: user.email,
-        name: user.name,
-        role: user.role,
+      data: {
+        user: userResponse,
+        token,
       },
     });
   } catch (error) {

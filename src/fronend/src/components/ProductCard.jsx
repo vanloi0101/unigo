@@ -1,13 +1,27 @@
 import React from 'react';
-import useCartStore from '../store/useCartStore';
 import toast from 'react-hot-toast';
+import axiosClient from '../api/axiosClient';
+import { useCart } from '../contexts/CartContext';
 
 export default function ProductCard({ product, onOpen }) {
-  const { addToCart } = useCartStore();
+  const { fetchCartCount } = useCart();
 
-  const handleAddToCart = () => {
-    addToCart(product, 1);
-    toast.success(`Đã thêm ${product.name} vào giỏ hàng!`);
+  const handleAddToCart = async () => {
+    try {
+      await axiosClient.post('/cart', {
+        productId: product.id,
+        quantity: 1
+      });
+      toast.success('Đã thêm vào giỏ hàng thành công');
+      fetchCartCount();
+    } catch (error) {
+      if (error.response?.status === 401) {
+        toast.error('Vui lòng đăng nhập để tiếp tục');
+        window.location.href = '/login';
+      } else {
+        toast.error(error.response?.data?.message || 'Không thể thêm vào giỏ hàng');
+      }
+    }
   };
 
   return (

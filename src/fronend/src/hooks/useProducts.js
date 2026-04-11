@@ -1,19 +1,21 @@
 import { useQuery } from '@tanstack/react-query';
 import axiosClient from '../api/axiosClient';
 
-// Tạm thời fallback dùng mock data nếu API chưa có để UI ko bị vỡ
-import mockProducts from '../data/products';
-
 const fetchProducts = async () => {
   try {
-    // GỌI API THỰC TẾ
+    // HTTP GET request tới backend API
     const response = await axiosClient.get('/products');
-    return response; // Dữ liệu đã được axiosClient interceptor lấy ra (response.data)
+
+    // Response structure: { success, products: [...], pagination: {...} }
+    if (response.success && Array.isArray(response.products)) {
+      return response.products;
+    }
+
+    console.warn('Unexpected API response structure:', response);
+    return [];
   } catch (error) {
-    console.warn("API chưa sẵn sàng, dùng Mock Data thay thế.");
-    // Simulate mạng chạy chậm 1 xíu để test UX loading (ProductSkeleton)
-    await new Promise(resolve => setTimeout(resolve, 1000));
-    return mockProducts;
+    console.error('Failed to fetch products:', error.message);
+    throw error; // Cho React Query xử lý lỗi
   }
 };
 
@@ -21,6 +23,6 @@ export default function useProducts() {
   return useQuery({
     queryKey: ['products'],
     queryFn: fetchProducts,
-    staleTime: 5 * 60 * 1000, // Cash 5 phút
+    staleTime: 5 * 60 * 1000, // Cache 5 phút
   });
 }

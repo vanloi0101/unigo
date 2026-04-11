@@ -8,7 +8,7 @@ export default function ProductSection({ onOpen }) {
   const [searchQuery, setSearchQuery] = useState('');
   
   // Dùng React Query lấy dữ liệu.
-  const { data: productsData, isLoading, isError } = useProducts();
+  const { data: productsData, isLoading, isError, error, refetch } = useProducts();
 
   const filtered = useMemo(() => {
     // productsData có thể null lúc ban đầu nếu không có fallback
@@ -47,8 +47,25 @@ export default function ProductSection({ onOpen }) {
               <ProductSkeleton key={index} />
             ))
           ) : isError ? (
-            <div className="col-span-full text-center text-red-500 py-10">
-              Có lỗi xảy ra khi tải sản phẩm. Vui lòng thử lại sau.
+            <div className="col-span-full text-center py-16">
+              <div className="inline-block">
+                <div className="text-5xl mb-4">😞</div>
+                <h3 className="text-xl font-semibold text-brand-dark mb-2">Oops! Có lỗi xảy ra</h3>
+                <p className="text-gray-500 mb-6">
+                  Không thể tải sản phẩm lúc này. Vui lòng thử lại sau.
+                </p>
+                {error?.message && (
+                  <p className="text-sm text-gray-400 mb-4">
+                    ({error.message})
+                  </p>
+                )}
+                <button
+                  onClick={() => refetch()}
+                  className="bg-brand-purple text-white px-6 py-3 rounded-full font-semibold hover:bg-brand-dark transition-colors"
+                >
+                  🔄 Thử lại
+                </button>
+              </div>
             </div>
           ) : filtered.length > 0 ? (
             filtered.map((p) => (

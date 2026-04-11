@@ -1,82 +1,76 @@
 import prisma from "../config/database.js";
+import OrderService from "../services/OrderService.js";
 
 // ==================== CREATE ORDER ====================
 export const createOrder = async (req, res) => {
   try {
     const { userId } = req.user;
-    const { items, shippingAddress } = req.body;
+    const { productId, quantity } = req.body;
 
-    // Validation
-    if (!items || items.length === 0) {
+    // Validation - Kiểm tra chi tiết hơn
+    if (productId === undefined || productId === null || productId === "") {
       return res.status(400).json({
-        success: false,
-        message: "Đơn hàng phải có ít nhất một sản phẩm",
+        status: "error",
+        message: "productId là bắt buộc",
       });
     }
 
-    // Calculate total amount
-    let totalAmount = 0;
-    const orderItemsData = [];
-
-    for (const item of items) {
-      const product = await prisma.product.findUnique({
-        where: { id: item.productId },
-      });
-
-      if (!product) {
-        return res.status(404).json({
-          success: false,
-          message: `Sản phẩm với ID ${item.productId} không tìm thấy`,
-        });
-      }
-
-      // Check stock
-      if (product.stock < item.quantity) {
-        return res.status(400).json({
-          success: false,
-          message: `Sản phẩm "${product.name}" không đủ hàng`,
-        });
-      }
-
-      totalAmount += product.price * item.quantity;
-      orderItemsData.push({
-        productId: item.productId,
-        quantity: item.quantity,
-        price: product.price,
+    if (quantity === undefined || quantity === null || quantity === "") {
+      return res.status(400).json({
+        status: "error",
+        message: "quantity là bắt buộc",
       });
     }
 
-    // Create order with order items
-    const order = await prisma.order.create({
-      data: {
-        userId,
-        shippingAddress,
-        totalAmount,
-        status: "PENDING",
-        items: {
-          create: orderItemsData,
-        },
-      },
-      include: {
-        items: {
-          include: {
-            product: true,
-          },
-        },
-      },
+    // Gọi OrderService để tạo đơn hàng
+    const order = await OrderService.createOrder({
+      userId,
+      productId: parseInt(productId),
+      quantity: parseInt(quantity),
     });
 
     res.status(201).json({
-      success: true,
+      status: "success",
       message: "Đơn hàng tạo thành công",
-      order,
+      data: order,
     });
   } catch (error) {
-    console.error("Create order error:", error);
+    console.error("Create order error:", error.message);
+
+    // ==================== PHÂN LOẠI LỖI ====================
+
+    // 1️⃣ Lỗi: Sản phẩm không tồn tại → 404
+    if (error.message.includes("Sản phẩm không tồn tại")) {
+      return res.status(404).json({
+        status: "error",
+        message: error.message,
+      });
+    }
+
+    // 2️⃣ Lỗi: Không đủ tồn kho → 409 Conflict
+    if (error.message.includes("Sản phẩm không đủ số lượng")) {
+      return res.status(409).json({
+        status: "error",
+        message: error.message,
+      });
+    }
+
+    // 3️⃣ Lỗi: Validation (quantity <= 0, userId/productId không hợp lệ) → 400
+    if (
+      error.message.includes("là bắt buộc") ||
+      error.message.includes("phải lớn hơn")
+    ) {
+      return res.status(400).json({
+        status: "error",
+        message: error.message,
+      });
+    }
+
+    // 4️⃣ Lỗi hệ thống khác → 500
+    console.error("⚠️ Unexpected error in createOrder:", error);
     res.status(500).json({
-      success: false,
-      message: "Lỗi server",
-      error: error.message,
+      status: "error",
+      message: "Lỗi server khi tạo đơn hàng",
     });
   }
 };
@@ -106,21 +100,22 @@ export const getUserOrders = async (req, res) => {
     const total = await prisma.order.count({ where: { userId } });
 
     res.status(200).json({
-      success: true,
-      orders,
-      pagination: {
-        total,
-        page: parseInt(page),
-        limit: parseInt(limit),
-        pages: Math.ceil(total / limit),
+      status: "success",
+      data: {
+        orders,
+        pagination: {
+          total,
+          page: parseInt(page),
+          limit: parseInt(limit),
+          pages: Math.ceil(total / limit),
+        },
       },
     });
   } catch (error) {
-    console.error("Get user orders error:", error);
+    console.error("Get user orders error:", error.message);
     res.status(500).json({
-      success: false,
-      message: "Lỗi server",
-      error: error.message,
+      status: "error",
+      message: "Lỗi server khi lấy danh sách đơn hàng",
     });
   }
 };
@@ -151,7 +146,7 @@ export const getOrderById = async (req, res) => {
 
     if (!order) {
       return res.status(404).json({
-        success: false,
+        status: "error",
         message: "Đơn hàng không tìm thấy",
       });
     }
@@ -159,21 +154,20 @@ export const getOrderById = async (req, res) => {
     // Check if the order belongs to the user (unless they are admin)
     if (order.userId !== userId && req.user.role !== "ADMIN") {
       return res.status(403).json({
-        success: false,
+        status: "error",
         message: "Bạn không có quyền xem đơn hàng này",
       });
     }
 
     res.status(200).json({
-      success: true,
-      order,
+      status: "success",
+      data: order,
     });
   } catch (error) {
-    console.error("Get order by ID error:", error);
+    console.error("Get order by ID error:", error.message);
     res.status(500).json({
-      success: false,
-      message: "Lỗi server",
-      error: error.message,
+      status: "error",
+      message: "Lỗi server khi lấy thông tin đơn hàng",
     });
   }
 };
@@ -184,8 +178,8 @@ export const getAllOrders = async (req, res) => {
     // Check if user is admin
     if (req.user.role !== "ADMIN") {
       return res.status(403).json({
-        success: false,
-        message: "Chỉ admin mới có thể xem tất cả đơn hàng",
+        status: "error",
+        message: "Chỉ admin mới có quyền truy cập",
       });
     }
 
@@ -218,21 +212,22 @@ export const getAllOrders = async (req, res) => {
     const total = await prisma.order.count({ where });
 
     res.status(200).json({
-      success: true,
-      orders,
-      pagination: {
-        total,
-        page: parseInt(page),
-        limit: parseInt(limit),
-        pages: Math.ceil(total / limit),
+      status: "success",
+      data: {
+        orders,
+        pagination: {
+          total,
+          page: parseInt(page),
+          limit: parseInt(limit),
+          pages: Math.ceil(total / limit),
+        },
       },
     });
   } catch (error) {
-    console.error("Get all orders error:", error);
+    console.error("Get all orders error:", error.message);
     res.status(500).json({
-      success: false,
-      message: "Lỗi server",
-      error: error.message,
+      status: "error",
+      message: "Lỗi server khi lấy danh sách đơn hàng",
     });
   }
 };
@@ -246,8 +241,16 @@ export const updateOrderStatus = async (req, res) => {
     // Check if user is admin
     if (req.user.role !== "ADMIN") {
       return res.status(403).json({
-        success: false,
-        message: "Chỉ admin mới có thể cập nhật tình trạng đơn hàng",
+        status: "error",
+        message: "Chỉ admin mới có quyền cập nhật trạng thái đơn hàng",
+      });
+    }
+
+    // Validation: status bắt buộc
+    if (!status) {
+      return res.status(400).json({
+        status: "error",
+        message: "status là bắt buộc",
       });
     }
 
@@ -255,8 +258,8 @@ export const updateOrderStatus = async (req, res) => {
     const validStatuses = ["PENDING", "PROCESSING", "SHIPPED", "DELIVERED", "CANCELLED"];
     if (!validStatuses.includes(status)) {
       return res.status(400).json({
-        success: false,
-        message: "Tình trạng đơn hàng không hợp lệ",
+        status: "error",
+        message: `Trạng thái không hợp lệ. Cho phép: ${validStatuses.join(", ")}`,
       });
     }
 
@@ -273,16 +276,24 @@ export const updateOrderStatus = async (req, res) => {
     });
 
     res.status(200).json({
-      success: true,
-      message: "Cập nhật tình trạng đơn hàng thành công",
-      order,
+      status: "success",
+      message: "Cập nhật trạng thái đơn hàng thành công",
+      data: order,
     });
   } catch (error) {
-    console.error("Update order status error:", error);
+    console.error("Update order status error:", error.message);
+
+    // Nếu không tìm thấy đơn hàng
+    if (error.code === "P2025") {
+      return res.status(404).json({
+        status: "error",
+        message: "Đơn hàng không tìm thấy",
+      });
+    }
+
     res.status(500).json({
-      success: false,
-      message: "Lỗi server",
-      error: error.message,
+      status: "error",
+      message: "Lỗi server khi cập nhật trạng thái đơn hàng",
     });
   }
 };

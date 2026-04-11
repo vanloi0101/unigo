@@ -7,6 +7,7 @@ import {
   deleteProduct,
 } from "../controllers/productController.js";
 import { authenticateToken } from "../middlewares/authMiddleware.js";
+import { checkAdminRole } from "../middlewares/adminMiddleware.js";
 import { uploadSingle, handleMulterError } from "../middlewares/uploadMiddleware.js";
 
 const router = express.Router();
@@ -19,6 +20,7 @@ router.get("/:id", getProductById);
 router.post(
   "/",
   authenticateToken,
+  checkAdminRole,
   uploadSingle,
   handleMulterError,
   createProduct
@@ -26,10 +28,11 @@ router.post(
 router.put(
   "/:id",
   authenticateToken,
+  checkAdminRole,
   uploadSingle,
   handleMulterError,
   updateProduct
 );
-router.delete("/:id", authenticateToken, deleteProduct);
+router.delete("/:id", authenticateToken, checkAdminRole, deleteProduct);
 
 export default router;

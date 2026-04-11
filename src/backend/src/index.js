@@ -7,6 +7,7 @@ import prisma from "./config/database.js";
 import authRoutes from "./routes/authRoutes.js";
 import productRoutes from "./routes/productRoutes.js";
 import orderRoutes from "./routes/orderRoutes.js";
+import cartRoutes from "./routes/cartRoutes.js";
 
 const app = express();
 
@@ -53,27 +54,46 @@ app.get("/api/db-check", async (req, res) => {
   }
 });
 
+// ==================== Environment Variables Check ====================
+app.get("/api/env-check", (req, res) => {
+  try {
+    // Check all required environment variables (without exposing sensitive values)
+    const requiredEnvVars = {
+      PORT: config.PORT,
+      NODE_ENV: config.NODE_ENV,
+      CORS_ORIGIN: config.CORS_ORIGIN,
+      JWT_EXPIRE: process.env.JWT_EXPIRE,
+      DATABASE_URL: process.env.DATABASE_URL ? "✅ Configured" : "❌ Missing",
+      JWT_SECRET: process.env.JWT_SECRET ? "✅ Configured" : "❌ Missing",
+    };
+
+    const allConfigured = Object.values(requiredEnvVars).every(
+      (val) => val !== "❌ Missing"
+    );
+
+    res.status(allConfigured ? 200 : 500).json({
+      success: allConfigured,
+      message: allConfigured
+        ? "✅ All environment variables are properly configured!"
+        : "⚠️ Some environment variables are missing!",
+      environment: requiredEnvVars,
+      timestamp: new Date().toISOString(),
+    });
+  } catch (error) {
+    console.error("❌ Environment check failed:", error.message);
+    res.status(500).json({
+      success: false,
+      message: "❌ Environment check failed!",
+      error: error.message,
+    });
+  }
+});
+
 // ==================== API Routes ====================
 app.use("/api/auth", authRoutes);
 app.use("/api/products", productRoutes);
 app.use("/api/orders", orderRoutes);
-
-// ==================== Error Handling ====================
-app.use((err, req, res, next) => {
-  console.error("Global error:", err);
-  res.status(err.status || 500).json({
-    success: false,
-    message: err.message || "Lỗi máy chủ",
-  });
-});
-
-// ==================== Start Server ====================
-const PORT = config.PORT;
-app.listen(PORT, () => {
-  console.log(`✅ Server đang chạy trên cổng ${PORT}`);
-  console.log(`📍 Môi trường: ${config.NODE_ENV}`);
-  console.log(`🔗 CORS Origin: ${config.CORS_ORIGIN}`);
-});
+app.use("/api/cart", cartRoutes);
 
 // ==================== 404 Handler ====================
 app.use((req, res) => {
@@ -94,22 +114,10 @@ app.use((err, req, res, next) => {
 });
 
 // ==================== Start Server ====================
-app.listen(config.PORT, () => {
-  console.log(`
-╔═══════════════════════════════════════════════════╗
-║         🎨 Unigo - Backend API Server 🎨         ║
-║        Mon Nho Handmade E-commerce Platform      ║
-╚═══════════════════════════════════════════════════╝
+const PORT = config.PORT;
 
-✅ Server is running on: http://localhost:${config.PORT}
-📍 Environment: ${config.NODE_ENV}
-🔗 CORS Origin: ${config.CORS_ORIGIN}
-
-Test the server:
-  - Health Check: GET http://localhost:${config.PORT}/api/health
-  - Database Check: GET http://localhost:${config.PORT}/api/db-check
-
-  `);
+app.listen(PORT, () => {
+  console.log(`✅ Server đang chạy trên cổng ${PORT}`);
+  console.log(`📍 Môi trường: ${config.NODE_ENV}`);
+  console.log(`🔗 CORS Origin: ${config.CORS_ORIGIN}`);
 });
-
-export default app;
