@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import { useLocation } from 'react-router-dom';
 import { FiFilter, FiX } from 'react-icons/fi';
 import useProductStore from '../store/useProductStore';
 import CategorySidebar from '../components/CategorySidebar';
@@ -7,24 +8,24 @@ import ProductModal from '../components/ProductModal';
 import SEO from '../components/common/SEO';
 
 export default function Products() {
+  const location = useLocation();
   const [selectedCategory, setSelectedCategory] = useState('all');
   const [modalOpen, setModalOpen] = useState(false);
   const [selectedProduct, setSelectedProduct] = useState(null);
   const [isMobileSidebarOpen, setIsMobileSidebarOpen] = useState(false);
 
-  // Fetch products từ store
-  const { products, isLoading, error, fetchProducts } = useProductStore();
+  const { products, isLoading, error, fetchProducts, loadMoreProducts, hasMore, isLoadingMore, totalProducts } = useProductStore();
 
-  // Fetch dữ liệu khi component mount (chỉ 1 lần)
-  useEffect(() => {
-    fetchProducts(1, 100); // Lấy tối đa 100 sản phẩm
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
-
-  // Lọc sản phẩm theo danh mục
+  // Lọc sản phẩm theo danh mục — MUST be before any useEffect that reads it
   const filteredProducts = selectedCategory === 'all'
     ? products
     : products.filter(p => p.category === selectedCategory);
+
+  // Refetch mỗi khi route thay đổi (bao gồm khi quay lại từ Admin)
+  useEffect(() => {
+    fetchProducts(1); // dùng pageLimit mặc định từ store (20)
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [location.pathname]);
 
   // Handle mở product modal
   const handleOpenProduct = (product) => {
@@ -47,14 +48,14 @@ export default function Products() {
         description="Khám phá bộ sưu tập sản phẩm handmade chính hãng từ Món Nhỏ. Vòng tay ấn tượng với thiết kế độc quyền."
       />
 
-      <div className="min-h-screen bg-gray-50">
+      <div className="min-h-screen bg-gray-50 pt-16 sm:pt-20">
         {/* Header */}
         <div className="bg-white border-b border-gray-200">
-          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+          <div className="max-w-7xl mx-auto px-3 sm:px-4 md:px-6 lg:px-8 py-4 sm:py-6 lg:py-8">
             <div className="flex items-center justify-between">
               <div>
-                <h1 className="text-4xl font-bold text-gray-900">Sản Phẩm</h1>
-                <p className="text-gray-600 mt-2">
+                <h1 className="text-2xl sm:text-3xl lg:text-4xl font-bold text-gray-900">Sản Phẩm</h1>
+                <p className="text-gray-600 mt-1 sm:mt-2 text-sm sm:text-base">
                   Tổng số: <span className="font-semibold">{products.length}</span> sản phẩm
                 </p>
               </div>
@@ -62,9 +63,9 @@ export default function Products() {
               {/* Mobile filter button */}
               <button
                 onClick={() => setIsMobileSidebarOpen(!isMobileSidebarOpen)}
-                className="md:hidden flex items-center gap-2 px-4 py-2 bg-brand-purple text-white rounded-lg hover:bg-brand-dark transition-colors"
+                className="md:hidden flex items-center gap-2 px-3 sm:px-4 py-2 bg-brand-purple text-white rounded-lg hover:bg-brand-dark transition-colors text-sm min-h-[44px] touch-manipulation"
               >
-                <FiFilter className="w-5 h-5" />
+                <FiFilter className="w-4 h-4 sm:w-5 sm:h-5" />
                 Lọc
               </button>
             </div>
@@ -72,10 +73,10 @@ export default function Products() {
         </div>
 
         {/* Main content */}
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-          <div className="flex gap-8">
+        <div className="max-w-7xl mx-auto px-3 sm:px-4 md:px-6 lg:px-8 py-4 sm:py-6 lg:py-8">
+          <div className="flex flex-col md:flex-row gap-4 md:gap-6 lg:gap-8">
             {/* Sidebar */}
-            <div className="md:w-56 flex-shrink-0">
+            <div className="md:w-48 lg:w-56 flex-shrink-0">
               <CategorySidebar
                 products={products}
                 selectedCategory={selectedCategory}
@@ -110,7 +111,7 @@ export default function Products() {
                   <p className="font-semibold">Có lỗi xảy ra</p>
                   <p className="text-sm mt-1">{error}</p>
                   <button
-                    onClick={() => fetchProducts(1, 100)}
+                    onClick={() => fetchProducts(1)}
                     className="mt-3 text-sm font-semibold text-red-600 hover:text-red-800 underline"
                   >
                     Thử lại
@@ -121,13 +122,13 @@ export default function Products() {
               {/* Product grid */}
               {isLoading ? (
                 // Loading skeleton
-                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+                <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-3 xl:grid-cols-4 gap-3 sm:gap-4 md:gap-5 lg:gap-6">
                   {Array.from({ length: 6 }).map((_, idx) => (
                     <div key={idx} className="bg-gray-200 rounded-3xl aspect-[4/5] animate-pulse" />
                   ))}
                 </div>
               ) : filteredProducts.length > 0 ? (
-                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+                <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-3 xl:grid-cols-4 gap-3 sm:gap-4 md:gap-5 lg:gap-6">
                   {filteredProducts.map((product) => (
                     <ProductCard
                       key={product.id}
@@ -151,6 +152,19 @@ export default function Products() {
                     className="mt-6 px-6 py-3 bg-brand-purple text-white rounded-full font-semibold hover:bg-brand-dark transition-colors"
                   >
                     Xem Tất Cả Sản Phẩm
+                  </button>
+                </div>
+              )}
+
+              {/* Nút Tải Thêm — chỉ hiện khi đang show "tất cả" (không filter) và còn sản phẩm */}
+              {!isLoading && hasMore && selectedCategory === 'all' && (
+                <div className="flex justify-center mt-10">
+                  <button
+                    onClick={() => loadMoreProducts()}
+                    disabled={isLoadingMore}
+                    className="px-10 py-3 bg-brand-purple text-white rounded-full font-semibold hover:bg-brand-dark transition-colors disabled:opacity-60 disabled:cursor-not-allowed shadow-md"
+                  >
+                    {isLoadingMore ? 'Đang tải...' : `Xem thêm (còn ${totalProducts - products.length} sản phẩm)`}
                   </button>
                 </div>
               )}

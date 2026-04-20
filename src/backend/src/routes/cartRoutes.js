@@ -7,6 +7,7 @@ import {
   removeItem,
   updateItemQuantity,
   clearCart,
+  syncCart,
 } from "../controllers/cartController.js";
 import { authenticateToken } from "../middlewares/authMiddleware.js";
 
@@ -16,14 +17,17 @@ const router = express.Router();
 // POST /api/cart - Thêm sản phẩm vào giỏ hàng
 router.post("/", authenticateToken, addToCart);
 
+// POST /api/cart/sync - Đồng bộ giỏ hàng tạm (guest cart)
+router.post("/sync", authenticateToken, syncCart);
+
 // GET /api/cart - Lấy thông tin giỏ hàng
 router.get("/", authenticateToken, getCart);
 
 // PUT /api/cart/items/:itemId - Cập nhật số lượng sản phẩm (không cần userId từ JWT)
-router.put("/items/:itemId", updateItemQuantity);
+router.put("/items/:itemId", authenticateToken, updateItemQuantity);
 
 // DELETE /api/cart/items/:itemId - Xóa sản phẩm khỏi giỏ hàng (không cần userId từ JWT)
-router.delete("/items/:itemId", removeItem);
+router.delete("/items/:itemId", authenticateToken, removeItem);
 
 // DELETE /api/cart/:cartItemId - Xóa sản phẩm khỏi giỏ hàng
 router.delete("/:cartItemId", authenticateToken, removeFromCart);

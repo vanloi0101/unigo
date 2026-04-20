@@ -3,15 +3,13 @@ import cloudinary from "../config/cloudinary.js";
 
 // ==================== HELPER FUNCTION ====================
 // Upload image to Cloudinary from buffer
-const uploadImageToCloudinary = async (fileBuffer, folder = "unigo/products") => {
+const uploadImageToCloudinary = async (fileBuffer, folder = "unigo_products") => {
   try {
     return new Promise((resolve, reject) => {
       const uploadStream = cloudinary.uploader.upload_stream(
         {
           folder: folder,
-          resource_type: "auto",
-          quality: "auto",
-          fetch_format: "auto",
+          resource_type: "image",
         },
         (error, result) => {
           if (error) reject(error);
@@ -33,7 +31,7 @@ export const getAllProducts = async (req, res) => {
       search = "",
       category = "",
       minPrice = 0,
-      maxPrice = 999999999,
+      maxPrice = Number.MAX_SAFE_INTEGER,
       page = 1,
       limit = 50,
     } = req.query;
@@ -43,7 +41,10 @@ export const getAllProducts = async (req, res) => {
     const limitNum = Math.max(1, parseInt(limit) || 50);
     const skip = (pageNum - 1) * limitNum;
     const minPriceNum = parseFloat(minPrice) || 0;
-    const maxPriceNum = parseFloat(maxPrice) || 999999999;
+    // Nếu không truyền maxPrice thì không filter theo giá tối đa
+    const maxPriceNum = req.query.maxPrice !== undefined
+      ? (parseFloat(maxPrice) || Number.MAX_SAFE_INTEGER)
+      : Number.MAX_SAFE_INTEGER;
 
     // Build where clause for filtering
     const where = {
@@ -323,6 +324,9 @@ export const deleteProduct = async (req, res) => {
     // Check if product exists
     const existingProduct = await prisma.product.findUnique({
       where: { id: parseInt(id) },
+      include: {
+        orderItems: { select: { id: true } },
+      },
     });
 
     if (!existingProduct) {
@@ -332,31 +336,58 @@ export const deleteProduct = async (req, res) => {
       });
     }
 
-    // Delete image from Cloudinary if exists
-    if (existingProduct.imageUrl) {
-      try {
-        const urlParts = existingProduct.imageUrl.split("/");
-        const publicId = urlParts.slice(-2).join("/").split(".")[0];
-        await cloudinary.uploader.destroy(publicId);
-      } catch (deleteError) {
-        console.warn("Lỗi xóa ảnh từ Cloudinary:", deleteError.message);
-      }
-    }
+    // Use transaction to delete related records then product
+    await prisma.$transaction(async (tx) => {
+      // 1. Delete related CartItems
+      await tx.cartItem.deleteMany({
+        where: { productId: parseInt(id) },
+      });
 
-    await prisma.product.delete({
-      where: { id: parseInt(id) },
+      // 2. Delete related OrderItems (history kept in orders table, items cleared)
+      await tx.orderItem.deleteMany({
+        where: { productId: parseInt(id) },
+      });
+
+      // 3. Delete image from Cloudinary if exists (non-blocking)
+      if (existingProduct.imageUrl) {
+        try {
+          const urlParts = existingProduct.imageUrl.split("/");
+          const publicId = urlParts.slice(-2).join("/").split(".")[0];
+          await cloudinary.uploader.destroy(publicId);
+          console.log(`✅ Cloudinary image deleted: ${publicId}`);
+        } catch (deleteError) {
+          console.warn(`⚠️ Failed to delete Cloudinary image:`, deleteError.message);
+        }
+      }
+
+      // 4. Delete the product itself
+      await tx.product.delete({
+        where: { id: parseInt(id) },
+      });
     });
 
-    res.status(200).json({
+    return res.status(200).json({
       success: true,
       message: "Sản phẩm xóa thành công",
     });
   } catch (error) {
-    console.error("Delete product error:", error);
-    res.status(500).json({
+    console.error("❌ Delete product error:", error);
+
+    let statusCode = 500;
+    let message = "Lỗi server";
+
+    if (error.code === "P2025") {
+      statusCode = 404;
+      message = "Sản phẩm không tìm thấy";
+    } else if (error.message?.includes("database")) {
+      statusCode = 503;
+      message = "Không thể kết nối cơ sở dữ liệu";
+    }
+
+    return res.status(statusCode).json({
       success: false,
-      message: "Lỗi server",
-      error: error.message,
+      message,
+      error: process.env.NODE_ENV === "development" ? error.message : undefined,
     });
   }
 };

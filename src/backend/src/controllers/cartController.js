@@ -158,6 +158,7 @@ export const updateCartItem = async (req, res) => {
  */
 export const removeItem = async (req, res) => {
   try {
+    const { userId } = req.user;
     const { itemId } = req.params;
 
     // Validation
@@ -168,11 +169,11 @@ export const removeItem = async (req, res) => {
       });
     }
 
-    const result = await cartService.removeCartItem(parseInt(itemId));
+    const result = await cartService.removeFromCart(userId, parseInt(itemId));
 
     res.status(200).json({
       success: true,
-      message: result.message,
+      message: "XÃ³a sáº£n pháº©m khá»i giá» hÃ ng thÃ nh cÃ´ng",
       data: result,
     });
   } catch (error) {
@@ -190,6 +191,7 @@ export const removeItem = async (req, res) => {
  */
 export const updateItemQuantity = async (req, res) => {
   try {
+    const { userId } = req.user;
     const { itemId } = req.params;
     const { quantity } = req.body;
 
@@ -215,7 +217,8 @@ export const updateItemQuantity = async (req, res) => {
       });
     }
 
-    const result = await cartService.updateItemQuantity(
+    const result = await cartService.updateCartItem(
+      userId,
       parseInt(itemId),
       quantity
     );
@@ -253,6 +256,63 @@ export const clearCart = async (req, res) => {
     });
   } catch (error) {
     console.error("Clear cart error:", error);
+    res.status(500).json({
+      success: false,
+      message: error.message || "Lỗi server",
+    });
+  }
+};
+
+/**
+ * Đồng bộ giỏ hàng tạm (guest cart) với giỏ hàng của user
+ * POST /api/cart/sync
+ * Body: { items: [{ productId, quantity }] }
+ */
+export const syncCart = async (req, res) => {
+  try {
+    const { userId } = req.user; // Từ JWT middleware
+    const { items } = req.body;
+
+    // Validation
+    if (!items || !Array.isArray(items)) {
+      return res.status(400).json({
+        success: false,
+        message: "items phải là một mảng",
+      });
+    }
+
+    if (items.length === 0) {
+      return res.status(400).json({
+        success: false,
+        message: "Danh sách sản phẩm không được rỗng",
+      });
+    }
+
+    // Validate each item
+    for (const item of items) {
+      if (!item.productId || typeof item.productId !== 'number') {
+        return res.status(400).json({
+          success: false,
+          message: "productId phải là số",
+        });
+      }
+      if (!item.quantity || typeof item.quantity !== 'number' || item.quantity <= 0) {
+        return res.status(400).json({
+          success: false,
+          message: "quantity phải là số lớn hơn 0",
+        });
+      }
+    }
+
+    const cart = await cartService.syncGuestCart(userId, items);
+
+    res.status(200).json({
+      success: true,
+      message: `Đã đồng bộ ${items.length} sản phẩm vào giỏ hàng`,
+      data: cart,
+    });
+  } catch (error) {
+    console.error("Sync cart error:", error);
     res.status(500).json({
       success: false,
       message: error.message || "Lỗi server",

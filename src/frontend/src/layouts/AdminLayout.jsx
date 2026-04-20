@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { Outlet, Link } from 'react-router-dom';
-import { FaHome, FaBox, FaPenNib, FaCog, FaBars, FaTimes, FaBell, FaUserCircle } from 'react-icons/fa';
+import { FaHome, FaBox, FaPenNib, FaCog, FaBars, FaTimes, FaBell, FaUserCircle, FaImage } from 'react-icons/fa';
 
 export default function AdminLayout() {
   const [sidebarOpen, setSidebarOpen] = useState(true);
@@ -8,6 +8,7 @@ export default function AdminLayout() {
   const menuItems = [
     { label: 'Tổng quan', icon: FaHome, path: '/admin' },
     { label: 'Sản phẩm', icon: FaBox, path: '/admin/products' },
+    { label: 'Banner', icon: FaImage, path: '/admin/banner' },
     { label: 'Bài viết', icon: FaPenNib, path: '/admin/posts' },
     { label: 'Cài đặt', icon: FaCog, path: '/admin/settings' },
   ];

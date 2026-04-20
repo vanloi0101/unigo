@@ -5,6 +5,7 @@ import ProductSection from '../components/ProductSection';
 import ProductModal from '../components/ProductModal';
 import About from '../components/About';
 import SocialFeed from '../components/SocialFeed';
+import BlogPreview from '../components/BlogPreview';
 import useFadeUp from '../hooks/useFadeUp';
 import SEO from '../components/common/SEO'; // <--- Thêm Component SEO
 
@@ -36,6 +37,7 @@ export default function Home() {
       <TrustBadges />
       <ProductSection onOpen={handleOpen} />
       <About />
+      <BlogPreview />
       <SocialFeed />
       <ProductModal open={modalOpen} product={selectedProduct} onClose={handleClose} />
     </>

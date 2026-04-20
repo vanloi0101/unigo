@@ -13,10 +13,9 @@ const router = express.Router();
 // Protected routes
 router.post("/", authenticateToken, createOrder);
 router.get("/", authenticateToken, getUserOrders);
-router.get("/:id", authenticateToken, getOrderById);
-
 // Admin only routes
 router.get("/admin/all", authenticateToken, getAllOrders);
 router.put("/:id/status", authenticateToken, updateOrderStatus);
+router.get("/:id", authenticateToken, getOrderById);
 
 export default router;

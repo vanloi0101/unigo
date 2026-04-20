@@ -6,7 +6,7 @@ export const config = {
   PORT: process.env.PORT || 5000,
   NODE_ENV: process.env.NODE_ENV || "development",
   CORS_ORIGIN: process.env.CORS_ORIGIN || "http://localhost:5173",
-  JWT_SECRET: process.env.JWT_SECRET || "your_jwt_secret_key",
+  JWT_SECRET: process.env.JWT_SECRET, // No fallback - must be set!
   JWT_EXPIRE: process.env.JWT_EXPIRE || "7d",
   DATABASE_URL: process.env.DATABASE_URL,
   CLOUDINARY_CLOUD_NAME: process.env.CLOUDINARY_CLOUD_NAME,
@@ -17,6 +17,13 @@ export const config = {
 // Validate required environment variables
 if (!config.DATABASE_URL) {
   console.error("❌ DATABASE_URL is not defined in .env file");
+  process.exit(1);
+}
+
+// CRITICAL: JWT_SECRET must be set in production
+if (!config.JWT_SECRET) {
+  console.error("❌ JWT_SECRET is not defined in .env file");
+  console.error("   This is REQUIRED for security. Generate one with: openssl rand -hex 32");
   process.exit(1);
 }
 

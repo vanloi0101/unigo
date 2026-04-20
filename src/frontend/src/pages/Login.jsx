@@ -7,6 +7,7 @@ import useAuthStore from '../store/useAuthStore';
 import axiosClient from '../api/axiosClient';
 import toast from 'react-hot-toast';
 import { FaGem, FaEnvelope, FaLock, FaSignInAlt } from 'react-icons/fa';
+import { useCart } from '../contexts/CartContext';
 
 // Schema validation
 const loginSchema = z.object({
@@ -17,15 +18,21 @@ const loginSchema = z.object({
 export default function Login() {
   const navigate = useNavigate();
   const location = useLocation();
-  const { login, isAuthenticated } = useAuthStore();
+  const { login, isAuthenticated, user } = useAuthStore();
+  const { checkAndShowSyncModal, fetchCartCount } = useCart();
   
   useEffect(() => {
     if (isAuthenticated) {
-      navigate('/admin', { replace: true });
+      // Redirect dựa trên role
+      if (user?.role === 'ADMIN') {
+        navigate('/admin', { replace: true });
+      } else {
+        navigate('/', { replace: true });
+      }
     }
-  }, [isAuthenticated, navigate]);
+  }, [isAuthenticated, user, navigate]);
 
-  const from = location.state?.from?.pathname || '/admin';
+  const from = location.state?.from?.pathname || '/';
 
   const {
     register,
@@ -34,8 +41,8 @@ export default function Login() {
   } = useForm({
     resolver: zodResolver(loginSchema),
     defaultValues: {
-      email: 'admin@unigo.com',
-      password: 'admin123'
+      email: '',
+      password: ''
     }
   });
 
@@ -48,9 +55,24 @@ export default function Login() {
 
       // Response structure: { status, message, data: { user, token } }
       if (response?.data?.user && response?.data?.token) {
-        login(response.data.user, response.data.token);
+        const loggedInUser = response.data.user;
+        login(loggedInUser, response.data.token);
         toast.success("✅ Đăng nhập thành công!");
-        navigate(from, { replace: true });
+        
+        // Fetch cart count after login
+        await fetchCartCount();
+        
+        // Check if there are guest cart items and show sync modal
+        checkAndShowSyncModal();
+        
+        // Redirect dựa trên role: ADMIN -> /admin, CUSTOMER -> trang chủ hoặc trang trước đó
+        if (loggedInUser.role === 'ADMIN') {
+          navigate('/admin', { replace: true });
+        } else {
+          // Customer: nếu đang cố vào admin thì về trang chủ, còn lại về trang trước đó
+          const redirectTo = from.startsWith('/admin') ? '/' : from;
+          navigate(redirectTo, { replace: true });
+        }
       } else {
         throw new Error('Invalid login response');
       }
@@ -87,34 +109,34 @@ export default function Login() {
 
         {/* Title */}
         <h1 className="mt-6 text-center text-4xl font-serif font-bold text-transparent bg-clip-text bg-gradient-to-r from-brand-purple to-brand-pink">
-          Món Nhỏ Admin
+          Đăng nhập
         </h1>
         <p className="mt-3 text-center text-sm text-gray-600 font-medium">
-          Quản lý sản phẩm và đơn hàng của bạn
+          Đăng nhập để mua sắm và quản lý đơn hàng
         </p>
       </div>
 
       {/* Form Container */}
       <div className="mt-8 sm:mx-auto sm:w-full sm:max-w-md relative z-10 w-full">
         <div className="bg-white/95 backdrop-blur-xl py-8 px-6 shadow-2xl rounded-2xl border border-white/40">
-          <form className="space-y-5" onSubmit={handleSubmit(onSubmit)}>
+          <form className="space-y-5" onSubmit={handleSubmit(onSubmit)} autoComplete="off">
             
             {/* Email Field */}
             <div>
               <label className="block text-sm font-semibold text-gray-800 mb-2">
                 <FaEnvelope className="inline mr-2 text-brand-purple" />
-                Email Admin
+                Email
               </label>
               <input
                 type="email"
                 {...register('email')}
-                autoComplete="email"
+                autoComplete="new-email"
                 className={`appearance-none block w-full px-4 py-3 border-2 rounded-lg transition-all placeholder-gray-400 focus:outline-none font-medium text-gray-800 ${
                   errors.email 
                     ? 'border-red-400 bg-red-50 focus:ring-2 focus:ring-red-300' 
                     : 'border-gray-200 bg-gray-50 focus:ring-2 focus:ring-brand-purple focus:border-brand-purple hover:border-purple-300'
                 }`}
-                placeholder="admin@unigo.com"
+                placeholder="Nhập email của bạn"
                 disabled={isSubmitting}
               />
               {errors.email && (
@@ -133,7 +155,7 @@ export default function Login() {
               <input
                 type="password"
                 {...register('password')}
-                autoComplete="current-password"
+                autoComplete="new-password"
                 className={`appearance-none block w-full px-4 py-3 border-2 rounded-lg transition-all placeholder-gray-400 focus:outline-none font-medium text-gray-800 ${
                   errors.password 
                     ? 'border-red-400 bg-red-50 focus:ring-2 focus:ring-red-300' 
@@ -171,29 +193,20 @@ export default function Login() {
                 ) : (
                   <>
                     <FaSignInAlt className="text-lg" />
-                    <span>Đăng Nhập Admin</span>
+                    <span>Đăng Nhập</span>
                   </>
                 )}
               </button>
             </div>
 
-            {/* Divider */}
-            <div className="relative">
-              <div className="absolute inset-0 flex items-center">
-                <div className="w-full border-t border-gray-200"></div>
-              </div>
-              <div className="relative flex justify-center text-sm">
-                <span className="px-2 bg-white text-gray-500">Hoặc</span>
-              </div>
-            </div>
-
-            {/* Demo Credentials */}
-            <div className="bg-gradient-to-br from-purple-50 to-pink-50 border border-purple-100 rounded-lg p-4">
-              <p className="text-xs font-semibold text-gray-700 mb-2">🔓 Tài khoản Demo (sẵn có):</p>
-              <div className="space-y-1 text-xs text-gray-600 font-medium">
-                <p><span className="text-brand-purple font-bold">Email:</span> admin@unigo.com</p>
-                <p><span className="text-brand-purple font-bold">Password:</span> admin123</p>
-              </div>
+            {/* Register Link */}
+            <div className="text-center">
+              <p className="text-sm text-gray-600">
+                Chưa có tài khoản?{' '}
+                <Link to="/register" className="text-brand-purple font-semibold hover:text-brand-pink transition-colors">
+                  Đăng ký ngay
+                </Link>
+              </p>
             </div>
           </form>
 

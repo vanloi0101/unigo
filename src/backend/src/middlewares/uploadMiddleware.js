@@ -30,16 +30,25 @@ const upload = multer({
   },
 });
 
-// Middleware to handle single file upload
+// Middleware to handle single file upload (for product image)
 export const uploadSingle = upload.single("image");
 
-// Middleware to handle multiple file uploads
+// Middleware to handle single thumbnail upload (for blog posts)
+export const uploadThumbnail = upload.single("thumbnail");
+
+// Middleware to handle multiple file uploads (for blog post content images)
 export const uploadMultiple = upload.array("images", 10);
+
+// Middleware to handle both thumbnail and content images for blog posts
+export const uploadPostImages = upload.fields([
+  { name: 'thumbnail', maxCount: 1 },
+  { name: 'contentImages', maxCount: 10 }
+]);
 
 // Custom error handling middleware for multer errors
 export const handleMulterError = (err, req, res, next) => {
   if (err instanceof multer.MulterError) {
-    if (err.code === "FILE_TOO_LARGE") {
+    if (err.code === "LIMIT_FILE_SIZE") {
       return res.status(400).json({
         success: false,
         message: "Kích thước tệp quá lớn (tối đa 5MB)",
@@ -48,7 +57,13 @@ export const handleMulterError = (err, req, res, next) => {
     if (err.code === "LIMIT_FILE_COUNT") {
       return res.status(400).json({
         success: false,
-        message: "Số lượng tệp vượt quá giới hạn",
+        message: "Số lượng tệp vượt quá giới hạn (tối đa 10 ảnh)",
+      });
+    }
+    if (err.code === "LIMIT_UNEXPECTED_FILE") {
+      return res.status(400).json({
+        success: false,
+        message: "Trường upload không hợp lệ",
       });
     }
   }

@@ -3,24 +3,16 @@ import axiosClient from '../api/axiosClient';
 
 const fetchProducts = async () => {
   try {
-    // HTTP GET request tới backend API
-    // axiosClient.interceptors.response đã trả về response.data trực tiếp
-    // Nên response ở đây là: { success, message, data: { products: [...], pagination: {...} }, statusCode }
+    // axiosClient interceptor returns response.data directly
+    // API shape: { success, products: [...], pagination: {...} }
     const response = await axiosClient.get('/products');
-
-    // response đã là response.data từ interceptor, nên lấy response.data.products
-    const products = response.data?.products;
-    
+    const products = response.products;
     if (Array.isArray(products)) {
       return products;
     }
-
-    console.warn('Unexpected API response structure:', response);
-    console.warn('Expected: { data: { products: [...], pagination: {...} } }');
     return [];
   } catch (error) {
-    console.error('Failed to fetch products:', error.message);
-    throw error; // Cho React Query xử lý lỗi
+    throw error;
   }
 };
 

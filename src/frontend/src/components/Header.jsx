@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
-import { FaGem, FaBars, FaTimes, FaUser, FaSignOutAlt, FaShoppingCart } from 'react-icons/fa';
-import { Link, useNavigate } from 'react-router-dom';
+import { FaGem, FaBars, FaTimes, FaUser, FaSignOutAlt, FaShoppingCart, FaQuestionCircle } from 'react-icons/fa';
+import { Link, useNavigate, useLocation } from 'react-router-dom';
 import useAuthStore from '../store/useAuthStore';
 import { useCart } from '../contexts/CartContext';
 
@@ -9,8 +9,10 @@ export default function Header() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [bounceKey, setBounceKey] = useState(0);
   const { isAuthenticated, user, logout } = useAuthStore();
-  const { cartCount, fetchCartCount } = useCart();
+  const { cartCount, fetchCartCount, clearCartState } = useCart();
   const navigate = useNavigate();
+  const location = useLocation();
+  const isHomePage = location.pathname === '/';
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 50);
@@ -30,6 +32,8 @@ export default function Header() {
 
   const handleLogout = () => {
     logout();
+    // Clear API cart state but keep guest cart in localStorage
+    clearCartState();
     navigate('/');
     setMobileMenuOpen(false);
   };
@@ -37,15 +41,22 @@ export default function Header() {
   return (
     <header className={`fixed w-full top-0 z-40 transition-all duration-300 ${scrolled ? 'shadow-md glass-nav py-3' : 'bg-transparent py-5'}`}>
       <div className="max-w-7xl mx-auto px-6 flex justify-between items-center">
-        <Link href="#" className="font-serif font-bold text-2xl text-brand-purple flex items-center gap-2 hover:text-brand-pink transition-colors">
+        <Link to="/" className="font-serif font-bold text-2xl text-brand-purple flex items-center gap-2 hover:text-brand-pink transition-colors">
           <FaGem className="text-xl text-brand-pink" /> Món Nhỏ
         </Link>
 
-        <nav className="hidden md:flex gap-8 font-medium text-brand-dark">
-          <a href="#hero" className="hover:text-brand-pink transition-colors">Trang chủ</a>
-          <a href="#about" className="hover:text-brand-pink transition-colors">Về Mận</a>
-          <a href="#products" className="hover:text-brand-pink transition-colors">Nổi bật</a>
+        <nav className="hidden md:flex items-center gap-8 font-medium text-brand-dark">
+          <Link to="/" className="hover:text-brand-pink transition-colors">Trang chủ</Link>
+          {isHomePage ? (
+            <a href="#about" className="hover:text-brand-pink transition-colors">Về Mận</a>
+          ) : (
+            <Link to="/#about" className="hover:text-brand-pink transition-colors">Về Mận</Link>
+          )}
           <Link to="/products" className="hover:text-brand-pink transition-colors">Sản Phẩm</Link>
+          <Link to="/tin-tuc" className="hover:text-brand-pink transition-colors">Tin tức</Link>
+          <Link to="/help" className="hover:text-brand-pink transition-colors flex items-center gap-1">
+            <FaQuestionCircle className="text-sm" /> Hỗ trợ
+          </Link>
         </nav>
 
         <div className="hidden md:flex items-center gap-3">
@@ -107,14 +118,21 @@ export default function Header() {
       {/* Mobile Menu */}
       {mobileMenuOpen && (
         <div className="md:hidden bg-white shadow-lg mt-2 mx-6 rounded-lg p-4 space-y-3">
-          <a href="#hero" className="block text-brand-dark hover:text-brand-pink font-medium py-2">Trang chủ</a>
-          <a href="#about" className="block text-brand-dark hover:text-brand-pink font-medium py-2">Về Mận</a>
-          <a href="#products" className="block text-brand-dark hover:text-brand-pink font-medium py-2">Nổi bật</a>
-          <Link to="/products" className="block text-brand-dark hover:text-brand-pink font-medium py-2">Sản Phẩm</Link>
-          <Link to="/cart" className="relative block text-brand-purple hover:text-brand-dark font-medium py-2 flex items-center gap-2">
+          <Link to="/" onClick={() => setMobileMenuOpen(false)} className="block text-brand-dark hover:text-brand-pink font-medium py-2">Trang chủ</Link>
+          {isHomePage ? (
+            <a href="#about" onClick={() => setMobileMenuOpen(false)} className="block text-brand-dark hover:text-brand-pink font-medium py-2">Về Mận</a>
+          ) : (
+            <Link to="/#about" onClick={() => setMobileMenuOpen(false)} className="block text-brand-dark hover:text-brand-pink font-medium py-2">Về Mận</Link>
+          )}
+          <Link to="/products" onClick={() => setMobileMenuOpen(false)} className="block text-brand-dark hover:text-brand-pink font-medium py-2">Sản Phẩm</Link>
+          <Link to="/tin-tuc" onClick={() => setMobileMenuOpen(false)} className="block text-brand-dark hover:text-brand-pink font-medium py-2">Tin tức</Link>
+          <Link to="/help" onClick={() => setMobileMenuOpen(false)} className="block text-brand-dark hover:text-brand-pink font-medium py-2 flex items-center gap-2">
+            <FaQuestionCircle className="text-sm" /> Hỗ trợ
+          </Link>
+          <Link to="/cart" onClick={() => setMobileMenuOpen(false)} className="relative block text-brand-purple hover:text-brand-dark font-medium py-2 flex items-center gap-2">
             <FaShoppingCart /> Giỏ hàng
             {cartCount > 0 && (
-              <span className="bg-red-500 text-white text-xs font-bold w-5 h-5 rounded-full flex items-center justify-center text-xs ml-auto">
+              <span className="bg-red-500 text-white text-xs font-bold w-5 h-5 rounded-full flex items-center justify-center ml-auto">
                 {cartCount}
               </span>
             )}

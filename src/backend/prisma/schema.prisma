@@ -1,5 +1,6 @@
 generator client {
-  provider = "prisma-client-js"
+  provider      = "prisma-client-js"
+  binaryTargets = ["native", "windows"]
 }
 
 datasource db {
@@ -109,4 +110,143 @@ enum PaymentStatus {
   PENDING
   COMPLETED
   FAILED
+}
+
+// ==================== BANNER MANAGEMENT ====================
+model BannerContent {
+  id          Int      @id @default(autoincrement())
+  title       String
+  subtitle    String?
+  description String?
+  badge       String?
+  buttonText  String?
+  buttonLink  String?
+  button2Text String?
+  button2Link String?
+  isActive    Boolean  @default(true)
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  @@map("banner_contents")
+}
+
+model BannerImage {
+  id        Int      @id @default(autoincrement())
+  imageUrl  String
+  caption   String?
+  sortOrder Int      @default(0)
+  isActive  Boolean  @default(true)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@map("banner_images")
+}
+
+// ==================== BLOG/NEWS MANAGEMENT ====================
+
+// Author - Tác giả viết bài
+model Author {
+  id        Int      @id @default(autoincrement())
+  name      String
+  slug      String   @unique
+  email     String?  @unique
+  avatar    String?
+  bio       String?  @db.Text
+  website   String?
+  facebook  String?
+  twitter   String?
+  isActive  Boolean  @default(true)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  posts     Post[]
+
+  @@map("authors")
+}
+
+// CategoryNews - Danh mục tin tức (hỗ trợ cây phân cấp)
+model CategoryNews {
+  id          Int            @id @default(autoincrement())
+  name        String
+  slug        String         @unique
+  description String?        @db.Text
+  thumbnail   String?
+  sortOrder   Int            @default(0)
+  isActive    Boolean        @default(true)
+  parentId    Int?
+  parent      CategoryNews?  @relation("CategoryHierarchy", fields: [parentId], references: [id], onDelete: SetNull)
+  children    CategoryNews[] @relation("CategoryHierarchy")
+  posts       Post[]
+  createdAt   DateTime       @default(now())
+  updatedAt   DateTime       @updatedAt
+
+  @@map("category_news")
+}
+
+// Post - Bài viết tin tức/blog
+model Post {
+  id                  Int           @id @default(autoincrement())
+  title               String
+  slug                String        @unique
+  thumbnail           String?
+  shortDescription    String?       @db.Text
+  content             String        @db.Text
+  
+  // SEO fields
+  metaTitle           String?
+  metaDescription     String?       @db.Text
+  metaKeywords        String?
+  
+  // Open Graph (optional)
+  ogTitle             String?
+  ogDescription       String?       @db.Text
+  ogImage             String?
+  
+  // Statistics
+  views               Int           @default(0)
+  wordCount           Int           @default(0)
+  estimatedReadingTime Int          @default(0) // in minutes
+  
+  // Status & Features
+  status              PostStatus    @default(DRAFT)
+  isFeatured          Boolean       @default(false)
+  allowComments       Boolean       @default(true)
+  
+  // Timestamps
+  publishedAt         DateTime?
+  createdAt           DateTime      @default(now())
+  updatedAt           DateTime      @updatedAt
+  
+  // Relations
+  categoryId          Int?
+  category            CategoryNews? @relation(fields: [categoryId], references: [id], onDelete: SetNull)
+  authorId            Int?
+  author              Author?       @relation(fields: [authorId], references: [id], onDelete: SetNull)
+  images              PostImage[]
+
+  @@index([status, publishedAt])
+  @@index([categoryId])
+  @@index([authorId])
+  @@index([isFeatured])
+  @@map("posts")
+}
+
+// PostImage - Ảnh gallery cho bài viết
+model PostImage {
+  id        Int      @id @default(autoincrement())
+  postId    Int
+  imageUrl  String
+  caption   String?
+  sortOrder Int      @default(0)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  post      Post     @relation(fields: [postId], references: [id], onDelete: Cascade)
+
+  @@index([postId])
+  @@map("post_images")
+}
+
+enum PostStatus {
+  DRAFT
+  PUBLISHED
+  ARCHIVED
 }

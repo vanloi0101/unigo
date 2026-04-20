@@ -1,20 +1,22 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 
 export default function Footer() {
   return (
     <footer className="bg-[#2a2432] text-gray-300 pt-20 pb-10 px-6">
       <div className="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-4 gap-12 mb-16">
         <div className="md:col-span-2">
-          <a href="#" className="font-serif font-bold text-3xl text-white mb-6 block">Món Nhỏ ♡</a>
+          <Link to="/" className="font-serif font-bold text-3xl text-white mb-6 block hover:text-brand-pink transition-colors">Món Nhỏ ♡</Link>
           <p className="text-gray-400 max-w-sm mb-8 leading-relaxed">Thương hiệu trang sức handmade dành riêng cho thế hệ trẻ. Mang thiết kế thanh lịch, chất liệu bền bỉ và giá thành hợp lý.</p>
         </div>
         <div>
-          <h4 className="text-white font-bold text-lg mb-6 uppercase tracking-wider text-sm">Chính sách</h4>
+          <h4 className="text-white font-bold text-lg mb-6 uppercase tracking-wider text-sm">Khám phá</h4>
           <ul className="space-y-4 text-gray-400 font-medium">
-            <li><a href="#" className="hover:text-white transition-colors">Hướng dẫn đo size</a></li>
-            <li><a href="#" className="hover:text-white transition-colors">Chính sách vận chuyển</a></li>
-            <li><a href="#" className="hover:text-white transition-colors">Chính sách đổi trả</a></li>
-            <li><a href="#" className="hover:text-white transition-colors">Bảo hành sản phẩm</a></li>
+            <li><Link to="/products" className="hover:text-white transition-colors">Sản phẩm</Link></li>
+            <li><Link to="/tin-tuc" className="hover:text-white transition-colors">Tin tức & Blog</Link></li>
+            <li><Link to="/help" className="hover:text-white transition-colors">Hướng dẫn đo size</Link></li>
+            <li><Link to="/help" className="hover:text-white transition-colors">Chính sách vận chuyển</Link></li>
+            <li><Link to="/help" className="hover:text-white transition-colors">Chính sách đổi trả</Link></li>
           </ul>
         </div>
         <div>

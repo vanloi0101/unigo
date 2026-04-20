@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useRef } from 'react';
 import { FaEdit, FaTrash, FaPlus } from 'react-icons/fa';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
@@ -20,12 +20,18 @@ export default function AdminProducts() {
   const {
     products,
     isLoading,
+    isLoadingMore,
+    hasMore,
+    totalProducts,
     error,
     fetchProducts,
+    loadMoreProducts,
     createProduct,
     updateProduct,
     deleteProduct,
   } = useProductStore();
+
+  const hasFetchedRef = useRef(false);
 
   const [showForm, setShowForm] = useState(false);
   const [editingId, setEditingId] = useState(null);
@@ -41,18 +47,22 @@ export default function AdminProducts() {
     resolver: zodResolver(productSchema),
   });
 
-  // Fetch products on component mount
+  // Fetch products once on mount
   useEffect(() => {
-    fetchProducts(1, 100); // Lấy tối đa 100 sản phẩm
+    if (hasFetchedRef.current) return;
+    hasFetchedRef.current = true;
+    fetchProducts(1); // dùng pageLimit mặc định từ store (20)
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   // Handle form submission
   const onSubmit = async (data) => {
     try {
-      // If a file was provided, build FormData to send multipart/form-data
-      let payload = data;
-      const file = data.imageFile && data.imageFile.length ? data.imageFile[0] : null;
+      // Strip the file input from the plain JSON payload
+      const { imageFile: _imageFile, ...jsonData } = data;
+      const file = _imageFile && _imageFile.length ? _imageFile[0] : null;
+
+      let payload = jsonData; // plain JSON (no FileList noise)
 
       if (file) {
         const formData = new FormData();
@@ -61,22 +71,22 @@ export default function AdminProducts() {
         formData.append('price', String(data.price));
         formData.append('stock', String(data.stock || 0));
         formData.append('category', data.category || '');
-        // Multer middleware expects field name 'image'
+        // Multer expects field name 'image'
         formData.append('image', file);
         payload = formData;
       }
 
       if (editingId) {
-        await updateProduct(editingId, payload);
+        const updated = await updateProduct(editingId, payload);
+        if (!updated) throw new Error('Cập nhật sản phẩm thất bại');
         toast.success('Cập nhật sản phẩm thành công!');
       } else {
-        await createProduct(payload);
+        const created = await createProduct(payload);
+        if (!created) throw new Error('Tạo sản phẩm thất bại');
         toast.success('Thêm sản phẩm thành công!');
       }
 
-      // Refetch danh sách sản phẩm sau khi tạo/cập nhật
-      await fetchProducts(1, 100);
-
+      // Store already updated locally — no refetch needed
       reset();
       setShowForm(false);
       setEditingId(null);
@@ -96,8 +106,11 @@ export default function AdminProducts() {
       const success = await deleteProduct(productId);
       if (success) {
         toast.success('Xóa sản phẩm thành công!');
-        // Refetch danh sách sản phẩm sau khi xóa
-        await fetchProducts(1, 100);
+        // Store filters state locally — no refetch needed
+      } else {
+        // Get error message from store's error state
+        const errorMsg = useProductStore.getState().error || 'Không thể xóa sản phẩm, vui lòng thử lại';
+        toast.error(errorMsg);
       }
     }
   };
@@ -121,7 +134,12 @@ export default function AdminProducts() {
       <div className="flex items-center justify-between">
         <div>
           <h1 className="text-3xl font-bold text-gray-800">Quản Lý Sản Phẩm</h1>
-          <p className="text-gray-600 mt-2">Tổng cộng: {products.length} sản phẩm</p>
+          <p className="text-gray-600 mt-2">
+            Hiển thị: <span className="font-semibold">{products.length}</span>
+            {totalProducts > products.length && (
+              <span className="text-gray-400"> / {totalProducts} sản phẩm</span>
+            )}
+          </p>
         </div>
         <button
           onClick={() => {
@@ -276,6 +294,7 @@ export default function AdminProducts() {
         ) : error ? (
           <div className="p-8 text-center text-red-500">{error}</div>
         ) : (
+          <>
           <div className="overflow-x-auto">
             <table className="w-full">
               <thead className="bg-gray-50 border-b border-gray-200">
@@ -362,6 +381,20 @@ export default function AdminProducts() {
               </div>
             )}
           </div>
+
+          {/* Nút tải thêm — chỉ hiện khi không có filter và còn sản phẩm chưa load */}
+          {!searchQuery && !categoryFilter && hasMore && (
+            <div className="flex justify-center pt-4">
+              <button
+                onClick={() => loadMoreProducts()}
+                disabled={isLoadingMore}
+                className="px-8 py-3 bg-brand-purple text-white rounded-lg hover:bg-purple-700 transition font-semibold disabled:opacity-60 disabled:cursor-not-allowed"
+              >
+                {isLoadingMore ? 'Đang tải...' : `Tải thêm (còn ${totalProducts - products.length} sản phẩm)`}
+              </button>
+            </div>
+          )}
+          </>
         )}
       </div>
     </div>
