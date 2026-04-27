@@ -20,42 +20,48 @@ export default function ProductSection({ onOpen }) {
   return (
     <section id="products" className="py-12 sm:py-16 md:py-20 lg:py-24 px-3 sm:px-4 md:px-6 relative">
       <div className="max-w-7xl mx-auto">
-        {/* Header */}
-        <div className="text-center mb-8 sm:mb-12 lg:mb-16 fade-up">
-          <span className="inline-block text-[10px] sm:text-xs font-semibold tracking-widest text-brand-purple uppercase mb-2 sm:mb-3 bg-purple-50 px-3 sm:px-4 py-1 sm:py-1.5 rounded-full">
-            Bộ sưu tập
-          </span>
-          <h2 className="font-serif text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold text-brand-dark mb-2 sm:mb-4">
-            Sản Phẩm Nổi Bật
-          </h2>
-          <p className="text-gray-500 max-w-2xl mx-auto text-sm sm:text-base lg:text-lg px-2">
-            Khám phá những mẫu vòng tay được yêu thích nhất. Thiết kế độc quyền từ Món Nhỏ.
-          </p>
+        {/* Header — left-aligned with product count right */}
+        <div className="flex flex-col sm:flex-row sm:items-end sm:justify-between mb-8 sm:mb-12 lg:mb-16 fade-up gap-4">
+          <div>
+            <span className="text-[10px] sm:text-xs font-semibold tracking-widest text-brand-purple uppercase mb-2 sm:mb-3 block">
+              Bộ sưu tập
+            </span>
+            <h2 className="font-serif text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold text-brand-dark">
+              Sản Phẩm Nổi Bật
+            </h2>
+          </div>
+          {!isLoading && !error && totalProducts > 0 && (
+            <p className="text-brand-purple/60 text-sm sm:text-base shrink-0">
+              {totalProducts} sản phẩm
+            </p>
+          )}
         </div>
 
-        {/* Grid */}
+        {/* Grid — first card featured (2-col span) */}
         <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3 sm:gap-4 md:gap-6 lg:gap-8">
           {isLoading ? (
             Array.from({ length: 8 }).map((_, i) => <ProductSkeleton key={i} />)
           ) : error ? (
             <div className="col-span-full text-center py-16">
-              <div className="text-5xl mb-4">😞</div>
               <h3 className="text-xl font-semibold text-brand-dark mb-2">Không thể tải sản phẩm</h3>
-              <p className="text-gray-500 mb-6">{error}</p>
+              <p className="text-brand-purple/60 mb-6">{error}</p>
               <button
                 onClick={() => fetchProducts(1, 8)}
                 className="bg-brand-purple text-white px-6 py-3 rounded-full font-semibold hover:bg-brand-dark transition-colors"
               >
-                🔄 Thử lại
+                Thử lại
               </button>
             </div>
           ) : preview.length > 0 ? (
-            preview.map((p) => (
-              <ProductCard key={p.id} product={p} onOpen={onOpen} />
+            preview.map((p, index) => (
+              <div key={p.id} className={index === 0 ? 'col-span-2' : ''}>
+                <ProductCard product={p} onOpen={onOpen} featured={index === 0} />
+              </div>
             ))
           ) : (
-            <div className="col-span-full text-center text-gray-500 py-10">
-              Chưa có sản phẩm nào.
+            <div className="col-span-full py-16 text-center">
+              <p className="font-serif text-2xl text-brand-dark mb-2">Chưa có sản phẩm nào.</p>
+              <p className="text-brand-purple/60 text-sm">Ghé lại sớm nhé — Mận đang làm thêm.</p>
             </div>
           )}
         </div>

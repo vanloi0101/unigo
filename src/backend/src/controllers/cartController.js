@@ -51,9 +51,9 @@ export const getCart = async (req, res) => {
     const cart = await cartService.getCart(userId);
 
     if (!cart) {
-      return res.status(404).json({
-        success: false,
-        message: "Giỏ hàng không tồn tại",
+      return res.status(200).json({
+        success: true,
+        data: { items: [], totalPrice: 0, totalItems: 0 },
       });
     }
 

@@ -1,45 +1,88 @@
-import React, { useEffect, useState } from 'react';
-import { useLocation } from 'react-router-dom';
-import { FiFilter, FiX } from 'react-icons/fi';
+import React, { useEffect, useState, useCallback } from 'react';
+import { FiFilter, FiX, FiChevronDown } from 'react-icons/fi';
 import useProductStore from '../store/useProductStore';
-import CategorySidebar from '../components/CategorySidebar';
+import { useProductFilters } from '../hooks/useProductFilters';
+import { useDebounce } from '../hooks/useDebounce';
+import FilterSidebar from '../components/FilterSidebar';
 import ProductCard from '../components/ProductCard';
 import ProductModal from '../components/ProductModal';
+import ProductSkeleton from '../components/common/ProductSkeleton';
+import EmptyState from '../components/common/EmptyState';
 import SEO from '../components/common/SEO';
 
+const MAX_PRICE = 2000000;
+
 export default function Products() {
-  const location = useLocation();
-  const [selectedCategory, setSelectedCategory] = useState('all');
+  const { filters, setCategory, setSearch, setPriceRange, setSort, clearFilters, setPage } = useProductFilters();
+  const [isMobileSidebarOpen, setIsMobileSidebarOpen] = useState(false);
   const [modalOpen, setModalOpen] = useState(false);
   const [selectedProduct, setSelectedProduct] = useState(null);
-  const [isMobileSidebarOpen, setIsMobileSidebarOpen] = useState(false);
+
+  // Local search input — debounced before hitting URL/API
+  const [searchInput, setSearchInput] = useState(filters.search || '');
+  const debouncedSearch = useDebounce(searchInput, 400);
 
   const { products, isLoading, error, fetchProducts, loadMoreProducts, hasMore, isLoadingMore, totalProducts } = useProductStore();
 
-  // Lọc sản phẩm theo danh mục — MUST be before any useEffect that reads it
-  const filteredProducts = selectedCategory === 'all'
-    ? products
-    : products.filter(p => p.category === selectedCategory);
-
-  // Refetch mỗi khi route thay đổi (bao gồm khi quay lại từ Admin)
+  // Sync debounced search → URL
   useEffect(() => {
-    fetchProducts(1); // dùng pageLimit mặc định từ store (20)
+    if (debouncedSearch !== filters.search) {
+      setSearch(debouncedSearch);
+    }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [location.pathname]);
+  }, [debouncedSearch]);
 
-  // Handle mở product modal
-  const handleOpenProduct = (product) => {
+  // Fetch whenever URL filters change
+  useEffect(() => {
+    fetchProducts(filters.page, null, {
+      category: filters.category,
+      search: filters.search,
+      minPrice: filters.minPrice,
+      maxPrice: filters.maxPrice < MAX_PRICE ? filters.maxPrice : undefined,
+      sort: filters.sort,
+    });
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [filters.category, filters.search, filters.minPrice, filters.maxPrice, filters.sort, filters.page]);
+
+  const handleSearchChange = useCallback((value) => {
+    setSearchInput(value);
+  }, []);
+
+  const handleCategoryChange = useCallback((cat) => {
+    setCategory(cat);
+  }, [setCategory]);
+
+  const handlePriceChange = useCallback((min, max) => {
+    setPriceRange(min, max);
+  }, [setPriceRange]);
+
+  const handleSortChange = useCallback((sort) => {
+    setSort(sort);
+  }, [setSort]);
+
+  const handleClearFilters = useCallback(() => {
+    setSearchInput('');
+    clearFilters();
+  }, [clearFilters]);
+
+  const handleOpenProduct = useCallback((product) => {
     setSelectedProduct(product);
     setModalOpen(true);
     document.body.classList.add('no-scroll');
-  };
+  }, []);
 
-  // Handle đóng product modal
-  const handleCloseModal = () => {
+  const handleCloseModal = useCallback(() => {
     setModalOpen(false);
     setSelectedProduct(null);
     document.body.classList.remove('no-scroll');
-  };
+  }, []);
+
+  const hasActiveFilters =
+    filters.category ||
+    filters.search ||
+    filters.minPrice > 0 ||
+    (filters.maxPrice && filters.maxPrice < MAX_PRICE) ||
+    filters.sort !== 'newest';
 
   return (
     <>
@@ -48,123 +91,173 @@ export default function Products() {
         description="Khám phá bộ sưu tập sản phẩm handmade chính hãng từ Món Nhỏ. Vòng tay ấn tượng với thiết kế độc quyền."
       />
 
-      <div className="min-h-screen bg-gray-50 pt-16 sm:pt-20">
-        {/* Header */}
-        <div className="bg-white border-b border-gray-200">
-          <div className="max-w-7xl mx-auto px-3 sm:px-4 md:px-6 lg:px-8 py-4 sm:py-6 lg:py-8">
-            <div className="flex items-center justify-between">
+      <div className="min-h-screen bg-[oklch(98%_0.008_30)] pt-16 sm:pt-20">
+        {/* Page header */}
+        <div className="bg-[oklch(99%_0.006_30)] border-b border-[oklch(88%_0.04_340/0.25)]">
+          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-5 sm:py-7">
+            <div className="flex items-center justify-between gap-4">
               <div>
-                <h1 className="text-2xl sm:text-3xl lg:text-4xl font-bold text-gray-900">Sản Phẩm</h1>
-                <p className="text-gray-600 mt-1 sm:mt-2 text-sm sm:text-base">
-                  Tổng số: <span className="font-semibold">{products.length}</span> sản phẩm
+                <h1 className="text-2xl sm:text-3xl font-bold text-brand-dark font-serif">Sản Phẩm</h1>
+                <p className="text-sm text-gray-500 mt-1">
+                  {isLoading ? 'Đang tải...' : (
+                    <>
+                      Hiển thị <span className="font-semibold text-gray-700">{products.length}</span>
+                      {totalProducts > 0 && (
+                        <> / <span className="font-semibold text-gray-700">{totalProducts}</span></>
+                      )} sản phẩm
+                      {hasActiveFilters && (
+                        <button
+                          onClick={handleClearFilters}
+                          className="ml-3 text-brand-purple hover:text-brand-dark underline underline-offset-2 text-xs font-semibold"
+                        >
+                          Xóa bộ lọc
+                        </button>
+                      )}
+                    </>
+                  )}
                 </p>
               </div>
 
-              {/* Mobile filter button */}
+              {/* Mobile filter toggle */}
               <button
-                onClick={() => setIsMobileSidebarOpen(!isMobileSidebarOpen)}
-                className="md:hidden flex items-center gap-2 px-3 sm:px-4 py-2 bg-brand-purple text-white rounded-lg hover:bg-brand-dark transition-colors text-sm min-h-[44px] touch-manipulation"
+                onClick={() => setIsMobileSidebarOpen(true)}
+                className="md:hidden flex items-center gap-2 px-4 py-2.5 bg-brand-purple text-white rounded-xl hover:bg-brand-dark transition-colors text-sm font-semibold min-h-[44px]"
+                aria-label="Mở bộ lọc"
               >
-                <FiFilter className="w-4 h-4 sm:w-5 sm:h-5" />
+                <FiFilter className="w-4 h-4" />
                 Lọc
+                {hasActiveFilters && (
+                  <span className="w-2 h-2 rounded-full bg-white/80 inline-block" />
+                )}
               </button>
             </div>
           </div>
         </div>
 
-        {/* Main content */}
-        <div className="max-w-7xl mx-auto px-3 sm:px-4 md:px-6 lg:px-8 py-4 sm:py-6 lg:py-8">
-          <div className="flex flex-col md:flex-row gap-4 md:gap-6 lg:gap-8">
-            {/* Sidebar */}
-            <div className="md:w-48 lg:w-56 flex-shrink-0">
-              <CategorySidebar
+        {/* Main layout */}
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6 lg:py-8">
+          <div className="flex gap-6 lg:gap-8">
+            {/* Filter Sidebar */}
+            <div className="hidden md:block md:w-52 lg:w-60 flex-shrink-0 sticky top-20 self-start">
+              <FilterSidebar
+                filters={{ ...filters, minPrice: filters.minPrice || 0, maxPrice: filters.maxPrice || MAX_PRICE }}
+                onSearchChange={handleSearchChange}
+                onCategoryChange={handleCategoryChange}
+                onPriceChange={handlePriceChange}
+                onSortChange={handleSortChange}
+                onClearFilters={handleClearFilters}
                 products={products}
-                selectedCategory={selectedCategory}
-                onCategoryChange={setSelectedCategory}
-                isLoading={isLoading}
-                onClose={() => setIsMobileSidebarOpen(false)}
-                isMobileOpen={isMobileSidebarOpen}
+                totalCount={totalProducts}
+                isOpen={true}
+                onClose={() => {}}
               />
             </div>
 
-            {/* Main product grid */}
+            {/* Mobile Sidebar Drawer — hidden on md+ to prevent duplicate rendering */}
+            <div className="md:hidden">
+              <FilterSidebar
+                filters={{ ...filters, minPrice: filters.minPrice || 0, maxPrice: filters.maxPrice || MAX_PRICE }}
+                onSearchChange={handleSearchChange}
+                onCategoryChange={handleCategoryChange}
+                onPriceChange={handlePriceChange}
+                onSortChange={handleSortChange}
+                onClearFilters={handleClearFilters}
+                products={products}
+                totalCount={totalProducts}
+                isOpen={isMobileSidebarOpen}
+                onClose={() => setIsMobileSidebarOpen(false)}
+              />
+            </div>
+
+            {/* Product Grid */}
             <div className="flex-1 min-w-0">
-              {/* Status */}
-              {selectedCategory !== 'all' && (
-                <div className="mb-6 flex items-center justify-between">
-                  <p className="text-gray-600">
-                    Đang hiển thị <span className="font-semibold">{filteredProducts.length}</span> sản phẩm
-                  </p>
-                  <button
-                    onClick={() => setSelectedCategory('all')}
-                    className="text-sm text-brand-purple hover:text-brand-dark transition-colors flex items-center gap-1"
-                  >
-                    <FiX className="w-4 h-4" />
-                    Xóa bộ lọc
-                  </button>
+              {/* Active filter tags */}
+              {hasActiveFilters && (
+                <div className="flex flex-wrap gap-2 mb-4">
+                  {filters.search && (
+                    <span className="flex items-center gap-1.5 bg-brand-purple/10 text-brand-purple text-xs font-semibold px-3 py-1.5 rounded-full">
+                      Tìm: "{filters.search}"
+                      <button onClick={() => { setSearchInput(''); setSearch(''); }} className="hover:text-brand-dark">
+                        <FiX className="w-3 h-3" />
+                      </button>
+                    </span>
+                  )}
+                  {filters.category && (
+                    <span className="flex items-center gap-1.5 bg-brand-purple/10 text-brand-purple text-xs font-semibold px-3 py-1.5 rounded-full">
+                      Danh mục: {filters.category}
+                      <button onClick={() => setCategory('')} className="hover:text-brand-dark">
+                        <FiX className="w-3 h-3" />
+                      </button>
+                    </span>
+                  )}
+                  {(filters.minPrice > 0 || (filters.maxPrice && filters.maxPrice < MAX_PRICE)) && (
+                    <span className="flex items-center gap-1.5 bg-brand-purple/10 text-brand-purple text-xs font-semibold px-3 py-1.5 rounded-full">
+                      Giá đã lọc
+                      <button onClick={() => setPriceRange(0, MAX_PRICE)} className="hover:text-brand-dark">
+                        <FiX className="w-3 h-3" />
+                      </button>
+                    </span>
+                  )}
                 </div>
               )}
 
               {/* Error state */}
               {error && !isLoading && (
-                <div className="mb-6 p-4 bg-red-50 border border-red-200 rounded-lg text-red-800">
-                  <p className="font-semibold">Có lỗi xảy ra</p>
-                  <p className="text-sm mt-1">{error}</p>
+                <div className="mb-6 p-4 bg-red-50 border border-red-200 rounded-xl text-red-800">
+                  <p className="font-semibold text-sm">Có lỗi xảy ra</p>
+                  <p className="text-xs mt-1 opacity-80">{error}</p>
                   <button
-                    onClick={() => fetchProducts(1)}
-                    className="mt-3 text-sm font-semibold text-red-600 hover:text-red-800 underline"
+                    onClick={() => fetchProducts(1, null, filters)}
+                    className="mt-3 text-xs font-semibold text-red-600 hover:text-red-800 underline"
                   >
                     Thử lại
                   </button>
                 </div>
               )}
 
-              {/* Product grid */}
+              {/* Grid */}
               {isLoading ? (
-                // Loading skeleton
-                <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-3 xl:grid-cols-4 gap-3 sm:gap-4 md:gap-5 lg:gap-6">
-                  {Array.from({ length: 6 }).map((_, idx) => (
-                    <div key={idx} className="bg-gray-200 rounded-3xl aspect-[4/5] animate-pulse" />
+                <div className="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-3 sm:gap-4 md:gap-5">
+                  {Array.from({ length: 8 }).map((_, idx) => (
+                    <div key={idx} className={idx === 0 ? 'col-span-2' : ''}>
+                      <ProductSkeleton />
+                    </div>
                   ))}
                 </div>
-              ) : filteredProducts.length > 0 ? (
-                <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-3 xl:grid-cols-4 gap-3 sm:gap-4 md:gap-5 lg:gap-6">
-                  {filteredProducts.map((product) => (
-                    <ProductCard
+              ) : products.length > 0 ? (
+                <div className="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-3 sm:gap-4 md:gap-5">
+                  {products.map((product, index) => (
+                    <div
                       key={product.id}
-                      product={product}
-                      onOpen={handleOpenProduct}
-                    />
+                      className={index === 0 ? 'col-span-2' : ''}
+                    >
+                      <ProductCard
+                        product={product}
+                        onOpen={handleOpenProduct}
+                        featured={index === 0}
+                      />
+                    </div>
                   ))}
                 </div>
               ) : (
-                // Empty state
-                <div className="text-center py-16">
-                  <div className="inline-block mb-4">
-                    <div className="text-5xl mb-4">🛍️</div>
-                    <h3 className="text-xl font-semibold text-gray-800">Không tìm thấy sản phẩm</h3>
-                    <p className="text-gray-600 mt-2">
-                      Hãy thử chọn một danh mục khác hoặc quay lại sau.
-                    </p>
-                  </div>
-                  <button
-                    onClick={() => setSelectedCategory('all')}
-                    className="mt-6 px-6 py-3 bg-brand-purple text-white rounded-full font-semibold hover:bg-brand-dark transition-colors"
-                  >
-                    Xem Tất Cả Sản Phẩm
-                  </button>
-                </div>
+                <EmptyState
+                  type={filters.search ? 'search' : 'products'}
+                  action={hasActiveFilters ? handleClearFilters : null}
+                  actionLabel="Xóa bộ lọc"
+                />
               )}
 
-              {/* Nút Tải Thêm — chỉ hiện khi đang show "tất cả" (không filter) và còn sản phẩm */}
-              {!isLoading && hasMore && selectedCategory === 'all' && (
+              {/* Load more */}
+              {!isLoading && hasMore && (
                 <div className="flex justify-center mt-10">
                   <button
-                    onClick={() => loadMoreProducts()}
+                    onClick={() => loadMoreProducts({ category: filters.category, search: filters.search })}
                     disabled={isLoadingMore}
                     className="px-10 py-3 bg-brand-purple text-white rounded-full font-semibold hover:bg-brand-dark transition-colors disabled:opacity-60 disabled:cursor-not-allowed shadow-md"
                   >
-                    {isLoadingMore ? 'Đang tải...' : `Xem thêm (còn ${totalProducts - products.length} sản phẩm)`}
+                    {isLoadingMore
+                      ? 'Đang tải...'
+                      : `Xem thêm (còn ${totalProducts - products.length} sản phẩm)`}
                   </button>
                 </div>
               )}
@@ -173,7 +266,7 @@ export default function Products() {
         </div>
       </div>
 
-      {/* Product modal */}
+      {/* Quick View Modal */}
       <ProductModal
         open={modalOpen}
         product={selectedProduct}
@@ -182,3 +275,4 @@ export default function Products() {
     </>
   );
 }
+

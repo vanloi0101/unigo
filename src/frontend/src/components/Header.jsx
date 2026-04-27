@@ -45,7 +45,7 @@ export default function Header() {
           <FaGem className="text-xl text-brand-pink" /> Món Nhỏ
         </Link>
 
-        <nav className="hidden md:flex items-center gap-8 font-medium text-brand-dark">
+        <nav className="hidden md:flex items-center gap-8 font-medium text-brand-dark" aria-label="Điều hướng chính">
           <Link to="/" className="hover:text-brand-pink transition-colors">Trang chủ</Link>
           {isHomePage ? (
             <a href="#about" className="hover:text-brand-pink transition-colors">Về Mận</a>
@@ -109,15 +109,17 @@ export default function Header() {
         <button 
           className="md:hidden text-2xl text-brand-dark" 
           onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-          aria-label="Mở menu"
+          aria-label={mobileMenuOpen ? 'Đóng menu' : 'Mở menu'}
+          aria-expanded={mobileMenuOpen}
+          aria-controls="mobile-menu"
         >
-          {mobileMenuOpen ? <FaTimes /> : <FaBars />}
+          {mobileMenuOpen ? <FaTimes aria-hidden="true" /> : <FaBars aria-hidden="true" />}
         </button>
       </div>
 
       {/* Mobile Menu */}
       {mobileMenuOpen && (
-        <div className="md:hidden bg-white shadow-lg mt-2 mx-6 rounded-lg p-4 space-y-3">
+        <div id="mobile-menu" className="md:hidden bg-white shadow-lg mt-2 mx-6 rounded-lg p-4 space-y-3" role="navigation" aria-label="Menu điều hướng">
           <Link to="/" onClick={() => setMobileMenuOpen(false)} className="block text-brand-dark hover:text-brand-pink font-medium py-2">Trang chủ</Link>
           {isHomePage ? (
             <a href="#about" onClick={() => setMobileMenuOpen(false)} className="block text-brand-dark hover:text-brand-pink font-medium py-2">Về Mận</a>

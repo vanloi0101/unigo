@@ -93,18 +93,12 @@ export default function Hero() {
                 {content.button2Text}
               </a>
             )}
-            <a 
-              href="#products" 
-              className="bg-gradient-to-r from-brand-purple to-brand-pink text-white px-8 py-4 rounded-full font-semibold text-lg hover:shadow-xl transition-all shadow-lg shadow-brand-purple/20 flex items-center justify-center gap-2"
-            >
-              🎁 Xem Khuyến Mãi
-            </a>
           </div>
         </div>
 
         {/* Image Slider */}
         <div className="flex-1 relative">
-          <div className="relative rounded-[2.5rem] overflow-hidden shadow-2xl border-8 border-white transform rotate-3 hover:rotate-0 transition-transform duration-500">
+          <div className="relative rounded-[2.5rem] overflow-hidden shadow-xl border-4 border-white transform rotate-3 hover:rotate-0 transition-transform duration-500">
             {/* Loading State */}
             {isLoading ? (
               <div className="w-full h-[400px] md:h-[500px] bg-gray-100 animate-pulse flex items-center justify-center">

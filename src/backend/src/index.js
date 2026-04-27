@@ -7,6 +7,7 @@ import prisma from "./config/database.js";
 
 // ==================== Import Routes ====================
 import authRoutes from "./routes/authRoutes.js";
+import categoryRoutes from "./routes/categoryRoutes.js";
 import productRoutes from "./routes/productRoutes.js";
 import orderRoutes from "./routes/orderRoutes.js";
 import cartRoutes from "./routes/cartRoutes.js";
@@ -25,13 +26,11 @@ app.use(helmet({
 // Rate limiting - prevent brute force attacks
 const generalLimiter = rateLimit({
   windowMs: 15 * 60 * 1000, // 15 minutes
-  max: 100, // limit each IP to 100 requests per windowMs
+  max: process.env.NODE_ENV === 'development' ? 1000 : 200,
   message: { success: false, message: 'Quá nhiều request, vui lòng thử lại sau.' },
   standardHeaders: true,
   legacyHeaders: false,
 });
-
-app.use(generalLimiter);
 
 // ==================== CORS Configuration ====================
 const allowedOrigins = [
@@ -53,6 +52,9 @@ app.use(
     credentials: true,
   })
 );
+
+// Rate limiter — sau CORS để 429 vẫn trả đúng CORS headers
+app.use(generalLimiter);
 
 // Body parser middleware
 app.use(express.json({ limit: '10mb' }));
@@ -126,6 +128,7 @@ if (config.NODE_ENV !== 'production') {
 
 // ==================== API Routes ====================
 app.use("/api/auth", authRoutes);
+app.use("/api/categories", categoryRoutes);
 app.use("/api/products", productRoutes);
 app.use("/api/orders", orderRoutes);
 app.use("/api/cart", cartRoutes);

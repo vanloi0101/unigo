@@ -1,83 +1,61 @@
 import React from 'react';
 
+const SOCIAL_LINKS = [
+  {
+    platform: 'TikTok',
+    handle: '@mon_nho_unigo',
+    description: 'Xem Mận làm đồ, review vòng tay, và những video nhỏ đáng yêu.',
+    href: 'https://www.tiktok.com/@mon_nho_unigo',
+    cta: 'Theo dõi TikTok',
+  },
+  {
+    platform: 'Facebook',
+    handle: 'Unigo – Món Nhỏ',
+    description: 'Ảnh sản phẩm mới nhất, khuyến mãi và câu chuyện từ xưởng nhỏ.',
+    href: 'https://www.facebook.com/profile.php?id=61582809680392',
+    cta: 'Like Fanpage',
+  },
+];
+
 export default function SocialFeed() {
   return (
-    <section className="py-16 bg-gradient-to-br from-white to-brand-light">
-      <div className="max-w-7xl mx-auto px-6">
-        <h2 className="text-3xl md:text-4xl font-bold text-center mb-4 text-brand-dark">Theo Dõi Chúng Tôi</h2>
-        <p className="text-center text-gray-600 mb-12 max-w-2xl mx-auto">
-          Cập nhật những xu hướng mới, review sản phẩm, và những khoảnh khắc đặc biệt từ Món Nhỏ Handmade
-        </p>
-
-        {/* Social Media Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-          {/* TikTok Column */}
-          <div className="flex flex-col">
-            <h3 className="text-xl font-semibold text-gray-800 mb-4">TikTok</h3>
-            <div className="rounded-xl overflow-hidden shadow-lg hover:shadow-xl transition duration-300 backdrop-blur-sm bg-white/80 border border-white/20">
-              <iframe
-                src="https://www.tiktok.com/embed/v2"
-                width="100%"
-                height="600"
-                frameBorder="0"
-                allowFullScreen
-                className="w-full"
-              ></iframe>
-              {/* Placeholder khi iframe không tải */}
-              <div className="w-full h-96 bg-gradient-to-br from-gray-100 to-gray-200 flex items-center justify-center rounded-lg">
-                <div className="text-center">
-                  <p className="text-gray-600 font-semibold">📱 TikTok @MonnhoHandmade</p>
-                  <p className="text-gray-500 text-sm mt-2">Nhảy vào để xem video mới nhất</p>
-                </div>
-              </div>
-            </div>
-          </div>
-
-          {/* Facebook Column */}
-          <div className="flex flex-col">
-            <h3 className="text-xl font-semibold text-gray-800 mb-4">Facebook</h3>
-            <div className="rounded-xl overflow-hidden shadow-lg hover:shadow-xl transition duration-300 backdrop-blur-sm bg-white/80 border border-white/20">
-              <iframe
-                src="https://www.facebook.com/plugins/page.php?href=https%3A%2F%2Fwww.facebook.com%2FMonnhoHandmade&tabs=timeline&width=500&height=600&small_header=false&adapt_container_width=true&hide_cover=true&show_facepile=true&appId="
-                width="100%"
-                height="600"
-                frameBorder="0"
-                allowFullScreen
-                allow="autoplay; clipboard-write; encrypted-media; picture-in-picture; web-share"
-                className="w-full"
-              ></iframe>
-              {/* Placeholder khi iframe không tải */}
-              <div className="w-full h-96 bg-gradient-to-br from-blue-50 to-blue-100 flex items-center justify-center rounded-lg">
-                <div className="text-center">
-                  <p className="text-blue-600 font-semibold">f Món Nhỏ Handmade</p>
-                  <p className="text-blue-500 text-sm mt-2">Theo dõi trang Facebook của chúng tôi</p>
-                </div>
-              </div>
-            </div>
-          </div>
+    <section className="py-20 px-6 bg-brand-cream">
+      <div className="max-w-7xl mx-auto">
+        <div className="flex flex-col sm:flex-row sm:items-end sm:justify-between mb-12 gap-4 fade-up">
+          <h2 className="font-serif text-3xl md:text-4xl font-bold text-brand-dark">
+            Theo dõi hành trình
+          </h2>
+          <p className="text-brand-purple/60 text-sm sm:text-base max-w-xs sm:text-right">
+            Mận hay đăng quá trình làm đồ lên đây.
+          </p>
         </div>
 
-        {/* CTA Section */}
-        <div className="mt-12 text-center">
-          <p className="text-gray-600 mb-4">Bạn có thích vòng tay của Món Nhỏ không?</p>
-          <div className="flex justify-center gap-4 flex-wrap">
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-6 fade-up">
+          {SOCIAL_LINKS.map((s) => (
             <a
-              href="https://www.tiktok.com"
+              key={s.platform}
+              href={s.href}
               target="_blank"
               rel="noopener noreferrer"
-              className="px-6 py-3 bg-black text-white rounded-full hover:bg-gray-800 transition font-semibold"
+              className="group flex flex-col justify-between bg-white rounded-2xl border border-brand-pink/20 p-8 hover:border-brand-purple/30 hover:shadow-md hover:shadow-brand-purple/10 transition-all duration-300"
             >
-              Follow TikTok
+              <div>
+                <p className="text-xs font-semibold uppercase tracking-widest text-brand-purple/60 mb-1">
+                  {s.platform}
+                </p>
+                <p className="font-serif text-xl font-bold text-brand-dark mb-3 group-hover:text-brand-purple transition-colors">
+                  {s.handle}
+                </p>
+                <p className="text-brand-text/70 text-sm leading-relaxed">
+                  {s.description}
+                </p>
+              </div>
+              <p className="mt-8 text-sm font-semibold text-brand-purple group-hover:text-brand-dark transition-colors flex items-center gap-1">
+                {s.cta}
+                <span className="inline-block translate-x-0 group-hover:translate-x-1 transition-transform">→</span>
+              </p>
             </a>
-            <a
-              href="https://www.facebook.com"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="px-6 py-3 bg-blue-600 text-white rounded-full hover:bg-blue-700 transition font-semibold"
-            >
-              Like Facebook
-            </a>
-          </div>
+          ))}
         </div>
       </div>
     </section>

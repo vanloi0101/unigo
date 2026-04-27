@@ -76,14 +76,14 @@ router.get("/posts/category/:slug", getPostsByCategory);
 router.get("/posts/:slug", getPostBySlug);
 
 // ==================== PUBLIC ROUTES: CATEGORIES ====================
-// GET /api/categories - Lấy danh sách danh mục active
-router.get("/categories", getActiveCategories);
+// GET /api/blog/categories - Lấy danh sách danh mục active
+router.get("/blog/categories", getActiveCategories);
 
-// GET /api/categories/tree - Lấy cây danh mục
-router.get("/categories/tree", getCategoryTree);
+// GET /api/blog/categories/tree - Lấy cây danh mục
+router.get("/blog/categories/tree", getCategoryTree);
 
-// GET /api/categories/:slug - Lấy chi tiết danh mục
-router.get("/categories/:slug", getCategoryBySlug);
+// GET /api/blog/categories/:slug - Lấy chi tiết danh mục
+router.get("/blog/categories/:slug", getCategoryBySlug);
 
 // ==================== PUBLIC ROUTES: AUTHORS ====================
 // GET /api/authors - Lấy danh sách tác giả active
@@ -182,26 +182,26 @@ router.post(
   uploadContentImage
 );
 
-// ==================== ADMIN ROUTES: CATEGORIES ====================
-// GET /api/admin/categories - Lấy tất cả danh mục
+// ==================== ADMIN ROUTES: CATEGORIES (Blog/News) ====================
+// GET /api/admin/blog/categories - Lấy tất cả danh mục
 router.get(
-  "/admin/categories",
+  "/admin/blog/categories",
   authenticateToken,
   checkAdminRole,
   getAllCategories
 );
 
-// GET /api/admin/categories/:id - Lấy chi tiết danh mục theo ID
+// GET /api/admin/blog/categories/:id - Lấy chi tiết danh mục theo ID
 router.get(
-  "/admin/categories/:id",
+  "/admin/blog/categories/:id",
   authenticateToken,
   checkAdminRole,
   getCategoryById
 );
 
-// POST /api/admin/categories - Tạo danh mục mới
+// POST /api/admin/blog/categories - Tạo danh mục mới
 router.post(
-  "/admin/categories",
+  "/admin/blog/categories",
   authenticateToken,
   checkAdminRole,
   uploadSingle,
@@ -209,9 +209,9 @@ router.post(
   createCategory
 );
 
-// PUT /api/admin/categories/:id - Cập nhật danh mục
+// PUT /api/admin/blog/categories/:id - Cập nhật danh mục
 router.put(
-  "/admin/categories/:id",
+  "/admin/blog/categories/:id",
   authenticateToken,
   checkAdminRole,
   uploadSingle,
@@ -219,25 +219,25 @@ router.put(
   updateCategory
 );
 
-// DELETE /api/admin/categories/:id - Xóa danh mục
+// DELETE /api/admin/blog/categories/:id - Xóa danh mục
 router.delete(
-  "/admin/categories/:id",
+  "/admin/blog/categories/:id",
   authenticateToken,
   checkAdminRole,
   deleteCategory
 );
 
-// PATCH /api/admin/categories/:id/toggle-active - Toggle active
+// PATCH /api/admin/blog/categories/:id/toggle-active - Toggle active
 router.patch(
-  "/admin/categories/:id/toggle-active",
+  "/admin/blog/categories/:id/toggle-active",
   authenticateToken,
   checkAdminRole,
   toggleCategoryActive
 );
 
-// PUT /api/admin/categories/sort-order - Update sort order
+// PUT /api/admin/blog/categories/sort-order - Update sort order
 router.put(
-  "/admin/categories/sort-order",
+  "/admin/blog/categories/sort-order",
   authenticateToken,
   checkAdminRole,
   updateSortOrder

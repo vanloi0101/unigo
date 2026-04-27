@@ -11,7 +11,7 @@ import {
   getGuestCartForSync,
 } from '../services/guestCartService';
 
-export const CartContext = createContext();
+const CartContext = createContext();
 
 export function CartProvider({ children }) {
   const [cartCount, setCartCount] = useState(0);
@@ -51,8 +51,8 @@ export function CartProvider({ children }) {
     }
 
     try {
-      const data = await axiosClient.get('/cart');
-      const items = data.items || [];
+      const response = await axiosClient.get('/cart');
+      const items = response?.data?.items || response?.items || [];
       setApiCartItems(items);
       return items;
     } catch (error) {

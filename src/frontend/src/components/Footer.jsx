@@ -24,13 +24,16 @@ export default function Footer() {
           <ul className="space-y-4 text-gray-400 font-medium">
             <li className="flex items-start gap-3"><span>Quận Bình Thạnh, TP. Hồ Chí Minh (Chỉ bán Online)</span></li>
             <li className="flex items-center gap-3"><a href="tel:0346450546" className="hover:text-white transition-colors">0346.450.546</a></li>
+            <li className="flex items-center gap-3"><a href="https://zalo.me/0346450546" target="_blank" rel="noreferrer" className="hover:text-white transition-colors">Zalo: 0346.450.546</a></li>
+            <li className="flex items-center gap-3"><a href="https://www.facebook.com/profile.php?id=61582809680392" target="_blank" rel="noreferrer" className="hover:text-white transition-colors">Facebook</a></li>
+            <li className="flex items-center gap-3"><a href="https://www.tiktok.com/@mon_nho_unigo" target="_blank" rel="noreferrer" className="hover:text-white transition-colors">TikTok: @mon_nho_unigo</a></li>
           </ul>
         </div>
       </div>
 
       <div className="max-w-7xl mx-auto pt-8 border-t border-white/10 flex flex-col md:flex-row justify-between items-center gap-4 text-sm text-gray-500 font-medium">
-        <p>© 2026 Món Nhỏ Handmade. All rights reserved.</p>
-        <p>Designed with ❤ for Gen Z</p>
+        <p>© 2026 Món Nhỏ Handmade. Tất cả các quyền được bảo lưu.</p>
+        <p>Hàng thủ công từ TP. Hồ Chí Minh</p>
       </div>
     </footer>
   );

@@ -6,7 +6,8 @@ import { useNavigate, useLocation, Link } from 'react-router-dom';
 import useAuthStore from '../store/useAuthStore';
 import axiosClient from '../api/axiosClient';
 import toast from 'react-hot-toast';
-import { FaGem, FaEnvelope, FaLock, FaSignInAlt } from 'react-icons/fa';
+import { FaSignInAlt } from 'react-icons/fa';
+import AuthLayout from '../components/AuthLayout';
 import { useCart } from '../contexts/CartContext';
 
 // Schema validation
@@ -53,7 +54,7 @@ export default function Login() {
         password: data.password,
       });
 
-      // Response structure: { status, message, data: { user, token } }
+      // Response structure: { success: true, data: { user, token } }
       if (response?.data?.user && response?.data?.token) {
         const loggedInUser = response.data.user;
         login(loggedInUser, response.data.token);
@@ -84,47 +85,15 @@ export default function Login() {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-purple-50 via-white to-pink-50 flex flex-col justify-center items-center py-12 px-4 sm:px-6 lg:px-8 relative overflow-hidden">
-      {/* Background decoration - animated blobs */}
-      <div className="absolute top-0 left-0 w-72 h-72 bg-gradient-to-br from-purple-200 to-pink-200 rounded-full mix-blend-multiply filter blur-3xl opacity-20"></div>
-      <div className="absolute -bottom-8 right-0 w-72 h-72 bg-gradient-to-br from-pink-200 to-purple-200 rounded-full mix-blend-multiply filter blur-3xl opacity-20"></div>
-
-      {/* Back to Home Button */}
-      <div className="absolute top-6 left-6 z-10">
-        <Link 
-          to="/" 
-          className="inline-flex items-center gap-2 text-brand-purple hover:text-brand-pink transition-colors font-medium text-sm"
-        >
-          ← Quay lại trang chủ
-        </Link>
-      </div>
-
-      <div className="sm:mx-auto sm:w-full sm:max-w-md relative z-10">
-        {/* Logo */}
-        <div className="text-center mb-8">
-          <div className="inline-flex items-center justify-center h-16 w-16 rounded-full bg-gradient-to-br from-brand-purple to-brand-pink shadow-xl hover:shadow-2xl transition-all">
-            <FaGem className="text-white text-2xl animate-bounce" />
-          </div>
-        </div>
-
-        {/* Title */}
-        <h1 className="mt-6 text-center text-4xl font-serif font-bold text-transparent bg-clip-text bg-gradient-to-r from-brand-purple to-brand-pink">
-          Đăng nhập
-        </h1>
-        <p className="mt-3 text-center text-sm text-gray-600 font-medium">
-          Đăng nhập để mua sắm và quản lý đơn hàng
-        </p>
-      </div>
-
-      {/* Form Container */}
-      <div className="mt-8 sm:mx-auto sm:w-full sm:max-w-md relative z-10 w-full">
-        <div className="bg-white/95 backdrop-blur-xl py-8 px-6 shadow-2xl rounded-2xl border border-white/40">
+    <AuthLayout
+      title="Chào mừng trở lại."
+      subtitle="Đăng nhập để tiếp tục mua sắm"
+    >
           <form className="space-y-5" onSubmit={handleSubmit(onSubmit)} autoComplete="off">
             
             {/* Email Field */}
             <div>
-              <label className="block text-sm font-semibold text-gray-800 mb-2">
-                <FaEnvelope className="inline mr-2 text-brand-purple" />
+              <label className="block text-sm font-semibold text-brand-dark mb-2">
                 Email
               </label>
               <input
@@ -148,8 +117,7 @@ export default function Login() {
 
             {/* Password Field */}
             <div>
-              <label className="block text-sm font-semibold text-gray-800 mb-2">
-                <FaLock className="inline mr-2 text-brand-purple" />
+              <label className="block text-sm font-semibold text-brand-dark mb-2">
                 Mật khẩu
               </label>
               <input
@@ -178,8 +146,8 @@ export default function Login() {
                 disabled={isSubmitting}
                 className={`w-full flex justify-center items-center gap-2 py-3 px-4 rounded-lg font-semibold text-white transition-all duration-300 shadow-lg ${
                   isSubmitting
-                    ? 'bg-gray-400 cursor-not-allowed' 
-                    : 'bg-gradient-to-r from-brand-purple to-brand-pink hover:shadow-xl hover:scale-105 active:scale-95 focus:outline-none focus:ring-2 focus:ring-brand-purple focus:ring-offset-2'
+                    ? 'bg-brand-purple/40 cursor-not-allowed'
+                    : 'bg-brand-purple hover:bg-brand-dark hover:-translate-y-0.5 active:translate-y-0 focus:outline-none focus:ring-2 focus:ring-brand-purple focus:ring-offset-2 shadow-lg shadow-brand-purple/20'
                 }`}
               >
                 {isSubmitting ? (
@@ -200,24 +168,20 @@ export default function Login() {
             </div>
 
             {/* Register Link */}
-            <div className="text-center">
-              <p className="text-sm text-gray-600">
-                Chưa có tài khoản?{' '}
-                <Link to="/register" className="text-brand-purple font-semibold hover:text-brand-pink transition-colors">
-                  Đăng ký ngay
-                </Link>
-              </p>
-            </div>
+            <p className="text-center text-sm text-gray-600">
+              Chưa có tài khoản?{' '}
+              <Link to="/register" className="text-brand-purple font-semibold hover:text-brand-dark transition-colors">
+                Đăng ký ngay
+              </Link>
+            </p>
           </form>
 
           {/* Footer */}
           <div className="mt-6 pt-6 border-t border-gray-100">
-            <p className="text-center text-xs text-gray-500">
+            <p className="text-center text-xs text-gray-400">
               © 2026 Món Nhỏ Handmade. Mọi quyền được bảo vệ.
             </p>
           </div>
-        </div>
-      </div>
-    </div>
+    </AuthLayout>
   );
 }

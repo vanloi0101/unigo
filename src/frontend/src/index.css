@@ -5,8 +5,8 @@
 /* Custom styles from original HTML */
 html { scroll-behavior: smooth; }
 body { min-height: 100vh; }
-.glass-nav { background: rgba(255, 255, 255, 0.85); backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px); }
-.text-gradient { background: linear-gradient(135deg, #9b7bae 0%, #e2948a 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+.glass-nav { background: oklch(98% 0.008 310); border-bottom: 1px solid oklch(88% 0.04 340 / 0.35); }
+.text-gradient { color: #9b7bae; }
 .product-card { transition: all 0.4s cubic-bezier(0.2, 0, 0, 1); }
 .product-card:hover { transform: translateY(-8px); box-shadow: 0 25px 30px -15px rgba(155, 123, 174, 0.15); }
 .img-zoom { transition: transform 0.6s cubic-bezier(0.2, 0, 0, 1); }
@@ -115,6 +115,19 @@ main {
 @keyframes fadeIn {
   from { opacity: 0; transform: translateY(10px); }
   to { opacity: 1; transform: translateY(0); }
+}
+
+/* Reduced motion — disable all non-essential animations */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+  .fade-up {
+    opacity: 1 !important;
+    transform: none !important;
+  }
 }
 
 /* Loading spinner */

@@ -17,14 +17,23 @@ const useProductStore = create((set, get) => ({
   pageLimit: 20,           // số sản phẩm mỗi lần tải
 
   // Fetch all products (REPLACES current list — dùng khi vào trang lần đầu)
-  fetchProducts: async (page = 1, limit = null, category = null) => {
+  fetchProducts: async (page = 1, limit = null, filters = {}) => {
     const myId = ++fetchId;
     const effectiveLimit = limit ?? get().pageLimit;
 
     set({ isLoading: true, error: null });
     try {
       const params = { page, limit: effectiveLimit };
-      if (category) params.category = category;
+      // Support legacy 3rd arg as string (category) or object (filters)
+      if (typeof filters === 'string') {
+        if (filters) params.category = filters;
+      } else {
+        if (filters.category) params.category = filters.category;
+        if (filters.search) params.search = filters.search;
+        if (filters.minPrice !== undefined && filters.minPrice > 0) params.minPrice = filters.minPrice;
+        if (filters.maxPrice !== undefined && filters.maxPrice < 999999999) params.maxPrice = filters.maxPrice;
+        if (filters.sort && filters.sort !== 'newest') params.sort = filters.sort;
+      }
 
       const response = await axiosClient.get('/products', { params });
       if (myId !== fetchId) return;

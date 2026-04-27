@@ -1,0 +1,1255 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Món Nhỏ • Vòng tay Handmade Ý Nghĩa</title>
+  
+  <!-- Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
+
+  <style>
+    :root {
+      --primary: #a78b8b;      /* Warm mauve/taupe */
+      --accent: #d4a5a5;       /* Soft coral/rose */
+      --dark: #4a3f3f;         /* Deep warm brown */
+      --light: #faf7f5;        /* Off-white/cream */
+      --muted: #e5d9d5;        /* Light taupe */
+    }
+
+    * { font-family: 'Poppins', sans-serif; }
+    h1, h2, h3, h4, h5, h6 { font-family: 'Playfair Display', serif; font-weight: 600; }
+    body { background: var(--light); color: var(--dark); }
+
+    /* ──── Smooth Transitions ──── */
+    * { transition: color 0.3s, background-color 0.3s, border-color 0.3s; }
+
+    /* ──── Animations ──── */
+    @keyframes fadeInUp {
+      from { opacity: 0; transform: translateY(30px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    @keyframes slideInRight {
+      from { opacity: 0; transform: translateX(100%); }
+      to { opacity: 1; transform: translateX(0); }
+    }
+
+    @keyframes scaleIn {
+      from { opacity: 0; transform: scale(0.95); }
+      to { opacity: 1; transform: scale(1); }
+    }
+
+    @keyframes float {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-8px); }
+    }
+
+    @keyframes glow {
+      0%, 100% { box-shadow: 0 0 20px rgba(212, 165, 165, 0.3); }
+      50% { box-shadow: 0 0 40px rgba(212, 165, 165, 0.6); }
+    }
+
+    @keyframes pulse {
+      0%, 100% { transform: scale(1); }
+      50% { transform: scale(1.15); }
+    }
+
+    .animate-fade-up { animation: fadeInUp 0.8s ease-out; }
+    .animate-slide-in { animation: slideInRight 0.5s ease-out; }
+    .animate-scale-in { animation: scaleIn 0.4s ease-out; }
+    .animate-float { animation: float 3s ease-in-out infinite; }
+    .animate-glow { animation: glow 3s ease-in-out infinite; }
+    .animate-pulse-soft { animation: pulse 0.6s ease-in-out; }
+
+    /* ──── Glass Effect ──── */
+    .glass {
+      background: rgba(255, 255, 255, 0.7);
+      backdrop-filter: blur(10px);
+      -webkit-backdrop-filter: blur(10px);
+      border: 1px solid rgba(255, 255, 255, 0.2);
+    }
+
+    /* ──── Skeleton ──── */
+    .skeleton {
+      background: linear-gradient(90deg, #e5d9d5 25%, #f0e8e5 50%, #e5d9d5 75%);
+      background-size: 200% 100%;
+      animation: skeleton-load 1.5s infinite;
+    }
+    @keyframes skeleton-load {
+      0% { background-position: 200% 0; }
+      100% { background-position: -200% 0; }
+    }
+
+    /* ──── Flying Image ──── */
+    .flying-img {
+      position: fixed;
+      z-index: 9999;
+      pointer-events: none;
+      border-radius: 16px;
+      box-shadow: 0 20px 40px rgba(74, 63, 63, 0.3);
+      transition: all 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+    }
+
+    /* ──── Image Zoom ──── */
+    .img-zoom {
+      transition: transform 0.6s cubic-bezier(0.33, 0.66, 0.66, 1);
+    }
+
+    /* ──── Scrollbar ──── */
+    .custom-scroll::-webkit-scrollbar { width: 8px; }
+    .custom-scroll::-webkit-scrollbar-track { background: transparent; }
+    .custom-scroll::-webkit-scrollbar-thumb { background: var(--muted); border-radius: 4px; }
+    .custom-scroll::-webkit-scrollbar-thumb:hover { background: var(--primary); }
+
+    /* ──── Product Tag ──── */
+    .tag {
+      position: absolute;
+      top: 12px;
+      right: 12px;
+      z-index: 10;
+      padding: 6px 12px;
+      background: var(--accent);
+      color: white;
+      font-size: 12px;
+      font-weight: 600;
+      border-radius: 20px;
+      backdrop-filter: blur(5px);
+    }
+
+    /* ──── Cart Scrollbar ──── */
+    .cart-items::-webkit-scrollbar { width: 6px; }
+    .cart-items::-webkit-scrollbar-thumb { background: var(--muted); border-radius: 3px; }
+
+    /* ──── Gradient Text ──── */
+    .gradient-text {
+      background: linear-gradient(135deg, var(--primary), var(--accent));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    /* ──── Soft Shadow ──── */
+    .soft-shadow {
+      box-shadow: 0 10px 30px rgba(74, 63, 63, 0.1);
+    }
+
+    .soft-shadow-lg {
+      box-shadow: 0 20px 50px rgba(74, 63, 63, 0.15);
+    }
+
+    /* ──── Button States ──── */
+    button:active { transform: scale(0.98); }
+    button:disabled { opacity: 0.5; cursor: not-allowed; }
+  </style>
+</head>
+<body class="antialiased overflow-x-hidden">
+
+<!-- ===================== Alpine.js App Root ===================== -->
+<div x-data="appState()" x-init="init()">
+
+  <!-- ════════════════════════════════════════════════════════════════════════════════════
+       HEADER / NAVIGATION
+       ════════════════════════════════════════════════════════════════════════════════════ -->
+  <header :class="isScrolled ? 'glass soft-shadow' : 'bg-transparent'" class="fixed w-full top-0 z-40 transition-all duration-300 py-4 sm:py-5">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex justify-between items-center">
+      <!-- Logo -->
+      <div class="flex items-center gap-3">
+        <div class="w-10 h-10 bg-gradient-to-br from-primary to-accent rounded-full flex items-center justify-center text-white shadow-md">
+          <i class="fas fa-heart text-sm"></i>
+        </div>
+        <span class="text-2xl sm:text-3xl font-serif font-bold" style="color: var(--dark);">Món Nhỏ</span>
+      </div>
+
+      <!-- Desktop Nav -->
+      <nav class="hidden md:flex items-center gap-10 text-sm font-medium" style="color: var(--dark);">
+        <a href="#hero" class="hover:opacity-60 transition">Trang Chủ</a>
+        <a href="#about" class="hover:opacity-60 transition">Về Chúng Tôi</a>
+        <a href="#products" class="hover:opacity-60 transition">Sản Phẩm</a>
+        <a href="#contact" class="hover:opacity-60 transition">Liên Hệ</a>
+      </nav>
+
+      <!-- Actions -->
+      <div class="flex items-center gap-4">
+        <!-- Cart -->
+        <button @click="cartOpen = !cartOpen; mobileMenuOpen = false" class="relative p-2.5 rounded-full hover:bg-white/50 transition">
+          <i class="fas fa-shopping-bag text-lg" style="color: var(--primary);"></i>
+          <span x-show="cartCount > 0" x-text="cartCount" class="absolute -top-1 -right-1 w-5 h-5 rounded-full flex items-center justify-center text-xs font-bold text-white animate-pulse-soft" style="background: var(--accent);"></span>
+        </button>
+
+        <!-- Mobile Menu -->
+        <button @click="mobileMenuOpen = !mobileMenuOpen" class="md:hidden p-2 rounded-full hover:bg-white/50">
+          <i :class="mobileMenuOpen ? 'fas fa-times' : 'fas fa-bars'" class="text-xl" style="color: var(--dark);"></i>
+        </button>
+      </div>
+    </div>
+
+    <!-- Mobile Menu -->
+    <template x-if="mobileMenuOpen">
+      <div class="md:hidden mt-4 mx-4 p-6 rounded-2xl glass animate-slide-in">
+        <nav class="space-y-4 text-sm font-medium">
+          <a href="#hero" @click="mobileMenuOpen = false" class="block py-2 hover:opacity-60">Trang Chủ</a>
+          <a href="#about" @click="mobileMenuOpen = false" class="block py-2 hover:opacity-60">Về Chúng Tôi</a>
+          <a href="#products" @click="mobileMenuOpen = false" class="block py-2 hover:opacity-60">Sản Phẩm</a>
+          <a href="#contact" @click="mobileMenuOpen = false" class="block py-2 hover:opacity-60">Liên Hệ</a>
+          <hr class="my-3 border-white/20">
+          <button @click="cartOpen = !cartOpen; mobileMenuOpen = false" class="w-full py-2 text-left hover:opacity-60">
+            <i class="fas fa-shopping-bag mr-2"></i> Giỏ Hàng <span x-show="cartCount > 0" x-text="`(${cartCount})`"></span>
+          </button>
+        </nav>
+      </div>
+    </template>
+  </header>
+
+  <!-- ════════════════════════════════════════════════════════════════════════════════════
+       HERO SECTION
+       ════════════════════════════════════════════════════════════════════════════════════ -->
+  <section id="hero" class="pt-24 sm:pt-32 pb-16 sm:pb-24 px-4 sm:px-6 lg:px-8 relative overflow-hidden">
+    <!-- Background decoration -->
+    <div class="absolute inset-0 -z-10">
+      <div class="absolute top-0 right-0 w-96 h-96 rounded-full opacity-10" style="background: var(--accent);"></div>
+      <div class="absolute bottom-0 left-0 w-80 h-80 rounded-full opacity-10" style="background: var(--primary);"></div>
+    </div>
+
+    <div class="max-w-7xl mx-auto">
+      <div class="grid lg:grid-cols-2 gap-12 lg:gap-16 items-center">
+        <!-- Left: Emotional Copy -->
+        <div class="order-2 lg:order-1">
+          <div class="space-y-6 sm:space-y-8">
+            <!-- Badge -->
+            <div class="inline-flex items-center gap-2 px-4 py-2 rounded-full soft-shadow" style="background: var(--light);">
+              <span class="text-xs font-semibold" style="color: var(--accent);">✨ HANDMADE WITH LOVE</span>
+            </div>
+
+            <!-- Heading -->
+            <h1 class="text-4xl sm:text-5xl lg:text-6xl font-serif leading-tight animate-fade-up" style="color: var(--dark);">
+              Từng vòng tay <span class="gradient-text">là một câu chuyện</span>
+            </h1>
+
+            <!-- Description -->
+            <p class="text-base sm:text-lg leading-relaxed opacity-80 max-w-lg animate-fade-up" style="animation-delay: 0.1s; color: var(--dark);">
+              Mỗi chiếc vòng tay Món Nhỏ được tạo nên từ đôi tay tài năng và trái tim yêu thương. Không chỉ là phụ kiện, mà là điều ước, là cảm nhân, là tình bạn được dệt bằng các sợi tơ vàng.
+            </p>
+
+            <!-- CTA Buttons -->
+            <div class="flex flex-col sm:flex-row gap-4 sm:gap-6 pt-4 animate-fade-up" style="animation-delay: 0.2s;">
+              <a href="#products" class="px-8 py-3.5 rounded-full font-semibold text-white text-center shadow-lg transition hover:shadow-xl active:scale-95" style="background: var(--primary);">
+                Khám Phá Ngay
+              </a>
+              <a href="#about" class="px-8 py-3.5 rounded-full font-semibold text-center border-2 transition hover:bg-white/50" style="color: var(--dark); border-color: var(--primary);">
+                Về Món Nhỏ
+              </a>
+            </div>
+
+            <!-- Trust Badges -->
+            <div class="flex flex-wrap gap-8 pt-8 opacity-70 text-sm">
+              <div class="flex items-center gap-2">
+                <i class="fas fa-check-circle" style="color: var(--accent);"></i>
+                <span>100% Handmade</span>
+              </div>
+              <div class="flex items-center gap-2">
+                <i class="fas fa-shipping-fast" style="color: var(--accent);"></i>
+                <span>Giao hàng 1-2 ngày</span>
+              </div>
+              <div class="flex items-center gap-2">
+                <i class="fas fa-redo" style="color: var(--accent);"></i>
+                <span>Đổi trả 7 ngày</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Right: Hero Image -->
+        <div class="order-1 lg:order-2 relative">
+          <div class="relative aspect-square rounded-3xl overflow-hidden soft-shadow">
+            <!-- Image -->
+            <div class="absolute inset-0 bg-gradient-to-br from-accent/20 to-primary/20"></div>
+            <img 
+              src="https://images.unsplash.com/photo-1599643478518-a784e5dc4c8f?w=600&h=600&fit=crop"
+              alt="Handmade bracelets"
+              class="w-full h-full object-cover img-zoom"
+            >
+            <!-- Overlay glow -->
+            <div class="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent"></div>
+          </div>
+          
+          <!-- Floating badge -->
+          <div class="absolute -bottom-4 -right-4 px-6 py-4 rounded-2xl glass soft-shadow max-w-xs animate-float">
+            <p class="font-serif font-bold text-lg" style="color: var(--dark);">Được yêu thích bởi hàng nghìn người</p>
+            <p class="text-xs opacity-60 mt-2">⭐⭐⭐⭐⭐ 4.9/5 stars</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ════════════════════════════════════════════════════════════════════════════════════
+       PRODUCTS SECTION
+       ════════════════════════════════════════════════════════════════════════════════════ -->
+  <section id="products" class="py-20 sm:py-28 px-4 sm:px-6 lg:px-8">
+    <div class="max-w-7xl mx-auto">
+      <!-- Section Header -->
+      <div class="text-center mb-16 sm:mb-20">
+        <span class="text-sm font-semibold tracking-wider opacity-60 uppercase">Bộ Sưu Tập</span>
+        <h2 class="text-3xl sm:text-4xl lg:text-5xl font-serif mt-3 mb-6" style="color: var(--dark);">
+          Những Chiếc Vòng Tay Nên Có
+        </h2>
+        <p class="max-w-2xl mx-auto opacity-70 text-base sm:text-lg">
+          Mỗi thiết kế là tâm huyết của các thợ handmade, mỗi chi tiết đều tinh tế và ý nghĩa
+        </p>
+      </div>
+
+      <!-- Filters -->
+      <div class="flex flex-wrap justify-center gap-3 mb-12 sm:mb-16">
+        <button 
+          @click="filterTag = ''; applyFilters()"
+          :class="filterTag === '' ? 'opacity-100' : 'opacity-60 hover:opacity-80'"
+          class="px-6 py-2.5 rounded-full font-medium text-sm transition"
+          style="background: var(--light); color: var(--dark);"
+        >
+          Tất Cả
+        </button>
+        <template x-for="tag in ['New', 'Bestseller', 'Limited']" :key="tag">
+          <button 
+            @click="filterTag = tag; applyFilters()"
+            :class="filterTag === tag ? 'opacity-100' : 'opacity-60 hover:opacity-80'"
+            class="px-6 py-2.5 rounded-full font-medium text-sm transition text-white"
+            :style="`background: ${tag === 'New' ? 'var(--primary)' : tag === 'Bestseller' ? 'var(--accent)' : '#b8a0a0'}`"
+          >
+            <span x-text="tag"></span>
+          </button>
+        </template>
+      </div>
+
+      <!-- Loading State -->
+      <template x-if="loading">
+        <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 sm:gap-6">
+          <template x-for="i in 8">
+            <div class="space-y-4">
+              <div class="skeleton aspect-square rounded-2xl"></div>
+              <div class="skeleton h-4 rounded"></div>
+              <div class="skeleton h-3 w-2/3 rounded"></div>
+              <div class="skeleton h-10 rounded-full"></div>
+            </div>
+          </template>
+        </div>
+      </template>
+
+      <!-- Products Grid -->
+      <template x-if="!loading">
+        <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 sm:gap-6">
+          <template x-for="product in filteredProducts" :key="product.id">
+            <div class="group bg-white rounded-2xl overflow-hidden soft-shadow hover:soft-shadow-lg transition-all duration-300 cursor-pointer flex flex-col h-full"
+                 @click="openQuickView(product)">
+              <!-- Image Container -->
+              <div class="relative aspect-square overflow-hidden bg-muted">
+                <!-- Tag -->
+                <span x-show="product.tag" x-text="product.tag" class="tag" 
+                      :style="`background: ${product.tag === 'New' ? 'var(--primary)' : product.tag === 'Bestseller' ? 'var(--accent)' : '#b8a0a0'}`"></span>
+
+                <!-- Image -->
+                <img :src="product.image" :alt="product.name" class="w-full h-full object-cover img-zoom group-hover:scale-110">
+
+                <!-- Overlay -->
+                <div class="absolute inset-0 bg-black/0 group-hover:bg-black/20 transition-colors flex items-center justify-center">
+                  <div class="opacity-0 group-hover:opacity-100 transition-all">
+                    <span class="inline-flex items-center gap-2 px-4 py-2.5 rounded-full bg-white text-sm font-semibold" style="color: var(--dark);">
+                      <i class="fas fa-eye"></i> Xem Chi Tiết
+                    </span>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Content -->
+              <div class="p-4 sm:p-5 flex flex-col flex-grow">
+                <h3 class="text-sm sm:text-base font-serif font-semibold line-clamp-2 mb-2" style="color: var(--dark);" x-text="product.name"></h3>
+                
+                <!-- Price -->
+                <p class="text-lg sm:text-xl font-bold mb-4" style="color: var(--accent);" x-text="formatPrice(product.price)"></p>
+
+                <!-- Description -->
+                <p class="text-xs opacity-60 mb-4 line-clamp-2" x-text="product.description"></p>
+
+                <!-- Add to Cart Button -->
+                <button 
+                  @click.stop="addToCart(product, $event)"
+                  class="mt-auto w-full py-2.5 px-4 rounded-full font-semibold text-sm transition active:scale-95 text-white"
+                  style="background: var(--primary);"
+                  :class="{'opacity-50 cursor-not-allowed': isAdding}"
+                >
+                  <i class="fas fa-plus mr-2"></i> <span x-text="isAdding ? 'Đang thêm...' : 'Thêm Giỏ'"></span>
+                </button>
+              </div>
+            </div>
+          </template>
+        </div>
+      </template>
+
+      <!-- Empty State -->
+      <template x-if="!loading && filteredProducts.length === 0">
+        <div class="text-center py-20">
+          <i class="fas fa-inbox text-6xl opacity-20 mb-4 block"></i>
+          <p class="text-lg opacity-60 mb-6">Không có sản phẩm nào</p>
+          <button @click="filterTag = ''" class="text-sm font-semibold hover:opacity-60" style="color: var(--primary);">
+            Xem tất cả
+          </button>
+        </div>
+      </template>
+    </div>
+  </section>
+
+  <!-- ════════════════════════════════════════════════════════════════════════════════════
+       ABOUT SECTION
+       ════════════════════════════════════════════════════════════════════════════════════ -->
+  <section id="about" class="py-20 sm:py-28 px-4 sm:px-6 lg:px-8" style="background: var(--light);">
+    <div class="max-w-4xl mx-auto text-center">
+      <h2 class="text-3xl sm:text-4xl lg:text-5xl font-serif mb-8" style="color: var(--dark);">Câu Chuyện Của Món Nhỏ</h2>
+      
+      <p class="text-base sm:text-lg leading-relaxed opacity-80 mb-8">
+        Món Nhỏ bắt đầu từ một niềm yêu thích đơn giản: làm những vật dụng đẹp bằng tay. Mỗi vòng tay được dệt từ từng sợi tơ, từng hạt cườm, từng chi tiết được lựa chọn kỹ lưỡng.
+      </p>
+
+      <p class="text-base sm:text-lg leading-relaxed opacity-80 mb-12">
+        Chúng tôi tin rằng những chiếc vòng tay không chỉ là trang sức, mà là những cánh bướm mang thông điệp, là những lời chúc tốt lành được dệt vào mỗi sợi dây. Đó là lý do tại sao mỗi sản phẩm Món Nhỏ đều được làm với cả trái tim.
+      </p>
+
+      <div class="inline-block px-8 py-4 rounded-full font-semibold text-white shadow-lg transition hover:shadow-xl" style="background: var(--primary);">
+        Khám Phá Thêm →
+      </div>
+    </div>
+  </section>
+
+  <!-- ════════════════════════════════════════════════════════════════════════════════════
+       TESTIMONIALS
+       ════════════════════════════════════════════════════════════════════════════════════ -->
+  <section class="py-20 sm:py-28 px-4 sm:px-6 lg:px-8">
+    <div class="max-w-6xl mx-auto">
+      <h2 class="text-3xl sm:text-4xl font-serif text-center mb-16" style="color: var(--dark);">Yêu Thương Từ Khách Hàng</h2>
+
+      <div class="grid md:grid-cols-3 gap-6 sm:gap-8">
+        <template x-for="testimonial in testimonials" :key="testimonial.id">
+          <div class="p-6 sm:p-8 rounded-2xl bg-white soft-shadow">
+            <div class="flex gap-1 mb-4">
+              <template x-for="i in 5">
+                <i class="fas fa-star text-sm" style="color: var(--accent);"></i>
+              </template>
+            </div>
+            <p class="text-sm sm:text-base leading-relaxed opacity-80 mb-6 italic" x-text="testimonial.text"></p>
+            <div>
+              <p class="font-semibold" style="color: var(--dark);" x-text="testimonial.author"></p>
+              <p class="text-xs opacity-60" x-text="testimonial.role"></p>
+            </div>
+          </div>
+        </template>
+      </div>
+    </div>
+  </section>
+
+  <!-- ════════════════════════════════════════════════════════════════════════════════════
+       FOOTER
+       ════════════════════════════════════════════════════════════════════════════════════ -->
+  <footer class="border-t py-12 sm:py-16 px-4 sm:px-6 lg:px-8" style="border-color: var(--muted); background: var(--light);">
+    <div class="max-w-7xl mx-auto">
+      <div class="grid md:grid-cols-4 gap-8 sm:gap-12 mb-12">
+        <!-- Brand -->
+        <div>
+          <div class="flex items-center gap-2 mb-4">
+            <div class="w-8 h-8 bg-gradient-to-br from-primary to-accent rounded-full flex items-center justify-center text-white text-sm">
+              <i class="fas fa-heart"></i>
+            </div>
+            <span class="font-serif font-bold text-lg" style="color: var(--dark);">Món Nhỏ</span>
+          </div>
+          <p class="text-sm opacity-60">Vòng tay handmade được làm bằng yêu thương</p>
+        </div>
+
+        <!-- Links -->
+        <div>
+          <h4 class="font-semibold mb-4" style="color: var(--dark);">Danh Mục</h4>
+          <ul class="space-y-2 text-sm opacity-70">
+            <li><a href="#" class="hover:opacity-100 transition">Vòng Tay Mới</a></li>
+            <li><a href="#" class="hover:opacity-100 transition">Bộ Sưu Tập</a></li>
+            <li><a href="#" class="hover:opacity-100 transition">Sale</a></li>
+          </ul>
+        </div>
+
+        <!-- Info -->
+        <div>
+          <h4 class="font-semibold mb-4" style="color: var(--dark);">Thông Tin</h4>
+          <ul class="space-y-2 text-sm opacity-70">
+            <li><a href="#" class="hover:opacity-100 transition">Về Chúng Tôi</a></li>
+            <li><a href="#" class="hover:opacity-100 transition">Chính Sách</a></li>
+            <li><a href="#" class="hover:opacity-100 transition">Liên Hệ</a></li>
+          </ul>
+        </div>
+
+        <!-- Social -->
+        <div>
+          <h4 class="font-semibold mb-4" style="color: var(--dark);">Kết Nối</h4>
+          <div class="flex gap-4">
+            <a href="https://facebook.com" target="_blank" class="w-10 h-10 rounded-full flex items-center justify-center hover:scale-110 transition" style="background: var(--muted);">
+              <i class="fab fa-facebook"></i>
+            </a>
+            <a href="https://instagram.com" target="_blank" class="w-10 h-10 rounded-full flex items-center justify-center hover:scale-110 transition" style="background: var(--muted);">
+              <i class="fab fa-instagram"></i>
+            </a>
+            <a href="https://zalo.me/0346450546" target="_blank" class="w-10 h-10 rounded-full flex items-center justify-center hover:scale-110 transition" style="background: var(--muted);">
+              <i class="fab fa-zalo"></i>
+            </a>
+          </div>
+        </div>
+      </div>
+
+      <div class="text-center pt-8 border-t text-sm opacity-60" style="border-color: var(--muted);">
+        <p>&copy; 2026 Món Nhỏ Handmade. Tất cả các quyền được bảo lưu.</p>
+      </div>
+    </div>
+  </footer>
+
+  <!-- ════════════════════════════════════════════════════════════════════════════════════
+       CART DRAWER
+       ════════════════════════════════════════════════════════════════════════════════════ -->
+  <!-- Overlay -->
+  <div
+    x-show="cartOpen"
+    @click="cartOpen = false"
+    class="fixed inset-0 z-40 bg-black/30 backdrop-blur-sm transition-opacity"
+    :class="{'opacity-0 pointer-events-none': !cartOpen}"
+    style="display: none;"
+  ></div>
+
+  <!-- Drawer -->
+  <div
+    x-show="cartOpen"
+    class="fixed right-0 top-0 z-50 h-screen w-full sm:w-96 bg-white shadow-2xl flex flex-col overflow-hidden transition-transform"
+    :class="{'translate-x-0': cartOpen, 'translate-x-full': !cartOpen}"
+    style="display: none;"
+  >
+    <!-- Header -->
+    <div class="p-6 border-b flex justify-between items-center" style="border-color: var(--muted);">
+      <h2 class="font-serif text-xl font-bold" style="color: var(--dark);">Giỏ Hàng</h2>
+      <button @click="cartOpen = false" class="p-2 hover:bg-gray-100 rounded-full transition">
+        <i class="fas fa-times text-xl" style="color: var(--dark);"></i>
+      </button>
+    </div>
+
+    <!-- Items -->
+    <div class="flex-1 overflow-y-auto custom-scroll cart-items p-6 space-y-4">
+      <!-- Empty -->
+      <template x-if="cart.length === 0">
+        <div class="flex flex-col items-center justify-center h-full text-center py-12">
+          <i class="fas fa-shopping-bag text-6xl opacity-20 mb-4"></i>
+          <p class="font-semibold opacity-70 mb-2">Giỏ hàng trống</p>
+          <p class="text-sm opacity-50">Thêm những chiếc vòng tay yêu thích nhé!</p>
+        </div>
+      </template>
+
+      <!-- Items List -->
+      <template x-for="item in cart" :key="item.id">
+        <div class="flex gap-4 pb-4 border-b" style="border-color: var(--muted);">
+          <img :src="item.image" :alt="item.name" class="w-20 h-20 rounded-lg object-cover" style="background: var(--muted);">
+          
+          <div class="flex-1 min-w-0">
+            <h4 class="font-semibold text-sm line-clamp-2" style="color: var(--dark);" x-text="item.name"></h4>
+            <p class="text-sm font-bold mt-1 mb-3" style="color: var(--accent);" x-text="formatPrice(item.price)"></p>
+
+            <!-- Qty Controls -->
+            <div class="flex items-center gap-2 bg-muted w-fit rounded-lg p-1">
+              <button @click="decrementQty(item.id)" class="w-6 h-6 rounded flex items-center justify-center hover:bg-white/50 transition text-xs font-bold">−</button>
+              <span class="w-6 text-center text-xs font-semibold" x-text="item.quantity"></span>
+              <button @click="incrementQty(item.id)" class="w-6 h-6 rounded flex items-center justify-center hover:bg-white/50 transition text-xs font-bold">+</button>
+            </div>
+          </div>
+
+          <button @click="removeFromCart(item.id)" class="p-2 hover:bg-red-50 rounded transition opacity-40 hover:opacity-100">
+            <i class="fas fa-trash-alt text-red-400"></i>
+          </button>
+        </div>
+      </template>
+    </div>
+
+    <!-- Footer -->
+    <div class="p-6 border-t" style="border-color: var(--muted);">
+      <div class="flex justify-between items-center mb-6">
+        <span class="font-semibold opacity-70">Tổng Cộng:</span>
+        <span class="font-serif text-2xl font-bold" style="color: var(--accent);" x-text="formatPrice(cartTotal)"></span>
+      </div>
+      <button
+        @click="cartOpen = false"
+        :disabled="cart.length === 0"
+        class="w-full py-3.5 rounded-full font-semibold text-white transition hover:shadow-lg active:scale-95 disabled:opacity-50"
+        style="background: var(--primary);"
+      >
+        Thanh Toán
+      </button>
+    </div>
+  </div>
+
+  <!-- ════════════════════════════════════════════════════════════════════════════════════
+       QUICK VIEW MODAL
+       ════════════════════════════════════════════════════════════════════════════════════ -->
+  <div
+    x-show="quickViewOpen"
+    @click="quickViewOpen = false"
+    class="fixed inset-0 z-50 bg-black/50 backdrop-blur-sm flex items-center justify-center p-4"
+    :class="{'opacity-0 pointer-events-none': !quickViewOpen}"
+    style="display: none;"
+  >
+    <div
+      @click.stop
+      class="bg-white rounded-3xl max-w-2xl w-full max-h-[90vh] overflow-y-auto animate-scale-in"
+      style="animation: scaleIn 0.4s ease-out;"
+    >
+      <template x-if="quickViewProduct">
+        <div class="p-6 sm:p-8">
+          <!-- Close -->
+          <div class="flex justify-end mb-4">
+            <button @click="quickViewOpen = false" class="p-2 hover:bg-muted rounded-full transition">
+              <i class="fas fa-times text-xl" style="color: var(--dark);"></i>
+            </button>
+          </div>
+
+          <div class="grid md:grid-cols-2 gap-8">
+            <!-- Image -->
+            <div class="rounded-2xl overflow-hidden aspect-square" style="background: var(--muted);">
+              <img :src="quickViewProduct.image" :alt="quickViewProduct.name" class="w-full h-full object-cover">
+            </div>
+
+            <!-- Details -->
+            <div class="flex flex-col">
+              <span x-show="quickViewProduct.tag" x-text="quickViewProduct.tag" class="inline-block w-fit px-4 py-1.5 rounded-full text-xs font-bold text-white mb-4"
+                    :style="`background: ${quickViewProduct.tag === 'New' ? 'var(--primary)' : quickViewProduct.tag === 'Bestseller' ? 'var(--accent)' : '#b8a0a0'}`"></span>
+              
+              <h2 class="text-2xl sm:text-3xl font-serif font-bold mb-4" style="color: var(--dark);" x-text="quickViewProduct.name"></h2>
+              
+              <p class="text-2xl font-bold mb-6" style="color: var(--accent);" x-text="formatPrice(quickViewProduct.price)"></p>
+
+              <p class="text-base leading-relaxed opacity-70 mb-8" x-text="quickViewProduct.description"></p>
+
+              <!-- Materials -->
+              <div class="mb-8">
+                <h4 class="font-semibold mb-3" style="color: var(--dark);">Chất Liệu</h4>
+                <p class="text-sm opacity-70">Sợi polyester chất lượng cao, hạt cườm tự nhiên, khóa bạc mạ vàng. 100% handmade, không gây dị ứng.</p>
+              </div>
+
+              <!-- Buttons -->
+              <div class="space-y-3 mt-auto">
+                <button
+                  @click="addToCart(quickViewProduct); quickViewOpen = false"
+                  class="w-full py-3.5 rounded-full font-semibold text-white transition hover:shadow-lg active:scale-95"
+                  style="background: var(--primary);"
+                >
+                  <i class="fas fa-shopping-bag mr-2"></i> Thêm Vào Giỏ
+                </button>
+                <button
+                  @click="quickViewOpen = false"
+                  class="w-full py-3 rounded-full font-semibold transition hover:bg-muted"
+                  style="color: var(--dark);"
+                >
+                  Tiếp Tục Mua Sắm
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </template>
+    </div>
+  </div>
+
+  <!-- ════════════════════════════════════════════════════════════════════════════════════
+       TOAST NOTIFICATION
+       ════════════════════════════════════════════════════════════════════════════════════ -->
+  <div
+    x-show="toast.show"
+    class="fixed bottom-6 right-6 z-[60] px-6 py-4 rounded-2xl text-white font-semibold text-sm flex items-center gap-3 soft-shadow transition-all"
+    :class="{'opacity-0 pointer-events-none': !toast.show}"
+    :style="`background: ${toast.type === 'success' ? 'var(--primary)' : 'var(--accent)'}`"
+    style="display: none;"
+  >
+    <i :class="toast.type === 'success' ? 'fas fa-check-circle' : 'fas fa-exclamation-circle'"></i>
+    <span x-text="toast.message"></span>
+  </div>
+
+</div>
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 py-3 sm:py-4 flex justify-between items-center">
+      <!-- Logo -->
+      <a href="#" class="flex items-center gap-2 text-2xl font-bold text-brand-purple hover:text-brand-pink transition-colors">
+        <i class="fas fa-gem text-brand-pink"></i>
+        <span>Món Nhỏ</span>
+      </a>
+
+      <!-- Desktop Navigation -->
+      <nav class="hidden md:flex items-center gap-8 font-medium text-brand-dark">
+        <a href="#" class="hover:text-brand-pink transition-colors">Trang chủ</a>
+        <a href="#about" class="hover:text-brand-pink transition-colors">Về Mận</a>
+        <a href="#products" class="hover:text-brand-pink transition-colors">Sản Phẩm</a>
+        <a href="#" class="hover:text-brand-pink transition-colors">Tin tức</a>
+        <a href="#" class="hover:text-brand-pink transition-colors flex items-center gap-1">
+          <i class="fas fa-question-circle text-sm"></i> Hỗ trợ
+        </a>
+      </nav>
+
+      <!-- Right Actions -->
+      <div class="hidden md:flex items-center gap-3">
+        <!-- Cart Button -->
+        <button 
+          @click="cartOpen = !cartOpen; mobileMenuOpen = false"
+          class="relative flex items-center gap-2 text-brand-purple px-4 py-2.5 rounded-full font-medium border-2 border-brand-purple hover:bg-brand-purple hover:text-white transition-all"
+        >
+          <i class="fas fa-shopping-cart"></i>
+          Giỏ hàng
+          <span x-show="cartCount > 0" :key="`badge-${cartCount}`" x-text="cartCount" class="absolute -top-2 -right-2 bg-red-500 text-white text-xs font-bold w-6 h-6 rounded-full flex items-center justify-center animate-bounce-pop"></span>
+        </button>
+
+        <!-- Login / User -->
+        <button class="flex items-center gap-2 text-brand-purple px-4 py-2.5 rounded-full font-medium border-2 border-brand-purple hover:bg-brand-purple hover:text-white transition-all">
+          <i class="fas fa-user"></i>
+          Đăng Nhập
+        </button>
+
+        <!-- Zalo Contact -->
+        <a href="https://zalo.me/0346450546" target="_blank" rel="noreferrer" class="bg-brand-purple text-white px-5 py-2.5 rounded-full font-medium hover:bg-brand-dark transition-all shadow-lg shadow-purple-500/30">
+          <i class="fab fa-zalo mr-2"></i>Tư vấn Zalo
+        </a>
+      </div>
+
+      <!-- Mobile Menu Toggle -->
+      <button @click="mobileMenuOpen = !mobileMenuOpen" class="md:hidden text-2xl text-brand-dark">
+        <i :class="mobileMenuOpen ? 'fas fa-times' : 'fas fa-bars'"></i>
+      </button>
+    </div>
+
+    <!-- Mobile Menu -->
+    <div x-show="mobileMenuOpen" @click.outside="mobileMenuOpen = false" class="md:hidden mobile-menu bg-white border-t border-gray-200 p-4">
+      <nav class="space-y-3 flex flex-col">
+        <a href="#" class="text-brand-dark hover:text-brand-pink font-medium py-2">Trang chủ</a>
+        <a href="#about" class="text-brand-dark hover:text-brand-pink font-medium py-2">Về Mận</a>
+        <a href="#products" class="text-brand-dark hover:text-brand-pink font-medium py-2">Sản Phẩm</a>
+        <a href="#" class="text-brand-dark hover:text-brand-pink font-medium py-2">Tin tức</a>
+        <a href="#" class="text-brand-dark hover:text-brand-pink font-medium py-2 flex items-center gap-2">
+          <i class="fas fa-question-circle text-sm"></i> Hỗ trợ
+        </a>
+        <hr class="my-2">
+        <button @click="cartOpen = !cartOpen; mobileMenuOpen = false" class="text-brand-purple font-medium py-2 flex items-center gap-2 w-full">
+          <i class="fas fa-shopping-cart"></i>
+          Giỏ hàng
+          <span x-show="cartCount > 0" x-text="cartCount" class="bg-red-500 text-white text-xs font-bold w-5 h-5 rounded-full flex items-center justify-center ml-auto"></span>
+        </button>
+        <button class="text-brand-purple font-medium py-2 flex items-center gap-2 w-full border-t pt-3">
+          <i class="fas fa-user"></i>
+          Đăng Nhập
+        </button>
+      </nav>
+    </div>
+  </header>
+
+  <!-- ── Hero Section ── -->
+  <section class="pt-24 md:pt-32 pb-12 md:pb-20 px-4 sm:px-6 bg-gradient-to-br from-purple-50 via-pink-50 to-purple-50">
+    <div class="max-w-7xl mx-auto flex flex-col md:flex-row items-center gap-8 md:gap-12">
+      <!-- Left Content -->
+      <div class="flex-1 text-center md:text-left">
+        <span class="inline-block py-1.5 px-4 rounded-full bg-white border-2 border-brand-pink text-brand-purple text-sm font-semibold mb-6 shadow-sm">
+          ✨ Collection 2026 Đã Ra Mắt
+        </span>
+        <h1 class="text-4xl md:text-6xl font-bold text-brand-dark mb-6 leading-tight animate-float">
+          Vòng tay <span class="text-transparent bg-clip-text bg-gradient-to-r from-brand-purple to-brand-pink">xinh</span>
+          <br>
+          <span class="text-transparent bg-clip-text bg-gradient-to-r from-brand-pink to-brand-purple">Chạm đến trái tim</span>
+        </h1>
+        <p class="text-lg md:text-xl text-gray-600 mb-8 max-w-xl mx-auto md:mx-0 leading-relaxed">
+          Trang sức handmade thiết kế riêng. Chất liệu an toàn, không gỉ sét. Món quà nhỏ bé mang ngàn ý nghĩa cho ngày thêm vui.
+        </p>
+        <div class="flex flex-col sm:flex-row gap-4 justify-center md:justify-start flex-wrap">
+          <a href="#products" class="bg-brand-dark text-white px-8 py-4 rounded-full font-semibold text-lg hover:bg-black transition-all shadow-lg shadow-gray-900/20 inline-flex items-center justify-center gap-2">
+            Xem Bộ Sưu Tập
+          </a>
+          <a href="#about" class="bg-white text-brand-dark border-2 border-gray-200 px-8 py-4 rounded-full font-semibold text-lg hover:border-brand-dark transition-all inline-flex items-center justify-center">
+            Câu chuyện của Mận
+          </a>
+          <a href="#products" class="bg-gradient-to-r from-brand-purple to-brand-pink text-white px-8 py-4 rounded-full font-semibold text-lg hover:shadow-lg transition-all shadow-lg shadow-purple-500/20 inline-flex items-center justify-center gap-2">
+            🎁 Xem Khuyến Mãi
+          </a>
+        </div>
+      </div>
+
+      <!-- Hero Image Slider -->
+      <div class="flex-1 relative">
+        <div class="relative aspect-square md:aspect-auto md:h-96 rounded-3xl overflow-hidden bg-gray-100 shadow-2xl">
+          <div 
+            x-show="currentSlide === 0" 
+            class="hero-slider absolute inset-0 flex items-center justify-center text-white text-xl font-bold bg-gradient-to-br from-purple-400 to-pink-400"
+          >
+            Slide 1
+          </div>
+          <div 
+            x-show="currentSlide === 1" 
+            class="hero-slider absolute inset-0 flex items-center justify-center text-white text-xl font-bold bg-gradient-to-br from-pink-400 to-purple-400"
+          >
+            Slide 2
+          </div>
+        </div>
+        <!-- Slider Controls -->
+        <div class="flex justify-center gap-2 mt-4">
+          <button 
+            @click="currentSlide = 0" 
+            :class="currentSlide === 0 ? 'bg-brand-purple' : 'bg-gray-300'"
+            class="w-3 h-3 rounded-full transition-all"
+          ></button>
+          <button 
+            @click="currentSlide = 1"
+            :class="currentSlide === 1 ? 'bg-brand-purple' : 'bg-gray-300'"
+            class="w-3 h-3 rounded-full transition-all"
+          ></button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── Product Section ── -->
+  <section id="products" class="py-16 md:py-24 px-4 sm:px-6">
+    <div class="max-w-7xl mx-auto">
+      <!-- Header -->
+      <div class="text-center mb-12">
+        <h2 class="text-3xl md:text-5xl font-bold text-brand-dark mb-4">Bộ Sưu Tập Sản Phẩm</h2>
+        <p class="text-lg text-gray-600 max-w-2xl mx-auto">Những thiết kế độc đáo từ tay những thợ handmade tài năng</p>
+      </div>
+
+      <!-- Filter Bar -->
+      <div class="flex flex-wrap gap-3 justify-center mb-8">
+        <select x-model="filterCategory" @change="applyFilters()" class="px-4 py-2 rounded-full border-2 border-brand-purple text-brand-purple font-medium hover:bg-brand-light transition-colors cursor-pointer">
+          <option value="">Tất cả danh mục</option>
+          <template x-for="cat in categories" :key="cat">
+            <option :value="cat" x-text="cat"></option>
+          </template>
+        </select>
+
+        <select x-model="sortBy" @change="applyFilters()" class="px-4 py-2 rounded-full border-2 border-brand-purple text-brand-purple font-medium hover:bg-brand-light transition-colors cursor-pointer">
+          <option value="default">Sắp xếp</option>
+          <option value="price-asc">Giá tăng dần</option>
+          <option value="price-desc">Giá giảm dần</option>
+        </select>
+
+        <button @click="resetFilters()" class="px-4 py-2 rounded-full bg-gray-200 text-gray-700 font-medium hover:bg-gray-300 transition-colors">
+          Reset
+        </button>
+      </div>
+
+      <!-- Loading Skeleton -->
+      <div x-show="loading" class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 md:gap-6">
+        <template x-for="i in 8">
+          <div class="bg-white rounded-2xl p-3 shadow-sm">
+            <div class="skeleton w-full aspect-square rounded-xl mb-3"></div>
+            <div class="skeleton h-4 w-3/4 rounded mb-2"></div>
+            <div class="skeleton h-4 w-1/2 rounded mb-3"></div>
+            <div class="skeleton h-10 w-full rounded-full"></div>
+          </div>
+        </template>
+      </div>
+
+      <!-- Products Grid -->
+      <div x-show="!loading">
+        <div x-show="filteredProducts.length === 0" class="text-center py-16">
+          <i class="fas fa-inbox text-6xl text-gray-300 mb-4"></i>
+          <p class="text-xl text-gray-500 mb-4">Không tìm thấy sản phẩm phù hợp</p>
+          <button @click="resetFilters()" class="text-brand-pink underline font-medium">Xóa bộ lọc</button>
+        </div>
+
+        <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 md:gap-6">
+          <template x-for="product in filteredProducts" :key="product.id">
+            <div class="group bg-white rounded-2xl sm:rounded-3xl p-2 sm:p-3 border border-gray-100 hover:border-brand-pink hover:shadow-lg transition-all duration-300 flex flex-col h-full">
+              <!-- Image -->
+              <div 
+                @click="openQuickView(product)"
+                class="relative overflow-hidden rounded-xl sm:rounded-2xl aspect-[4/5] bg-gray-50 cursor-pointer mb-3 sm:mb-4"
+              >
+                <img 
+                  :src="product.image"
+                  :alt="product.name"
+                  class="w-full h-full object-cover img-zoom group-hover:scale-105"
+                />
+                <div class="absolute inset-0 bg-brand-dark/10 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
+                  <button class="bg-white/90 px-3 sm:px-4 py-1.5 sm:py-2 rounded-full font-medium text-xs sm:text-sm hover:bg-white transition-colors">
+                    Xem nhanh
+                  </button>
+                </div>
+              </div>
+
+              <!-- Info -->
+              <div class="flex flex-col flex-grow text-center">
+                <h3 class="font-serif font-bold text-sm sm:text-base text-brand-dark mb-2 line-clamp-2">
+                  <span x-text="product.name"></span>
+                </h3>
+                <p class="text-brand-pink font-bold text-sm sm:text-lg mb-3 sm:mb-4">
+                  <span x-text="formatPrice(product.price)"></span>
+                </p>
+                
+                <!-- Add to Cart Button -->
+                <button 
+                  @click="addToCart(product, $event)"
+                  class="mt-auto bg-brand-light border-2 border-brand-pink text-brand-purple hover:bg-brand-purple hover:text-white hover:border-brand-purple font-semibold py-2 sm:py-2.5 rounded-full transition-all text-xs sm:text-sm min-h-[40px] active:scale-95"
+                >
+                  <i class="fas fa-plus mr-1.5"></i>Thêm Giỏ Hàng
+                </button>
+              </div>
+            </div>
+          </template>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── About Section ── -->
+  <section id="about" class="py-16 md:py-24 px-4 sm:px-6 bg-gradient-to-r from-purple-50 to-pink-50">
+    <div class="max-w-7xl mx-auto">
+      <div class="text-center max-w-2xl mx-auto">
+        <h2 class="text-3xl md:text-4xl font-bold text-brand-dark mb-6">Câu chuyện của Món Nhỏ</h2>
+        <p class="text-lg text-gray-700 leading-relaxed mb-8">
+          Người sáng lập Món Nhỏ bắt đầu từ sở thích làm handmade. Mỗi sản phẩm được tạo nên từ tình yêu, tỉ mỉ và sự chuyên tâm. Chúng tôi tin rằng, những món vật nhỏ bé có thể mang lại những cảm xúc to lớn cho cuộc sống của bạn.
+        </p>
+        <button class="bg-brand-purple text-white px-8 py-4 rounded-full font-semibold text-lg hover:bg-brand-dark transition-all shadow-lg shadow-purple-500/30">
+          Khám Phá Thêm
+        </button>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── Footer ── -->
+  <footer class="border-t border-gray-200 bg-gray-50 py-8 md:py-12 px-4 sm:px-6 mt-auto">
+    <div class="max-w-7xl mx-auto">
+      <div class="grid grid-cols-1 md:grid-cols-4 gap-8 mb-8">
+        <div>
+          <h3 class="font-bold text-brand-dark mb-4 flex items-center gap-2">
+            <i class="fas fa-gem text-brand-pink"></i> Món Nhỏ
+          </h3>
+          <p class="text-gray-600 text-sm">Vòng tay handmade đầy ý nghĩa cho những người thân yêu</p>
+        </div>
+        <div>
+          <h4 class="font-semibold text-brand-dark mb-4">Danh Mục</h4>
+          <ul class="space-y-2 text-sm text-gray-600">
+            <li><a href="#" class="hover:text-brand-pink transition-colors">Vòng tay</a></li>
+            <li><a href="#" class="hover:text-brand-pink transition-colors">Nến thơm</a></li>
+            <li><a href="#" class="hover:text-brand-pink transition-colors">Trang trí</a></li>
+          </ul>
+        </div>
+        <div>
+          <h4 class="font-semibold text-brand-dark mb-4">Thông Tin</h4>
+          <ul class="space-y-2 text-sm text-gray-600">
+            <li><a href="#" class="hover:text-brand-pink transition-colors">Về Chúng Tôi</a></li>
+            <li><a href="#" class="hover:text-brand-pink transition-colors">Chính Sách</a></li>
+            <li><a href="#" class="hover:text-brand-pink transition-colors">Liên Hệ</a></li>
+          </ul>
+        </div>
+        <div>
+          <h4 class="font-semibold text-brand-dark mb-4">Kết Nối</h4>
+          <div class="flex gap-4 text-lg">
+            <a href="#" class="text-gray-600 hover:text-brand-pink transition-colors"><i class="fab fa-facebook"></i></a>
+            <a href="#" class="text-gray-600 hover:text-brand-pink transition-colors"><i class="fab fa-instagram"></i></a>
+            <a href="https://zalo.me/0346450546" class="text-gray-600 hover:text-brand-pink transition-colors"><i class="fab fa-zalo"></i></a>
+          </div>
+        </div>
+      </div>
+      <div class="border-t border-gray-200 pt-8 text-center text-sm text-gray-600">
+        <p>&copy; 2026 Món Nhỏ Handmade. All rights reserved.</p>
+      </div>
+    </div>
+  </footer>
+
+  <!-- ===================== Cart Drawer ===================== -->
+  <!-- Overlay -->
+  <div
+    x-show="cartOpen"
+    @click="cartOpen = false"
+    class="fixed inset-0 z-40 bg-black/30 backdrop-blur-sm transition-opacity"
+    style="display: none;"
+  ></div>
+
+  <!-- Cart Drawer -->
+  <div
+    x-show="cartOpen"
+    class="fixed right-0 top-0 z-50 h-screen w-full sm:w-96 bg-white shadow-2xl flex flex-col animate-slide-in"
+    style="display: none;"
+  >
+    <!-- Header -->
+    <div class="p-5 border-b border-gray-200 flex justify-between items-center shrink-0">
+      <h2 class="text-xl font-semibold text-brand-dark">Giỏ hàng của bạn</h2>
+      <button @click="cartOpen = false" class="text-gray-400 hover:text-gray-600 transition text-2xl">
+        <i class="fas fa-times"></i>
+      </button>
+    </div>
+
+    <!-- Items -->
+    <div class="flex-1 overflow-y-auto cart-scroll p-5">
+      <template x-if="cart.length === 0">
+        <div class="text-center py-12 text-gray-400">
+          <i class="fas fa-shopping-bag text-5xl mb-3 opacity-40"></i>
+          <p class="font-medium">Giỏ hàng trống</p>
+          <p class="text-sm mt-2">Hãy thêm sản phẩm vào giỏ!</p>
+        </div>
+      </template>
+
+      <template x-for="item in cart" :key="item.id">
+        <div class="flex gap-3 py-4 border-b border-gray-100 last:border-0">
+          <img :src="item.image" :alt="item.name" class="w-16 h-16 rounded-lg object-cover bg-gray-100 shrink-0">
+          <div class="flex-1 min-w-0">
+            <h4 class="font-semibold text-sm text-brand-dark truncate" x-text="item.name"></h4>
+            <p class="text-brand-pink font-bold text-sm mt-1" x-text="formatPrice(item.price)"></p>
+            <div class="flex items-center gap-2 mt-2">
+              <button @click="decrementQty(item.id)" class="w-6 h-6 rounded-full bg-gray-100 hover:bg-gray-200 flex items-center justify-center text-gray-600 font-bold transition text-sm">−</button>
+              <span class="text-sm w-6 text-center font-semibold" x-text="item.quantity"></span>
+              <button @click="incrementQty(item.id)" class="w-6 h-6 rounded-full bg-gray-100 hover:bg-gray-200 flex items-center justify-center text-gray-600 font-bold transition text-sm">+</button>
+            </div>
+          </div>
+          <button @click="removeFromCart(item.id)" class="text-gray-300 hover:text-red-500 transition shrink-0 text-lg">
+            <i class="fas fa-trash"></i>
+          </button>
+        </div>
+      </template>
+    </div>
+
+    <!-- Footer -->
+    <div class="p-5 border-t border-gray-200 shrink-0">
+      <div class="flex justify-between items-center mb-4">
+        <span class="font-semibold text-gray-700">Tổng cộng:</span>
+        <span class="font-bold text-brand-pink text-2xl" x-text="formatPrice(cartTotal)"></span>
+      </div>
+      <button
+        :disabled="cart.length === 0"
+        class="w-full bg-brand-purple hover:bg-brand-dark active:scale-95 disabled:opacity-50 disabled:cursor-not-allowed text-white py-3 rounded-full font-semibold transition-all shadow-lg shadow-purple-500/30"
+      >
+        Thanh Toán
+      </button>
+    </div>
+  </div>
+
+  <!-- ===================== Quick View Modal ===================== -->
+  <div
+    x-show="quickViewOpen"
+    @click="quickViewOpen = false"
+    class="fixed inset-0 z-50 bg-black/40 backdrop-blur-sm flex items-center justify-center p-4 animate-fade-in"
+    style="display: none;"
+  >
+    <div
+      @click.stop
+      class="bg-white rounded-3xl max-w-2xl w-full max-h-[90vh] overflow-y-auto animate-scale-up"
+    >
+      <template x-if="quickViewProduct">
+        <div class="p-6 md:p-8">
+          <!-- Close Button -->
+          <div class="flex justify-end mb-4">
+            <button @click="quickViewOpen = false" class="text-gray-400 hover:text-gray-600 transition text-2xl">
+              <i class="fas fa-times"></i>
+            </button>
+          </div>
+
+          <div class="grid md:grid-cols-2 gap-8">
+            <!-- Image -->
+            <div class="rounded-2xl overflow-hidden bg-gray-100 h-96 md:h-auto flex items-center justify-center">
+              <img :src="quickViewProduct.image" :alt="quickViewProduct.name" class="w-full h-full object-cover">
+            </div>
+
+            <!-- Info -->
+            <div class="flex flex-col">
+              <span class="text-xs text-brand-pink font-bold uppercase tracking-wider mb-2" x-text="quickViewProduct.category"></span>
+              <h2 class="text-3xl font-bold text-brand-dark mb-4" x-text="quickViewProduct.name"></h2>
+              <p class="text-3xl text-brand-pink font-bold mb-6" x-text="formatPrice(quickViewProduct.price)"></p>
+              <p class="text-gray-600 text-base mb-8 leading-relaxed">
+                Sản phẩm handmade tinh xảo, được tạo ra bằng yêu thương và sự tỉ mỉ. Mỗi chi tiết đều được chăm chút kỹ càng. Phù hợp làm quà tặng hoặc sưu tầm cá nhân.
+              </p>
+
+              <div class="mt-auto flex flex-col gap-3">
+                <button
+                  @click="addToCart(quickViewProduct); quickViewOpen = false"
+                  class="bg-brand-purple hover:bg-brand-dark active:scale-95 text-white py-4 rounded-full font-semibold transition-all shadow-lg shadow-purple-500/30 flex items-center justify-center gap-2"
+                >
+                  <i class="fas fa-shopping-bag"></i> Thêm vào Giỏ
+                </button>
+                <button
+                  @click="quickViewOpen = false"
+                  class="border-2 border-brand-purple text-brand-purple hover:bg-brand-light py-3 rounded-full font-semibold transition-all"
+                >
+                  Tiếp tục mua sắm
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </template>
+    </div>
+  </div>
+
+  <!-- Toast Notification -->
+  <div
+    x-show="toast.show"
+    class="fixed bottom-6 right-6 z-[60] bg-white rounded-xl shadow-xl px-6 py-4 flex items-center gap-4 border-l-4 border-brand-purple animate-slide-in"
+    style="display: none;"
+  >
+    <i class="fas fa-check-circle text-brand-purple text-lg"></i>
+    <span class="font-medium text-gray-800" x-text="toast.message"></span>
+  </div>
+
+</div><!-- end Alpine root -->
+
+<!-- ════════════════════════════════════════════════════════════════════════════════════
+     JAVASCRIPT
+     ════════════════════════════════════════════════════════════════════════════════════ -->
+<script>
+  const PRODUCTS = [
+    { id: 1, name: 'Vòng Tay Charm Hoa', price: 145000, image: 'https://images.unsplash.com/photo-1599643478518-a784e5dc4c8f?w=500&h=500&fit=crop', description: 'Vòng tay với những charm hoa xinh xắn, phù hợp cho bạn gái yêu thích style dễ thương', tag: 'New' },
+    { id: 2, name: 'Vòng Tay Hạt Đá Tự Nhiên', price: 220000, image: 'https://images.unsplash.com/photo-1548690312-e341509b1d10?w=500&h=500&fit=crop', description: 'Những hạt đá tự nhiên được chọn lọc kỹ lưỡng, mang năng lượng tích cực', tag: 'Bestseller' },
+    { id: 3, name: 'Vòng Tay Macramé Vintage', price: 95000, image: 'https://images.unsplash.com/photo-1611591437281-460bfbe1220a?w=500&h=500&fit=crop', description: 'Kiểu dáng vintage với kỹ thuật macramé truyền thống, thích hợp mix&match', tag: null },
+    { id: 4, name: 'Vòng Tay Ánh Sao', price: 185000, image: 'https://images.unsplash.com/photo-1610701596007-11502861dcfa?w=500&h=500&fit=crop', description: 'Thiết kế đặc biệt với những hạt tròn sáng bóng như những ngôi sao nhỏ', tag: 'Limited' },
+    { id: 5, name: 'Vòng Tay Hoa Cúc', price: 125000, image: 'https://images.unsplash.com/photo-1456228511063-87b3bea82b13?w=500&h=500&fit=crop', description: 'Những cánh hoa cúc tinh tế, thích hợp kết hợp với nhiều phong cách', tag: 'New' },
+    { id: 6, name: 'Vòng Tay Nơ Nhỏ', price: 165000, image: 'https://images.unsplash.com/photo-1639127289651-30bf6a3c61c0?w=500&h=500&fit=crop', description: 'Nơ nhỏ xinh xắn, phong cách Hàn Quốc, dễ thương và nữ tính', tag: 'Bestseller' },
+    { id: 7, name: 'Vòng Tay Xen Lẫn', price: 175000, image: 'https://images.unsplash.com/photo-1515377905703-c511b95cee51?w=500&h=500&fit=crop', description: 'Sự kết hợp hoàn hảo giữa các sợi dây và hạt cườm', tag: null },
+    { id: 8, name: 'Vòng Tay Nổi Bật', price: 195000, image: 'https://images.unsplash.com/photo-1599643478306-8599f6a04ee0?w=500&h=500&fit=crop', description: 'Thiết kế độc đáo, nổi bật với những chi tiết đặc biệt', tag: 'Limited' },
+  ];
+
+  const TESTIMONIALS = [
+    { id: 1, text: 'Đẹp quá! Chất lượng tốt, giao hàng nhanh. Sẽ mua tiếp lần tới.', author: 'Hương Giang', role: 'Khách hàng' },
+    { id: 2, text: 'Mỗi chiếc vòng tay đều là một tác phẩm. Yêu thích Món Nhỏ!', author: 'Vân Anh', role: 'Khách hàng' },
+    { id: 3, text: 'Handmade chất lượng, không giống bất kỳ nơi nào khác. Strongly recommend!', author: 'Linh Đan', role: 'Khách hàng' },
+  ];
+
+  function appState() {
+    return {
+      // UI State
+      isScrolled: false,
+      mobileMenuOpen: false,
+      cartOpen: false,
+      quickViewOpen: false,
+      quickViewProduct: null,
+      loading: true,
+      isAdding: false,
+
+      // Data
+      products: PRODUCTS,
+      testimonials: TESTIMONIALS,
+      filteredProducts: [],
+      cart: [],
+      filterTag: '',
+
+      // Toast
+      toast: { show: false, message: '', type: 'success', _timer: null },
+
+      // Computed
+      get cartCount() {
+        return this.cart.reduce((sum, item) => sum + item.quantity, 0);
+      },
+
+      get cartTotal() {
+        return this.cart.reduce((sum, item) => sum + item.price * item.quantity, 0);
+      },
+
+      // Methods
+      init() {
+        setTimeout(() => {
+          this.loading = false;
+          this.applyFilters();
+        }, 1200);
+
+        window.addEventListener('scroll', () => {
+          this.isScrolled = window.scrollY > 50;
+        });
+      },
+
+      formatPrice(price) {
+        return new Intl.NumberFormat('vi-VN', { style: 'currency', currency: 'VND' }).format(price);
+      },
+
+      applyFilters() {
+        let result = [...this.products];
+        if (this.filterTag) {
+          result = result.filter(p => p.tag === this.filterTag);
+        }
+        this.filteredProducts = result;
+      },
+
+      openQuickView(product) {
+        this.quickViewProduct = product;
+        this.quickViewOpen = true;
+        document.body.style.overflow = 'hidden';
+      },
+
+      addToCart(product, event) {
+        this.isAdding = true;
+
+        // Fly animation
+        if (event?.currentTarget) {
+          const btn = event.currentTarget;
+          const rect = btn.getBoundingClientRect();
+
+          const img = document.createElement('img');
+          img.src = product.image;
+          img.className = 'flying-img';
+          img.style.width = '80px';
+          img.style.height = '80px';
+          img.style.left = (rect.left + rect.width / 2 - 40) + 'px';
+          img.style.top = (rect.top + rect.height / 2 - 40) + 'px';
+
+          document.body.appendChild(img);
+
+          const cartBtn = document.querySelector('button i.fa-shopping-bag')?.closest('button');
+          if (cartBtn) {
+            const cartRect = cartBtn.getBoundingClientRect();
+            setTimeout(() => {
+              img.style.left = (cartRect.left + 15) + 'px';
+              img.style.top = (cartRect.top + 15) + 'px';
+              img.style.transform = 'scale(0.1)';
+              img.style.opacity = '0';
+            }, 10);
+            setTimeout(() => img.remove(), 800);
+          } else {
+            setTimeout(() => img.remove(), 800);
+          }
+        }
+
+        setTimeout(() => {
+          const existing = this.cart.find(i => i.id === product.id);
+          if (existing) {
+            existing.quantity++;
+          } else {
+            this.cart.push({ ...product, quantity: 1 });
+          }
+
+          this.showToast(`"${product.name}" đã thêm vào giỏ!`, 'success');
+          this.isAdding = false;
+        }, 400);
+      },
+
+      incrementQty(id) {
+        const item = this.cart.find(i => i.id === id);
+        if (item) item.quantity++;
+      },
+
+      decrementQty(id) {
+        const item = this.cart.find(i => i.id === id);
+        if (!item) return;
+        if (item.quantity > 1) {
+          item.quantity--;
+        } else {
+          this.removeFromCart(id);
+        }
+      },
+
+      removeFromCart(id) {
+        this.cart = this.cart.filter(i => i.id !== id);
+        this.showToast('Đã xóa khỏi giỏ hàng', 'success');
+      },
+
+      showToast(msg, type = 'success') {
+        if (this.toast._timer) clearTimeout(this.toast._timer);
+        this.toast.message = msg;
+        this.toast.type = type;
+        this.toast.show = true;
+        this.toast._timer = setTimeout(() => {
+          this.toast.show = false;
+        }, 3000);
+      }
+    };
+  }
+</script>
+
+</body>
+</html>

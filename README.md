@@ -1,115 +1,121 @@
-﻿# 🎀 Unigo - Mon Nho Handmade E-Commerce Platform
+﻿# 🎀 Unigo – Món Nhỏ Handmade
 
-A full-stack e-commerce platform for handmade products with modern web technologies. Built with **React**, **Node.js**, **PostgreSQL**, and **Cloudinary**.
+Nền tảng thương mại điện tử cho sản phẩm handmade, xây dựng với **React**, **Node.js**, **PostgreSQL** và **Cloudinary**.  
+Thương hiệu vòng tay handmade dành cho học sinh, sinh viên – mang phong cách trẻ trung và văn hoá Việt Nam.
 
-## 📊 Project Status: 95% Complete ✅
+🔗 **Repo:** https://github.com/vanloi0101/unigo  
+📱 **Mạng xã hội:** [Facebook](https://www.facebook.com/profile.php?id=61582809680392) · [TikTok @mon_nho_unigo](https://www.tiktok.com/@mon_nho_unigo) · Zalo: 0346.450.546
 
-| Component | Status | Details |
+---
+
+## 📊 Trạng thái dự án
+
+| Thành phần | Trạng thái | Chi tiết |
 |-----------|--------|---------|
-| **Backend API** | ✅ 100% | 13 REST endpoints, authentication, search/filter |
-| **Frontend** | ✅ 95% | Product listing, cart, admin panel, responsive design |
-| **Database** | ✅ 100% | PostgreSQL with Prisma ORM, migrations complete |
-| **Authentication** | ✅ 100% | JWT + bcryptjs secure login/register |
-| **Image Upload** | ✅ 100% | Cloudinary integration with validation |
-| **Search/Filter** | ✅ 100% | Text search, category, price range, pagination |
+| **Backend API** | ✅ Hoàn chỉnh | REST API đầy đủ, xác thực JWT, tìm kiếm/lọc |
+| **Frontend** | ✅ Hoàn chỉnh | Trang sản phẩm, giỏ hàng, admin panel, responsive |
+| **Cơ sở dữ liệu** | ✅ Hoàn chỉnh | PostgreSQL + Prisma ORM, migration đầy đủ |
+| **Xác thực** | ✅ Hoàn chỉnh | JWT + bcryptjs, đăng nhập/đăng ký an toàn |
+| **Upload ảnh** | ✅ Hoàn chỉnh | Cloudinary, validation file |
+| **Tìm kiếm/Lọc** | ✅ Hoàn chỉnh | Tìm theo tên, danh mục, khoảng giá, phân trang |
+| **Trang chủ** | ✅ Hoàn chỉnh | Hero, giới thiệu thương hiệu, blog preview, social feed |
+| **Blog/Tin tức** | ✅ Hoàn chỉnh | Bài viết, brand story, SEO meta tags |
+| **Giỏ hàng** | ✅ Hoàn chỉnh | Persistent state với Zustand + Zalo order |
+| **CORS/Rate limit** | ✅ Đã sửa | Rate limiter sau CORS, tăng giới hạn dev |
 
 ## 🏗️ Tech Stack
 
 ### Backend
-- **Runtime:** Node.js 18+
-- **Framework:** Express.js 4.18.2
-- **Database:** PostgreSQL + Prisma 5.8.0
-- **Authentication:** JWT (jsonwebtoken 9.0.2) + bcryptjs
-- **File Upload:** Multer 1.4.5-lts.1 + Cloudinary 1.41.0
+- **Runtime:** Node.js 20+
+- **Framework:** Express.js
+- **Database:** PostgreSQL + Prisma ORM
+- **Auth:** JWT + bcryptjs
+- **Upload:** Multer + Cloudinary
 - **Validation:** Zod
+- **Rate limiting:** express-rate-limit (sau CORS middleware)
 
 ### Frontend
-- **Framework:** React 18.2.0
-- **Build Tool:** Vite 5.0.8
-- **State Management:** Zustand 4.4.0
-- **Styling:** Tailwind CSS 3.3.0
-- **HTTP Client:** Axios with interceptors
-- **Form Management:** React Hook Form + Zod
+- **Framework:** React 18 + Vite
+- **State:** Zustand
+- **Styling:** Tailwind CSS
+- **HTTP:** Axios với interceptors
+- **Forms:** React Hook Form + Zod
+- **UI:** Lucide React, rc-slider
 - **Notifications:** React Hot Toast
-- **UI Components:** Lucide React
 
 ### DevOps
-- **Containerization:** Docker + Docker Compose
-- **Web Server:** Nginx (production)
-- **Database:** PostgreSQL 15
+- **Container:** Docker + Docker Compose
+- **Web server:** Nginx (production)
+- **DB:** PostgreSQL 15
 
-## 📁 Project Structure
+## 🎨 Tính năng
 
-```
-unigo/
-├── src/
-│   ├── backend/                    # Node.js/Express API
-│   │   ├── src/
-│   │   │   ├── controllers/        # Business logic (productController, authController, etc.)
-│   │   │   ├── routes/             # API endpoints
-│   │   │   ├── middlewares/        # Auth, upload, error handlers
-│   │   │   ├── services/           # Business logic layer
-│   │   │   ├── schemas/            # Zod validation schemas
-│   │   │   ├── config/             # Cloudinary, database config
-│   │   │   └── index.js            # Express app setup
-│   │   ├── prisma/
-│   │   │   ├── schema.prisma       # Database schema
-│   │   │   └── migrations/         # Database migration history
-│   │   ├── Dockerfile              # Backend container
-│   │   └── package.json            # Backend dependencies
-│   │
-│   └── frontend/                   # React + Vite SPA
-│       ├── src/
-│       │   ├── components/         # Reusable React components
-│       │   ├── pages/              # Page components (Products, Cart, Admin)
-│       │   ├── store/              # Zustand stores (auth, cart, products)
-│       │   ├── api/                # Axios client setup
-│       │   ├── hooks/              # Custom React hooks
-│       │   ├── utils/              # Utilities (formatPrice, queryClient)
-│       │   ├── App.jsx             # Main app component
-│       │   └── main.jsx            # Entry point
-│       ├── Dockerfile              # Frontend container
-│       ├── vite.config.js          # Vite configuration
-│       └── package.json            # Frontend dependencies
-│
-├── docker-compose.yml              # Multi-container orchestration
-├── nginx-production.conf           # Nginx reverse proxy config
-└── SETUP_GUIDE.md                  # Detailed installation guide
-```
+### Người dùng
+- ✅ Đăng ký / đăng nhập JWT
+- ✅ Duyệt sản phẩm với tìm kiếm & lọc nâng cao (danh mục, khoảng giá, sắp xếp)
+- ✅ Giỏ hàng (persistent Zustand)
+- ✅ Đặt hàng qua Zalo
+- ✅ Trang chi tiết sản phẩm
+- ✅ Blog / Tin tức
+- ✅ Responsive mobile
 
-## 🚀 Quick Start
+### Admin
+- ✅ Quản lý sản phẩm (CRUD + upload ảnh Cloudinary)
+- ✅ Quản lý banner
+- ✅ Quản lý bài viết / brand story
+- ✅ Quản lý danh mục
+- ✅ Quản lý tác giả
 
-### Prerequisites
-- Node.js 18+ or Docker Desktop
-- PostgreSQL 12+ (or use Docker)
-- Cloudinary account (for image uploads)
+### Trang chủ
+- ✅ Hero banner động (lấy từ API)
+- ✅ Giới thiệu thương hiệu Unigo (câu chuyện sinh viên + văn hoá Việt)
+- ✅ Sản phẩm nổi bật
+- ✅ Blog preview
+- ✅ Social feed (Facebook, TikTok)
+- ✅ Floating Zalo button
 
-### Option 1: Docker (Recommended)
+##  Lỗi đã sửa
 
+| Lỗi | Mô tả | Cách sửa |
+|-----|--------|----------|
+| **Bộ lọc trùng lặp** | Sidebar lọc hiện 2 lần trên desktop | Wrap mobile drawer trong `md:hidden` |
+| **CORS + 429** | Rate limiter trước CORS → response 429 không có CORS header | Chuyển `app.use(generalLimiter)` sau CORS middleware |
+| **Brand story ảnh** | `About.jsx` đọc sai field (`res?.post` thay vì `res?.data`) | Sửa thành `res?.data \|\| res?.post \|\| res` |
+| **Social links sai** | Facebook/TikTok dùng URL cũ | Cập nhật đúng URL thực tế |
+| **Sort dropdown** | Phần sắp xếp hiển thị dạng giá tiền | Đã đúng — dropdown `<select>` với options Mới nhất / Giá thấp → cao |
+
+## 🚀 Khởi động nhanh
+
+### Option 1: Docker
 ```bash
-# Start all services (PostgreSQL, Backend, Frontend)
 docker-compose up -d
-
-# Initialize database
 docker-compose exec backend npx prisma migrate dev
-
-# Access the application
 # Frontend: http://localhost:5173
-# Backend API: http://localhost:5000
-# Database: localhost:5432
+# Backend:  http://localhost:5000
 ```
 
-### Option 2: Local Development
+### Option 2: Local
 
-#### Backend Setup
+**Backend:**
 ```bash
 cd src/backend
-
-# Install dependencies
 npm install
+# Tạo file .env (xem mục Environment Variables)
+npx prisma migrate dev
+npm run dev
+```
 
-# Create .env file
-cat > .env << EOF
+**Frontend:**
+```bash
+cd src/frontend
+npm install
+npm run dev
+```
+
+## 🔐 Environment Variables
+
+### Backend (`.env`)
+```env
 DATABASE_URL=postgresql://postgres:password@localhost:5432/unigo
 PORT=5000
 NODE_ENV=development
@@ -119,290 +125,64 @@ JWT_EXPIRE=7d
 CLOUDINARY_CLOUD_NAME=your-cloud-name
 CLOUDINARY_API_KEY=your-api-key
 CLOUDINARY_API_SECRET=your-api-secret
-EOF
-
-# Setup database
-npx prisma migrate dev
-npx prisma generate
-
-# Start server (runs on port 5000)
-npm run dev
 ```
 
-#### Frontend Setup
-```bash
-cd src/frontend
-
-# Install dependencies
-npm install
-
-# Create .env.local file
-cat > .env.local << EOF
+### Frontend (`.env.local`)
+```env
 VITE_API_BASE_URL=http://localhost:5000
-EOF
-
-# Start dev server (runs on port 5173)
-npm run dev
 ```
 
-## 🔐 Environment Variables
+## 📡 API Endpoints chính
 
-### Backend (.env)
-| Variable | Example | Description |
-|----------|---------|-------------|
-| `DATABASE_URL` | `postgresql://user:pass@localhost:5432/unigo` | PostgreSQL connection |
-| `PORT` | `5000` | Server port |
-| `NODE_ENV` | `development` \| `production` | Environment mode |
-| `CORS_ORIGIN` | `http://localhost:5173` | Frontend URL for CORS |
-| `JWT_SECRET` | `your-secret-key` | JWT signing secret |
-| `JWT_EXPIRE` | `7d` | Token expiration time |
-| `CLOUDINARY_CLOUD_NAME` | `your-name` | Cloudinary cloud name |
-| `CLOUDINARY_API_KEY` | `your-key` | Cloudinary API key |
-| `CLOUDINARY_API_SECRET` | `your-secret` | Cloudinary API secret |
+| Method | Endpoint | Mô tả |
+|--------|----------|--------|
+| POST | `/api/auth/register` | Đăng ký |
+| POST | `/api/auth/login` | Đăng nhập |
+| GET | `/api/products` | Lấy danh sách sản phẩm (có lọc) |
+| GET | `/api/products/:id` | Chi tiết sản phẩm |
+| POST | `/api/products` | Tạo sản phẩm (admin) |
+| PUT | `/api/products/:id` | Sửa sản phẩm (admin) |
+| DELETE | `/api/products/:id` | Xóa sản phẩm (admin) |
+| GET | `/api/posts/:slug` | Lấy bài viết theo slug |
+| GET | `/api/posts/latest` | Bài viết mới nhất |
+| GET | `/api/banner` | Banner trang chủ |
 
-### Frontend (.env.local)
-| Variable | Example | Description |
-|----------|---------|-------------|
-| `VITE_API_BASE_URL` | `http://localhost:5000` | Backend API URL |
+## 📁 Cấu trúc thư mục
 
-## 📡 API Endpoints
-
-### Authentication
-- `POST /api/auth/register` - User registration
-- `POST /api/auth/login` - User login
-- `GET /api/auth/profile` - Get current user profile
-- `POST /api/auth/logout` - User logout
-
-### Products
-- `GET /api/products?search=...&category=...&minPrice=...&maxPrice=...&page=...&limit=...` - List products with filters
-- `GET /api/products/:id` - Get product details
-- `POST /api/products` - Create product (multipart, admin only)
-- `PUT /api/products/:id` - Update product (multipart, admin only)
-- `DELETE /api/products/:id` - Delete product (admin only)
-
-### Orders
-- `POST /api/orders` - Create order
-- `GET /api/orders` - List user orders (paginated)
-- `GET /api/orders/:id` - Get order details
-- `PUT /api/orders/:id/status` - Update order status (admin only)
-
-### Search Parameters
-```bash
-# Text search
-GET /api/products?search=vòng
-
-# Category filter
-GET /api/products?category=dihoc
-
-# Price range
-GET /api/products?minPrice=30000&maxPrice=100000
-
-# Pagination
-GET /api/products?page=1&limit=10
-
-# Combined
-GET /api/products?search=handmade&category=jewelry&minPrice=50000&maxPrice=200000&page=1&limit=20
+```
+unigo/
+├── src/
+│   ├── backend/
+│   │   ├── src/
+│   │   │   ├── controllers/
+│   │   │   ├── routes/
+│   │   │   ├── middlewares/
+│   │   │   ├── services/
+│   │   │   ├── schemas/
+│   │   │   ├── config/
+│   │   │   └── index.js
+│   │   └── prisma/
+│   │       ├── schema.prisma
+│   │       └── migrations/
+│   └── frontend/
+│       └── src/
+│           ├── components/
+│           ├── pages/
+│           ├── store/
+│           ├── hooks/
+│           ├── api/
+│           └── utils/
+├── docker-compose.yml
+└── nginx-production.conf
 ```
 
-## 🎨 Features
+## 📞 Liên hệ
 
-### User Features
-- ✅ User registration & login with JWT
-- ✅ Product browsing with search & filtering
-- ✅ Category browsing
-- ✅ Shopping cart (persistent with Zustand)
-- ✅ Order placement
-- ✅ Order history & tracking
-- ✅ Responsive mobile design
-
-### Admin Features
-- ✅ Product management (CRUD)
-- ✅ Image upload to Cloudinary
-- ✅ Order management & status updates
-- ✅ Advanced search & filter admin panel
-
-### Technical Features
-- ✅ JWT-based authentication
-- ✅ Cloudinary image integration
-- ✅ Full-text search
-- ✅ Price range filtering
-- ✅ Pagination
-- ✅ Error handling & validation
-- ✅ CORS support
-- ✅ Docker containerization
-- ✅ Database migrations
-
-## 📚 Documentation
-
-Detailed guides are included in the repository:
-
-| Document | Purpose |
-|----------|---------|
-| [SETUP_GUIDE.md](SETUP_GUIDE.md) | Complete installation & setup instructions |
-| [CLOUDINARY_UPLOAD_GUIDE.md](CLOUDINARY_UPLOAD_GUIDE.md) | Image upload configuration & usage |
-| [ADVANCED_SEARCH_GUIDE.md](ADVANCED_SEARCH_GUIDE.md) | Search & filter API documentation |
-| [COMPLETE_STATUS.md](COMPLETE_STATUS.md) | Comprehensive project status report |
-| [IMPLEMENTATION_SUMMARY.md](IMPLEMENTATION_SUMMARY.md) | Phase-by-phase implementation details |
-
-## 🧪 Testing
-
-### Test API with cURL
-```bash
-# Get all products
-curl "http://localhost:5000/api/products"
-
-# Search products
-curl "http://localhost:5000/api/products?search=vòng"
-
-# Filter by category
-curl "http://localhost:5000/api/products?category=dihoc"
-
-# Get product details
-curl "http://localhost:5000/api/products/1"
-
-# Login (returns JWT token)
-curl -X POST http://localhost:5000/api/auth/login \
-  -H "Content-Type: application/json" \
-  -d '{"email":"user@example.com","password":"password123"}'
-```
-
-### Test with Postman
-Import the Postman collection:
-```
-src/backend/Unigo_API.postman_collection.json
-```
-
-### Manual Testing
-1. Open frontend: http://localhost:5173
-2. Register a new account
-3. Browse products with search/filters
-4. Add items to cart
-5. Checkout (place order)
-6. View order history
-7. Login as admin to manage products
-
-## 🔧 Common Commands
-
-### Backend
-```bash
-cd src/backend
-
-npm run dev              # Start development server
-npm run build          # Build for production
-npm run start          # Start production server
-npm run migrate        # Run database migrations
-npx prisma studio    # Open Prisma Studio UI
-npm test              # Run tests (if configured)
-```
-
-### Frontend
-```bash
-cd src/frontend
-
-npm run dev           # Start development server
-npm run build        # Build for production
-npm run preview      # Preview production build
-npm run lint         # Lint code
-```
-
-### Docker
-```bash
-# Start all services
-docker-compose up -d
-
-# Stop services
-docker-compose down
-
-# View logs
-docker-compose logs -f backend
-docker-compose logs -f frontend
-
-# Rebuild images
-docker-compose up -d --build
-
-# Initialize database
-docker-compose exec backend npx prisma migrate dev
-```
-
-## 🐛 Known Issues & Fixes
-
-### Fixed Issues ✅
-- **JWT Version:** Downgraded to 9.0.2 (9.1.2 doesn't exist)
-- **Product Listing:** Fixed double-fetch with StrictMode + AbortController
-- **Image URLs:** Added validation & fallback in ProductCard
-- **State Management:** Unified Zustand stores with proper refetching
-- **Response Parsing:** Removed redundant `.data` nesting in API responses
-
-### Current Limitations
-- Payment integration (Stripe/MoMo) - planned
-- Product detail page - in progress
-- Order tracking visualization - planned
-
-## 📊 Database Schema
-
-Key entities:
-- **User** - Authentication & profile
-- **Product** - Handmade items with images
-- **Category** - Product categories
-- **Cart** - User shopping cart
-- **Order** - Order records
-- **OrderItem** - Individual items in orders
-
-View full schema: [src/backend/prisma/schema.prisma](src/backend/prisma/schema.prisma)
-
-## 🚦 Development Workflow
-
-1. **Branch Strategy:** Create feature branches from `main`
-2. **Commits:** Write clear commit messages
-3. **Testing:** Test locally before pushing
-4. **PR:** Create pull request for review
-5. **Deploy:** Merge to `main` for production deployment
-
-## 📞 Support & Troubleshooting
-
-### Port Already in Use
-```bash
-# Windows
-netstat -ano | findstr :5000
-taskkill /PID <PID> /F
-
-# macOS/Linux
-lsof -i :5000
-kill -9 <PID>
-```
-
-### Database Connection Issues
-```bash
-# Check PostgreSQL is running
-psql -U postgres -d unigo -c "SELECT 1"
-
-# Reset migrations
-npx prisma migrate reset
-```
-
-### Frontend Not Connecting to Backend
-- Verify `VITE_API_BASE_URL` in `.env.local`
-- Check CORS_ORIGIN in backend `.env`
-- Ensure backend is running on port 5000
-
-### Cloudinary Upload Fails
-- Verify credentials in `.env`
-- Check file size limits
-- Ensure correct image format (jpg, png, webp)
-
-## 📝 License
-
-Private project - All rights reserved
-
-## 👥 Contributors
-
-- Project developed as Mon Nho Handmade e-commerce platform
-- Full-stack implementation with modern architecture
-- Regular updates and improvements ongoing
+- **Zalo:** [0346.450.546](https://zalo.me/0346450546)
+- **Facebook:** [Unigo – Món Nhỏ](https://www.facebook.com/profile.php?id=61582809680392)
+- **TikTok:** [@mon_nho_unigo](https://www.tiktok.com/@mon_nho_unigo)
 
 ---
 
-**Last Updated:** April 22, 2026  
-**Version:** 1.0.0  
-**Status:** Production Ready 🚀
+**Cập nhật lần cuối:** Tháng 4, 2026 · **Phiên bản:** 1.1.0 · **Trạng thái:** Đang phát triển 🚀
 

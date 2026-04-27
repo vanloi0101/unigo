@@ -29,23 +29,20 @@ const BlogPreview = () => {
 
   if (loading) {
     return (
-      <section className="py-10 sm:py-12 md:py-16 bg-white">
+      <section className="py-10 sm:py-12 md:py-16 bg-brand-cream">
         <div className="max-w-7xl mx-auto px-3 sm:px-4 md:px-6">
-          <div className="text-center mb-6 sm:mb-8 md:mb-10">
+          <div className="flex items-baseline justify-between mb-6 sm:mb-8 md:mb-10">
             <h2 className="text-2xl sm:text-3xl font-serif font-bold text-brand-dark">
               Tin tức & Bài viết
             </h2>
-            <p className="mt-2 sm:mt-3 text-gray-600 text-sm sm:text-base">
-              Những chia sẻ mới nhất từ Món Nhỏ
-            </p>
           </div>
           <div className="grid grid-cols-2 md:grid-cols-3 gap-3 sm:gap-4 md:gap-6">
             {[...Array(3)].map((_, i) => (
-              <div key={i} className="bg-gray-100 rounded-xl overflow-hidden animate-pulse">
-                <div className="aspect-[16/10] bg-gray-200" />
+              <div key={i} className="bg-brand-pink/10 rounded-xl overflow-hidden animate-pulse">
+                <div className="aspect-[16/10] bg-brand-pink/20" />
                 <div className="p-4 space-y-3">
-                  <div className="h-5 bg-gray-200 rounded w-3/4" />
-                  <div className="h-4 bg-gray-200 rounded w-full" />
+                  <div className="h-5 bg-brand-pink/20 rounded w-3/4" />
+                  <div className="h-4 bg-brand-pink/20 rounded w-full" />
                 </div>
               </div>
             ))}
@@ -56,23 +53,34 @@ const BlogPreview = () => {
   }
 
   if (posts.length === 0) {
-    return null;
+    return (
+      <section className="py-10 sm:py-12 md:py-16 bg-brand-cream">
+        <div className="max-w-7xl mx-auto px-3 sm:px-4 md:px-6">
+          <div className="flex items-baseline justify-between mb-6 fade-up">
+            <h2 className="text-2xl sm:text-3xl font-serif font-bold text-brand-dark">Tin tức & Bài viết</h2>
+          </div>
+          <p className="text-brand-text/60 text-sm fade-up">
+            Chưa có bài viết nào. Ghé lại sớm nhé.
+          </p>
+        </div>
+      </section>
+    );
   }
 
   return (
-    <section className="py-10 sm:py-12 md:py-16 bg-white">
+    <section className="py-10 sm:py-12 md:py-16 bg-brand-cream">
       <div className="max-w-7xl mx-auto px-3 sm:px-4 md:px-6">
         {/* Header */}
-        <div className="text-center mb-6 sm:mb-8 md:mb-10 fade-up">
-          <span className="inline-block px-3 sm:px-4 py-1 sm:py-1.5 bg-purple-100 text-brand-purple text-xs sm:text-sm font-medium rounded-full mb-3 sm:mb-4">
-            Blog
-          </span>
+        <div className="flex items-baseline justify-between mb-6 sm:mb-8 md:mb-10 fade-up">
           <h2 className="text-2xl sm:text-3xl md:text-4xl font-serif font-bold text-brand-dark">
             Tin tức & Bài viết
           </h2>
-          <p className="mt-2 sm:mt-3 text-gray-600 max-w-lg mx-auto text-sm sm:text-base px-2">
-            Những chia sẻ mới nhất về handmade, tips làm đẹp và câu chuyện từ Món Nhỏ
-          </p>
+          <Link
+            to="/tin-tuc"
+            className="text-sm font-medium text-brand-purple hover:text-brand-dark transition-colors flex-shrink-0"
+          >
+            Xem tất cả →
+          </Link>
         </div>
 
         {/* Posts Grid */}
@@ -83,7 +91,7 @@ const BlogPreview = () => {
         </div>
 
         {/* View All Button */}
-        <div className="text-center mt-6 sm:mt-8 md:mt-10 fade-up">
+        <div className="mt-6 sm:mt-8 md:mt-10 fade-up">
           <Link
             to="/tin-tuc"
             className="inline-flex items-center gap-2 px-6 sm:px-8 py-2.5 sm:py-3 bg-brand-purple text-white font-medium rounded-full hover:bg-brand-dark transition-colors shadow-lg shadow-brand-purple/30 text-sm sm:text-base min-h-[44px] touch-manipulation"

@@ -201,6 +201,8 @@ export const createProduct = async (req, res) => {
       }
     }
 
+    const categoryId = category ? parseInt(category) : null;
+
     const product = await prisma.product.create({
       data: {
         name,
@@ -208,7 +210,7 @@ export const createProduct = async (req, res) => {
         price: parseFloat(price),
         imageUrl,
         stock: parseInt(stock) || 0,
-        category,
+        ...(categoryId ? { category: { connect: { id: categoryId } } } : {}),
       },
     });
 
@@ -260,7 +262,10 @@ export const updateProduct = async (req, res) => {
     if (description) updateData.description = description;
     if (price) updateData.price = parseFloat(price);
     if (stock !== undefined) updateData.stock = parseInt(stock);
-    if (category) updateData.category = category;
+    if (category) {
+      const categoryId = parseInt(category);
+      if (!isNaN(categoryId)) updateData.category = { connect: { id: categoryId } };
+    }
 
     // Handle image upload
     if (req.file) {

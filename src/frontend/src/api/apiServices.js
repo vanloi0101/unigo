@@ -131,15 +131,15 @@ export const blogAPI = {
   getPostsByCategory: (categorySlug, page = 1, limit = 10) =>
     axiosClient.get(`/posts/category/${categorySlug}`, { params: { page, limit } }),
 
-  // Public - Categories
+  // Public - Categories (Blog/News)
   getCategories: () =>
-    axiosClient.get('/categories'),
+    axiosClient.get('/blog/categories'),
 
   getCategoryTree: () =>
-    axiosClient.get('/categories/tree'),
+    axiosClient.get('/blog/categories/tree'),
 
   getCategoryBySlug: (slug) =>
-    axiosClient.get(`/categories/${slug}`),
+    axiosClient.get(`/blog/categories/${slug}`),
 
   // Public - Authors
   getAuthors: () =>
@@ -183,27 +183,27 @@ export const blogAPI = {
   adminBulkUpdateStatus: (ids, status) =>
     axiosClient.patch('/admin/posts/bulk-status', { ids, status }),
 
-  // Admin - Categories
+  // Admin - Categories (Blog/News)
   adminGetCategories: (page = 1, limit = 50) =>
-    axiosClient.get('/admin/categories', { params: { page, limit } }),
+    axiosClient.get('/admin/blog/categories', { params: { page, limit } }),
 
   adminGetCategoryById: (id) =>
-    axiosClient.get(`/admin/categories/${id}`),
+    axiosClient.get(`/admin/blog/categories/${id}`),
 
   adminCreateCategory: (data) =>
-    axiosClient.post('/admin/categories', data),
+    axiosClient.post('/admin/blog/categories', data),
 
   adminUpdateCategory: (id, data) =>
-    axiosClient.put(`/admin/categories/${id}`, data),
+    axiosClient.put(`/admin/blog/categories/${id}`, data),
 
   adminDeleteCategory: (id) =>
-    axiosClient.delete(`/admin/categories/${id}`),
+    axiosClient.delete(`/admin/blog/categories/${id}`),
 
   adminToggleCategoryActive: (id) =>
-    axiosClient.patch(`/admin/categories/${id}/toggle-active`),
+    axiosClient.patch(`/admin/blog/categories/${id}/toggle-active`),
 
   adminUpdateCategorySortOrder: (categories) =>
-    axiosClient.put('/admin/categories/sort-order', { categories }),
+    axiosClient.put('/admin/blog/categories/sort-order', { categories }),
 
   // Admin - Authors
   adminGetAuthors: (page = 1, limit = 20) =>

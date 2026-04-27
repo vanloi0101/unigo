@@ -5,7 +5,7 @@ import { useCart } from '../contexts/CartContext';
 import { getGuestCartTotalQuantity } from '../services/guestCartService';
 
 // Zalo contact info
-const ZALO_PHONE = '0123456789'; // Replace with actual Zalo number
+const ZALO_PHONE = import.meta.env.VITE_ZALO_PHONE || '0346450546';
 const ZALO_URL = `https://zalo.me/${ZALO_PHONE}`;
 
 export default function CartPage() {

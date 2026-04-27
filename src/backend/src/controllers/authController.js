@@ -123,8 +123,7 @@ export const login = async (req, res) => {
     };
 
     res.status(200).json({
-      status: "success",
-      message: "Đăng nhập thành công",
+      success: true,
       data: {
         user: userResponse,
         token,

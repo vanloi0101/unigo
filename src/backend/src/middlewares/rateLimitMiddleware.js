@@ -5,7 +5,7 @@ import rateLimit from "express-rate-limit";
 // Prevents brute force attacks
 export const authLimiter = rateLimit({
   windowMs: 15 * 60 * 1000, // 15 minutes
-  max: 5, // limit each IP to 5 attempts per windowMs
+  max: process.env.NODE_ENV === "development" ? 100 : 5, // relax limit in dev
   message: {
     success: false,
     message: "Quá nhiều lần thử đăng nhập, vui lòng thử lại sau 15 phút.",
