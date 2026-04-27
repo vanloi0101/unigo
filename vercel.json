@@ -1,6 +1,9 @@
 {
   "buildCommand": "cd src/frontend && npm install && npm run build",
   "outputDirectory": "src/frontend/dist",
+  "env": {
+    "VITE_API_URL": "https://positive-reprieve-production-f197.up.railway.app/api"
+  },
   "rewrites": [
     { "source": "/(.*)", "destination": "/index.html" }
   ]
