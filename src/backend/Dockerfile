@@ -1,6 +1,8 @@
 ﻿# Build stage
 FROM node:18-alpine AS builder
 
+RUN apk add --no-cache openssl
+
 WORKDIR /app
 
 # Copy package files
@@ -20,8 +22,8 @@ FROM node:18-alpine
 
 WORKDIR /app
 
-# Install dumb-init for proper signal handling
-RUN apk add --no-cache dumb-init
+# Install dumb-init and openssl for proper signal handling and Prisma
+RUN apk add --no-cache dumb-init openssl
 
 # Copy from builder
 COPY --from=builder /app/node_modules ./node_modules
