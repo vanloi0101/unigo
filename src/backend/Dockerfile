@@ -2,6 +2,8 @@
 FROM node:18-alpine AS builder
 
 RUN apk add --no-cache openssl
+# Update npm to latest version
+RUN npm install -g npm@latest
 
 WORKDIR /app
 
@@ -38,9 +40,9 @@ ENV NODE_ENV=production
 # Expose port
 EXPOSE 3000
 
-# Health check
-HEALTHCHECK --interval=30s --timeout=3s --start-period=5s --retries=3 \
-  CMD node -e "require('http').get('http://localhost:3000/api/health', (r) => {if (r.statusCode !== 200) throw new Error(r.statusCode)})"
+# Health check (use PORT env var, fallback to 3000)
+HEALTHCHECK --interval=30s --timeout=10s --start-period=15s --retries=3 \
+  CMD node -e "require('http').get('http://localhost:'+(process.env.PORT||3000)+'/api/health', (r) => {if (r.statusCode !== 200) throw new Error(r.statusCode)})"
 
 # Start application
 ENTRYPOINT ["dumb-init", "--"]
