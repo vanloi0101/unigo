@@ -1,3 +1,4 @@
+console.log("=== UNIGO BACKEND STARTING ===", new Date().toISOString());
 import express from "express";
 import cors from "cors";
 import helmet from "helmet";
@@ -37,6 +38,7 @@ const allowedOrigins = [
   'http://localhost:5173',
   'http://127.0.0.1:5173',
   config.CORS_ORIGIN,
+  process.env.FRONTEND_URL,
 ].filter(Boolean);
 
 app.use(
