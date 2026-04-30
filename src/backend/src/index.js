@@ -25,8 +25,7 @@ app.use(helmet({
 }));
 
 // Rate limiting - prevent brute force attacks
-const genera
-lLimiter = rateLimit({
+const generalLimiter = rateLimit({
   windowMs: 15 * 60 * 1000, // 15 minutes
   max: process.env.NODE_ENV === 'development' ? 1000 : 200,
   message: { success: false, message: 'Quá nhiều request, vui lòng thử lại sau.' },
