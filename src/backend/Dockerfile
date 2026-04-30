@@ -11,6 +11,7 @@ COPY package*.json ./
 # Copy prisma schema before install (needed for postinstall prisma generate)
 COPY prisma ./prisma/
 
+
 # Install dependencies
 RUN npm install --omit=dev && npm cache clean --force
 
