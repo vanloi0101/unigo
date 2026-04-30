@@ -3,7 +3,8 @@
   "build": {
     "builder": "DOCKERFILE",
     "dockerfilePath": "/src/backend/Dockerfile",
-    "buildEnvironment": "V3"
+    "buildEnvironment": "V3",
+    "NIXPACKS_NODE_VERSION": "20.17.0"
   },
   "deploy": {
     "runtime": "V2",
