@@ -1,7 +1,17 @@
 import axios from 'axios';
 
+const rawApiBase =
+  import.meta.env.VITE_API_BASE_URL ||
+  import.meta.env.VITE_API_URL ||
+  'https://positive-reprieve-production-f197.up.railway.app/api';
+
+// Normalize API base URL so requests always target backend routes under /api.
+const normalizedApiBase = rawApiBase.replace(/\/+$/, '').endsWith('/api')
+  ? rawApiBase.replace(/\/+$/, '')
+  : `${rawApiBase.replace(/\/+$/, '')}/api`;
+
 const axiosClient = axios.create({
-  baseURL: import.meta.env.VITE_API_BASE_URL || 'https://positive-reprieve-production-f197.up.railway.app/api',
+  baseURL: normalizedApiBase,
   headers: {
     'Content-Type': 'application/json',
   },
