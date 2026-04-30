@@ -35,10 +35,12 @@ app.use(helmet({
 const generalLimiter = createApiLimiter();
 
 // ==================== CORS Configuration ====================
-// FRONTEND_URLS can be a comma-separated list of allowed origins, e.g.
+// FRONTEND_URLS (or FRONTEND_URL) can be a comma-separated list of allowed origins, e.g.
 // FRONTEND_URLS="https://unigofe.vercel.app,https://unigo.id.vn"
-const envFrontendUrls = (process.env.FRONTEND_URLS || "")
-  .split(",")
+const envFrontendUrls = [
+  ...(process.env.FRONTEND_URLS || "").split(","),
+  ...(process.env.FRONTEND_URL || "").split(","),
+]
   .map((u) => u.trim())
   .filter(Boolean);
 
