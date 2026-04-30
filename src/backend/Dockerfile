@@ -2,8 +2,6 @@
 FROM node:18-alpine AS builder
 
 RUN apk add --no-cache openssl
-# Update npm to latest version
-RUN npm install -g npm@latest
 
 WORKDIR /app
 
@@ -26,8 +24,6 @@ WORKDIR /app
 
 # Install dumb-init and openssl for proper signal handling and Prisma
 RUN apk add --no-cache dumb-init openssl
-# Update npm in final image to match builder (prevents npm notice at runtime)
-RUN npm install -g npm@11.13.0
 
 # Copy from builder
 COPY --from=builder /app/node_modules ./node_modules

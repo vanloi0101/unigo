@@ -17,7 +17,7 @@ services:
       - ./src/backend/prisma/migrations:/docker-entrypoint-initdb.d
     healthcheck:
       test: ["CMD-SHELL", "pg_isready -U unigo_user -d unigo_db"]
-      interval: 10s
+      interval: 10s      docker-compose up backend      docker-compose up backend      docker-compose up backend
       timeout: 5s
       retries: 5
       start_period: 10s
