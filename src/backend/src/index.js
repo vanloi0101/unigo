@@ -48,6 +48,9 @@ const allowedOrigins = [
   // Production domains — add all Vercel/custom domains here
   'https://unigofe.vercel.app',
   'https://unigo-ten.vercel.app',
+  // Custom domain
+  'https://unigo.id.vn',
+  'https://www.unigo.id.vn',
   // Dynamic env vars (set in Railway dashboard)
   config.CORS_ORIGIN,
   process.env.FRONTEND_URL,
