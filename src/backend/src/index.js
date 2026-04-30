@@ -36,7 +36,7 @@ const generalLimiter = createApiLimiter();
 
 // ==================== CORS Configuration ====================
 // FRONTEND_URLS (or FRONTEND_URL) can be a comma-separated list of allowed origins, e.g.
-// FRONTEND_URLS="https://unigofe.vercel.app,https://unigo.id.vn"
+// FRONTEND_URLS="https://unigo.id.vn,https://www.unigo.id.vn"
 const envFrontendUrls = [
   ...(process.env.FRONTEND_URLS || "").split(","),
   ...(process.env.FRONTEND_URL || "").split(","),
@@ -47,10 +47,7 @@ const envFrontendUrls = [
 const allowedOrigins = [
   'http://localhost:5173',
   'http://127.0.0.1:5173',
-  // Production domains — add all Vercel/custom domains here
-  'https://unigofe.vercel.app',
-  'https://unigo-ten.vercel.app',
-  // Custom domain
+  // Production custom domains
   'https://unigo.id.vn',
   'https://www.unigo.id.vn',
   // Dynamic env vars (set in Railway dashboard)
