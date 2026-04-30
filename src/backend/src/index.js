@@ -17,6 +17,11 @@ import blogRoutes from "./routes/blogRoutes.js";
 
 const app = express();
 
+// If the app is running behind a proxy (Railway, Heroku, etc.),
+// enable trusting the first proxy so express-rate-limit and req.ip
+// use the X-Forwarded-For header correctly.
+app.set('trust proxy', 1);
+
 // ==================== Security Middlewares ====================
 // Helmet - Security headers (CSP, X-Frame-Options, etc.)
 app.use(helmet({
