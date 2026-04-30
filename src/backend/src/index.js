@@ -40,14 +40,8 @@ const allowedOrigins = [
   'http://127.0.0.1:5173',
   config.CORS_ORIGIN,
   process.env.FRONTEND_URL,
-https://www.unigo.id.vn/  // Production frontend deployed on Vercel
   'https://unigofe.vercel.app',
-  // In case a www subdomain is used
   'https://www.unigofe.vercel.app',
-  // Additional Vercel preview / alias URL provided by user
-  'https://unigofe-unigos-projects-14b9f185.vercel.app',
-  'https://www.unigofe-unigos-projects-14b9f185.vercel.app',
-  // Customer domains (added per request)
   'https://unigo.id.vn',
   'https://www.unigo.id.vn',
 ].filter(Boolean);
