@@ -45,10 +45,16 @@ const envFrontendUrls = (process.env.FRONTEND_URLS || "")
 const allowedOrigins = [
   'http://localhost:5173',
   'http://127.0.0.1:5173',
+  // Production domains — add all Vercel/custom domains here
+  'https://unigofe.vercel.app',
+  'https://unigo-ten.vercel.app',
+  // Dynamic env vars (set in Railway dashboard)
   config.CORS_ORIGIN,
   process.env.FRONTEND_URL,
   ...envFrontendUrls,
 ].filter(Boolean);
+
+console.log("🌐 CORS allowed origins:", allowedOrigins);
 
 app.use(
   cors({
