@@ -164,8 +164,7 @@ app.use((err, req, res, next) => {
 });
 
 // ==================== Start Server ====================
-const PORT = config.PORT;
-
+const PORT = process.env.PORT || config.PORT || 5000;
 app.listen(PORT, () => {
   console.log(`✅ Server đang chạy trên cổng ${PORT}`);
   console.log(`📍 Môi trường: ${config.NODE_ENV}`);
