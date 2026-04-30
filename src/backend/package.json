@@ -9,7 +9,9 @@
     "dev": "cross-env NODE_ENV=development nodemon src/index.js",
     "postinstall": "prisma generate",
     "db:migrate": "prisma migrate deploy",
-    "start:migrate": "npm run db:migrate && npm start"
+    "start:migrate": "npm run db:migrate && npm start",
+    "seed:admin": "node create-admin.js",
+    "seed:brand-story": "node seed-brand-story.js"
   },
   "keywords": [
     "handmade",
