@@ -3,6 +3,7 @@ import express from "express";
 import cors from "cors";
 import helmet from "helmet";
 import rateLimit from "express-rate-limit";
+import { createApiLimiter } from "./middlewares/rateLimitMiddleware.js";
 import config from "./config/env.js";
 import prisma from "./config/database.js";
 
@@ -30,13 +31,8 @@ app.use(helmet({
 }));
 
 // Rate limiting - prevent brute force attacks
-const generalLimiter = rateLimit({
-  windowMs: 15 * 60 * 1000, // 15 minutes
-  max: process.env.NODE_ENV === 'development' ? 1000 : 200,
-  message: { success: false, message: 'Quá nhiều request, vui lòng thử lại sau.' },
-  standardHeaders: true,
-  legacyHeaders: false,
-});
+// Use factory so the limiter is created after `trust proxy` is set
+const generalLimiter = createApiLimiter();
 
 // ==================== CORS Configuration ====================
 const allowedOrigins = [
