@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import axiosClient from '../api/axiosClient';
+import logoImg from '../assets/logo_unigo.png';
 
 const FALLBACK = {
   title: 'Unigo không chỉ\nlà vòng tay.',
@@ -41,9 +42,9 @@ export default function About() {
         <div className="flex-1 relative fade-up">
           <div className="absolute -inset-4 bg-brand-pink/20 rounded-[3rem] transform -rotate-3"></div>
           <img
-            src={thumbnail || 'https://placehold.co/600x600/FFE5DD/9B7BAE?text=Unigo+%E2%99%A1'}
-            alt="Câu chuyện thương hiệu Unigo"
-            className="relative rounded-[2.5rem] shadow-xl w-full object-cover aspect-square"
+            src={thumbnail || logoImg}
+            alt="Câu chuyện thương hiệu Món Nhỏ"
+            className="relative rounded-[2.5rem] shadow-xl w-full object-contain aspect-square bg-[#FFF8F5] p-6"
           />
         </div>
 

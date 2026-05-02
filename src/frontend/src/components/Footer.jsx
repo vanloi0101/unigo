@@ -1,12 +1,15 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
+import logoImg from '../assets/logo_unigo.png';
 
 export default function Footer() {
   return (
     <footer className="bg-[#2a2432] text-gray-300 pt-20 pb-10 px-6">
       <div className="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-4 gap-12 mb-16">
         <div className="md:col-span-2">
-          <Link to="/" className="font-serif font-bold text-3xl text-white mb-6 block hover:text-brand-pink transition-colors">Món Nhỏ ♡</Link>
+          <Link to="/" className="mb-6 block hover:opacity-85 transition-opacity">
+            <img src={logoImg} alt="Món Nhỏ Handmade Jewelry" className="h-16 w-auto object-contain brightness-0 invert" />
+          </Link>
           <p className="text-gray-400 max-w-sm mb-8 leading-relaxed">Thương hiệu trang sức handmade dành riêng cho thế hệ trẻ. Mang thiết kế thanh lịch, chất liệu bền bỉ và giá thành hợp lý.</p>
         </div>
         <div>

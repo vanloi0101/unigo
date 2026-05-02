@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
-import { FaGem, FaBars, FaTimes, FaUser, FaSignOutAlt, FaShoppingCart, FaQuestionCircle } from 'react-icons/fa';
+import { FaBars, FaTimes, FaUser, FaSignOutAlt, FaShoppingCart, FaQuestionCircle } from 'react-icons/fa';
+import logoImg from '../assets/logo_unigo.png';
 import { Link, useNavigate, useLocation } from 'react-router-dom';
 import useAuthStore from '../store/useAuthStore';
 import { useCart } from '../contexts/CartContext';
@@ -41,8 +42,8 @@ export default function Header() {
   return (
     <header className={`fixed w-full top-0 z-40 transition-all duration-300 ${scrolled ? 'shadow-md glass-nav py-3' : 'bg-transparent py-5'}`}>
       <div className="max-w-7xl mx-auto px-6 flex justify-between items-center">
-        <Link to="/" className="font-serif font-bold text-2xl text-brand-purple flex items-center gap-2 hover:text-brand-pink transition-colors">
-          <FaGem className="text-xl text-brand-pink" /> Món Nhỏ
+        <Link to="/" className="flex items-center hover:opacity-85 transition-opacity">
+          <img src={logoImg} alt="Món Nhỏ Handmade Jewelry" className="h-14 w-auto object-contain" />
         </Link>
 
         <nav className="hidden md:flex items-center gap-8 font-medium text-brand-dark" aria-label="Điều hướng chính">
