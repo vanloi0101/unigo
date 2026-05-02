@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { FaBars, FaTimes, FaUser, FaSignOutAlt, FaShoppingCart, FaQuestionCircle } from 'react-icons/fa';
-import logoImg from '../assets/logo_unigo.png';
 import { Link, useNavigate, useLocation } from 'react-router-dom';
+import BraceletLogo from './BraceletLogo';
 import useAuthStore from '../store/useAuthStore';
 import { useCart } from '../contexts/CartContext';
 
@@ -42,8 +42,12 @@ export default function Header() {
   return (
     <header className={`fixed w-full top-0 z-40 transition-all duration-300 ${scrolled ? 'shadow-md glass-nav py-3' : 'bg-transparent py-5'}`}>
       <div className="max-w-7xl mx-auto px-6 flex justify-between items-center">
-        <Link to="/" className="flex items-center hover:opacity-85 transition-opacity">
-          <img src={logoImg} alt="Món Nhỏ Handmade Jewelry" className="h-14 w-auto object-contain" />
+        <Link to="/" className="flex items-center gap-2.5 hover:opacity-85 transition-opacity group">
+          <BraceletLogo size={44} />
+          <div className="flex flex-col leading-tight">
+            <span className="font-serif font-bold text-xl text-brand-purple group-hover:text-brand-pink transition-colors">Món Nhỏ</span>
+            <span className="text-[10px] tracking-widest text-gray-400 uppercase">Handmade Jewelry</span>
+          </div>
         </Link>
 
         <nav className="hidden md:flex items-center gap-8 font-medium text-brand-dark" aria-label="Điều hướng chính">
