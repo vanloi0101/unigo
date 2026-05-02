@@ -10,7 +10,7 @@ const DEFAULT_CONTENT = {
   description: 'Trang sức handmade thiết kế riêng. Chất liệu an toàn, không gỉ sét. Món quà nhỏ bé mang ngàn ý nghĩa cho ngày thêm vui.',
   buttonText: 'Xem Bộ Sưu Tập',
   buttonLink: '#products',
-  button2Text: 'Câu chuyện của Mận',
+  button2Text: 'Câu chuyện của Món Nhỏ',
   button2Link: '#about',
 };
 

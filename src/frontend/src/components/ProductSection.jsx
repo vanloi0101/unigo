@@ -61,7 +61,7 @@ export default function ProductSection({ onOpen }) {
           ) : (
             <div className="col-span-full py-16 text-center">
               <p className="font-serif text-2xl text-brand-dark mb-2">Chưa có sản phẩm nào.</p>
-              <p className="text-brand-purple/60 text-sm">Ghé lại sớm nhé — Mận đang làm thêm.</p>
+              <p className="text-brand-purple/60 text-sm">Ghé lại sớm nhé — Món Nhỏ đang làm thêm.</p>
             </div>
           )}
         </div>

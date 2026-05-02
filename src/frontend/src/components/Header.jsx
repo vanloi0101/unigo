@@ -48,9 +48,9 @@ export default function Header() {
         <nav className="hidden md:flex items-center gap-8 font-medium text-brand-dark" aria-label="Điều hướng chính">
           <Link to="/" className="hover:text-brand-pink transition-colors">Trang chủ</Link>
           {isHomePage ? (
-            <a href="#about" className="hover:text-brand-pink transition-colors">Về Mận</a>
+            <a href="#about" className="hover:text-brand-pink transition-colors">Về Món Nhỏ</a>
           ) : (
-            <Link to="/#about" className="hover:text-brand-pink transition-colors">Về Mận</Link>
+            <Link to="/#about" className="hover:text-brand-pink transition-colors">Về Món Nhỏ</Link>
           )}
           <Link to="/products" className="hover:text-brand-pink transition-colors">Sản Phẩm</Link>
           <Link to="/tin-tuc" className="hover:text-brand-pink transition-colors">Tin tức</Link>
@@ -122,9 +122,9 @@ export default function Header() {
         <div id="mobile-menu" className="md:hidden bg-white shadow-lg mt-2 mx-6 rounded-lg p-4 space-y-3" role="navigation" aria-label="Menu điều hướng">
           <Link to="/" onClick={() => setMobileMenuOpen(false)} className="block text-brand-dark hover:text-brand-pink font-medium py-2">Trang chủ</Link>
           {isHomePage ? (
-            <a href="#about" onClick={() => setMobileMenuOpen(false)} className="block text-brand-dark hover:text-brand-pink font-medium py-2">Về Mận</a>
+            <a href="#about" onClick={() => setMobileMenuOpen(false)} className="block text-brand-dark hover:text-brand-pink font-medium py-2">Về Món Nhỏ</a>
           ) : (
-            <Link to="/#about" onClick={() => setMobileMenuOpen(false)} className="block text-brand-dark hover:text-brand-pink font-medium py-2">Về Mận</Link>
+            <Link to="/#about" onClick={() => setMobileMenuOpen(false)} className="block text-brand-dark hover:text-brand-pink font-medium py-2">Về Món Nhỏ</Link>
           )}
           <Link to="/products" onClick={() => setMobileMenuOpen(false)} className="block text-brand-dark hover:text-brand-pink font-medium py-2">Sản Phẩm</Link>
           <Link to="/tin-tuc" onClick={() => setMobileMenuOpen(false)} className="block text-brand-dark hover:text-brand-pink font-medium py-2">Tin tức</Link>

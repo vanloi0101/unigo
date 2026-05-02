@@ -4,7 +4,7 @@ const SOCIAL_LINKS = [
   {
     platform: 'TikTok',
     handle: '@mon_nho_unigo',
-    description: 'Xem Mận làm đồ, review vòng tay, và những video nhỏ đáng yêu.',
+    description: 'Xem Món Nhỏ làm đồ, review vòng tay, và những video nhỏ đáng yêu.',
     href: 'https://www.tiktok.com/@mon_nho_unigo',
     cta: 'Theo dõi TikTok',
   },
@@ -26,7 +26,7 @@ export default function SocialFeed() {
             Theo dõi hành trình
           </h2>
           <p className="text-brand-purple/60 text-sm sm:text-base max-w-xs sm:text-right">
-            Mận hay đăng quá trình làm đồ lên đây.
+            Món Nhỏ hay đăng quá trình làm đồ lên đây.
           </p>
         </div>
 
