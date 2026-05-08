@@ -14,11 +14,16 @@ const BlogPreview = () => {
     const fetchLatestPosts = async () => {
       try {
         const response = await blogAPI.getLatestPosts(3);
-        if (response.success) {
+        console.log('Blog API Response:', response);
+        if (response.success && Array.isArray(response.data) && response.data.length > 0) {
           setPosts(response.data);
+        } else {
+          console.warn('No blog posts from API, using fallback');
+          setPosts([]);
         }
       } catch (err) {
         console.error('Error fetching latest posts:', err);
+        setPosts([]);
       } finally {
         setLoading(false);
       }
