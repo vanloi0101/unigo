@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import Hero from '../components/Hero';
+import BrandIntro from '../components/BrandIntro';
 import TrustBadges from '../components/TrustBadges';
 import ProductSection from '../components/ProductSection';
 import ProductModal from '../components/ProductModal';
@@ -34,6 +35,7 @@ export default function Home() {
         description="Chào mừng bạn đến với Món Nhỏ Handmade. Nơi cung cấp những mẫu vòng tay ấn tượng nhất." 
       />
       <Hero />
+      <BrandIntro />
       <TrustBadges />
       <ProductSection onOpen={handleOpen} />
       <About />

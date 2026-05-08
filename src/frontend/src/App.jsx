@@ -28,6 +28,7 @@ const HelpPage      = lazy(() => import('./pages/HelpPage'));
 const Login         = lazy(() => import('./pages/Login'));
 const Register      = lazy(() => import('./pages/Register'));
 const TestProducts  = lazy(() => import('./pages/TestProducts'));
+const AboutPage     = lazy(() => import('./pages/AboutPage'));
 
 // Admin pages (heaviest — definitely lazy)
 const AdminDashboard  = lazy(() => import('./pages/AdminDashboard'));
@@ -82,6 +83,9 @@ export default function App() {
             } />
             <Route path="/help" element={
               <ErrorBoundary><Suspense fallback={<PageLoader />}><HelpPage /></Suspense></ErrorBoundary>
+            } />
+            <Route path="/ve-chung-toi" element={
+              <ErrorBoundary><Suspense fallback={<PageLoader />}><AboutPage /></Suspense></ErrorBoundary>
             } />
           </Route>
 

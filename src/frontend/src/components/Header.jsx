@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { FaUser, FaSignOutAlt, FaShoppingCart, FaQuestionCircle } from 'react-icons/fa';
-import { Link, useNavigate, useLocation } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import BraceletLogo from './BraceletLogo';
 import useAuthStore from '../store/useAuthStore';
 import { useCart } from '../contexts/CartContext';
@@ -11,8 +11,6 @@ export default function Header() {
   const { isAuthenticated, user, logout } = useAuthStore();
   const { cartCount, fetchCartCount, clearCartState } = useCart();
   const navigate = useNavigate();
-  const location = useLocation();
-  const isHomePage = location.pathname === '/';
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 50);
@@ -53,11 +51,7 @@ export default function Header() {
         {/* Desktop nav */}
         <nav className="hidden md:flex items-center gap-8 font-medium text-brand-dark" aria-label="Điều hướng chính">
           <Link to="/" className="hover:text-brand-pink transition-colors">Trang chủ</Link>
-          {isHomePage ? (
-            <a href="#about" className="hover:text-brand-pink transition-colors">Về Món Nhỏ</a>
-          ) : (
-            <Link to="/#about" className="hover:text-brand-pink transition-colors">Về Món Nhỏ</Link>
-          )}
+          <Link to="/ve-chung-toi" className="hover:text-brand-pink transition-colors">Về Món Nhỏ</Link>
           <Link to="/products" className="hover:text-brand-pink transition-colors">Sản Phẩm</Link>
           <Link to="/tin-tuc" className="hover:text-brand-pink transition-colors">Tin tức</Link>
           <Link to="/help" className="hover:text-brand-pink transition-colors flex items-center gap-1">

@@ -3,12 +3,12 @@ import axiosClient from '../api/axiosClient';
 import logoImg from '../assets/logo_unigo.png';
 
 const FALLBACK = {
-  title: 'Unigo không chỉ\nlà vòng tay.',
+  title: 'Món Nhỏ không chỉ\nlà vòng tay.',
   paragraphs: [
     'Chúng tôi bắt đầu từ những ngày còn là sinh viên, khi việc tìm một chiếc vòng tay giá rẻ nhưng vẫn có ý nghĩa và cá tính không hề dễ. Những sản phẩm đẹp thường quá đắt, còn những chiếc vòng đơn giản lại thiếu câu chuyện.',
-    'Vì vậy, chúng tôi tạo ra Unigo – những chiếc vòng tay mang phong cách trẻ trung, dành cho học sinh, sinh viên, nhưng vẫn chứa đựng văn hoá Việt Nam trong từng chi tiết nhỏ.',
-    'Chúng tôi tin rằng, như tinh thần mà Thép Mới từng thể hiện, lòng yêu nước bắt đầu từ những điều giản dị. Không cần lớn lao, chỉ cần mỗi ngày mang theo một phần bản sắc của mình.',
-    'Đó là cách thế hệ trẻ kết nối với văn hoá Việt, thể hiện cá tính và lan toả giá trị theo cách riêng.',
+    'Vì vậy, Món Nhỏ ra đời – những chiếc vòng tay handmade mang phong cách trẻ trung, dành cho học sinh và sinh viên, với mức giá phù hợp nhưng vẫn đủ tinh tế để làm người nhận cảm động.',
+    'Không đơn thuần là một chiếc vòng tay, mỗi sản phẩm của Món Nhỏ đều đại diện cho một câu chuyện, một cảm xúc hoặc một lời nhắn gửi dành cho người nhận.',
+    '"Không cần quá lớn lao, chỉ cần đúng lúc và đúng người — một Món Nhỏ thôi cũng đủ tạo nên kỷ niệm."',
   ],
   thumbnail: null,
 };
