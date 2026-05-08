@@ -114,9 +114,9 @@ export default function AboutPage() {
               Tại sao lại là Món Nhỏ?
             </h2>
             <p className="text-gray-600 leading-relaxed mb-5 text-lg">
-              Chúng tôi bắt đầu từ những ngày còn là sinh viên FPT, khi việc tìm một chiếc vòng tay giá rẻ
-              nhưng vẫn có ý nghĩa và cá tính không hề dễ. Những sản phẩm đẹp thường quá đắt, còn những
-              chiếc vòng đơn giản lại thiếu câu chuyện.
+              Chúng tôi bắt đầu từ một niềm đam mê đơn giản: tìm những chiếc vòng tay giá rẻ nhưng vẫn có 
+              ý nghĩa và cá tính. Những sản phẩm đẹp thường quá đắt, còn những chiếc vòng đơn giản lại 
+              thiếu câu chuyện. Vì vậy, Món Nhỏ ra đời.
             </p>
             <p className="text-gray-600 leading-relaxed mb-5 text-lg">
               Vì vậy, Món Nhỏ ra đời — để biến những khoảnh khắc bình thường thành kỷ niệm đáng nhớ.
