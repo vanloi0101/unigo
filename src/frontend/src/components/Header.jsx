@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { FaUser, FaSignOutAlt, FaShoppingCart, FaQuestionCircle } from 'react-icons/fa';
+import { FaUser, FaSignOutAlt, FaShoppingCart, FaQuestionCircle, FaBars, FaTimes } from 'react-icons/fa';
 import { Link, useNavigate } from 'react-router-dom';
 import BraceletLogo from './BraceletLogo';
 import useAuthStore from '../store/useAuthStore';
@@ -8,6 +8,7 @@ import { useCart } from '../contexts/CartContext';
 export default function Header() {
   const [scrolled, setScrolled] = useState(false);
   const [bounceKey, setBounceKey] = useState(0);
+  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const { isAuthenticated, user, logout } = useAuthStore();
   const { cartCount, fetchCartCount, clearCartState } = useCart();
   const navigate = useNavigate();
@@ -34,12 +35,22 @@ export default function Header() {
     navigate('/');
   };
 
+  const closeMobileMenu = () => setMobileMenuOpen(false);
+
+  const navLinks = [
+    { label: 'Trang chủ', path: '/' },
+    { label: 'Về Món Nhỏ', path: '/ve-chung-toi' },
+    { label: 'Sản Phẩm', path: '/products' },
+    { label: 'Tin tức', path: '/tin-tuc' },
+    { label: 'Hỗ trợ', path: '/help' },
+  ];
+
   return (
     <header className={`fixed w-full top-0 z-40 transition-all duration-300 ${scrolled ? 'shadow-md glass-nav py-3' : 'bg-transparent py-5'}`}>
       <div className="max-w-7xl mx-auto px-4 md:px-6 flex justify-between items-center">
 
         {/* Logo */}
-        <Link to="/" className="flex items-center gap-2 md:gap-2.5 hover:opacity-85 transition-opacity group">
+        <Link to="/" className="flex items-center gap-2 md:gap-2.5 hover:opacity-85 transition-opacity group" onClick={closeMobileMenu}>
           <BraceletLogo size={36} className="md:hidden" />
           <BraceletLogo size={44} className="hidden md:block" />
           <div className="flex flex-col leading-tight">
@@ -50,13 +61,11 @@ export default function Header() {
 
         {/* Desktop nav */}
         <nav className="hidden md:flex items-center gap-8 font-medium text-brand-dark" aria-label="Điều hướng chính">
-          <Link to="/" className="hover:text-brand-pink transition-colors">Trang chủ</Link>
-          <Link to="/ve-chung-toi" className="hover:text-brand-pink transition-colors">Về Món Nhỏ</Link>
-          <Link to="/products" className="hover:text-brand-pink transition-colors">Sản Phẩm</Link>
-          <Link to="/tin-tuc" className="hover:text-brand-pink transition-colors">Tin tức</Link>
-          <Link to="/help" className="hover:text-brand-pink transition-colors flex items-center gap-1">
-            <FaQuestionCircle className="text-sm" /> Hỗ trợ
-          </Link>
+          {navLinks.map((link) => (
+            <Link key={link.path} to={link.path} className="hover:text-brand-pink transition-colors">
+              {link.label}
+            </Link>
+          ))}
         </nav>
 
         {/* Desktop actions */}
@@ -106,17 +115,9 @@ export default function Header() {
           )}
         </div>
 
-        {/* Mobile: cart icon + zalo button */}
+        {/* Mobile: hamburger menu */}
         <div className="md:hidden flex items-center gap-2">
-          <a
-            href="https://zalo.me/0346450546"
-            target="_blank"
-            rel="noreferrer"
-            className="text-xs bg-brand-purple text-white px-3 py-1.5 rounded-full font-medium"
-          >
-            Zalo
-          </a>
-          <Link to="/cart" className="relative p-2 text-brand-purple">
+          <Link to="/cart" className="relative p-2 text-brand-purple hover:text-brand-pink transition-colors">
             <FaShoppingCart className="text-xl" />
             {cartCount > 0 && (
               <span
@@ -127,9 +128,68 @@ export default function Header() {
               </span>
             )}
           </Link>
+          <button
+            onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
+            className="p-2 text-brand-purple hover:text-brand-pink transition-colors"
+            aria-label="Mở menu điều hướng"
+          >
+            {mobileMenuOpen ? <FaTimes className="text-2xl" /> : <FaBars className="text-2xl" />}
+          </button>
         </div>
-
       </div>
+
+      {/* Mobile Menu */}
+      {mobileMenuOpen && (
+        <div className="md:hidden absolute top-full left-0 w-full bg-white shadow-lg border-t border-gray-100 animate-slide-down">
+          <nav className="flex flex-col p-4 space-y-1">
+            {navLinks.map((link) => (
+              <Link
+                key={link.path}
+                to={link.path}
+                onClick={closeMobileMenu}
+                className="px-4 py-3 rounded-lg text-brand-dark hover:bg-brand-cream hover:text-brand-purple font-medium transition-colors"
+              >
+                {link.label}
+              </Link>
+            ))}
+            <hr className="my-2" />
+            <a
+              href="https://zalo.me/0346450546"
+              target="_blank"
+              rel="noreferrer"
+              onClick={closeMobileMenu}
+              className="px-4 py-3 rounded-lg bg-brand-purple text-white font-medium hover:bg-brand-dark transition-colors text-center"
+            >
+              💬 Tư vấn Zalo
+            </a>
+            {isAuthenticated ? (
+              <>
+                <div className="px-4 py-3 flex items-center gap-2 bg-purple-50 rounded-lg">
+                  <FaUser className="text-brand-purple text-sm" />
+                  <span className="text-sm font-medium text-gray-700">{user?.name || 'Admin'}</span>
+                </div>
+                <button
+                  onClick={() => {
+                    handleLogout();
+                    closeMobileMenu();
+                  }}
+                  className="px-4 py-3 rounded-lg text-red-600 hover:bg-red-50 font-medium transition-colors flex items-center gap-2"
+                >
+                  <FaSignOutAlt className="text-sm" /> Đăng Xuất
+                </button>
+              </>
+            ) : (
+              <Link
+                to="/login"
+                onClick={closeMobileMenu}
+                className="px-4 py-3 rounded-lg border-2 border-brand-purple text-brand-purple hover:bg-brand-purple hover:text-white font-medium transition-colors flex items-center gap-2 justify-center"
+              >
+                <FaUser /> Đăng Nhập
+              </Link>
+            )}
+          </nav>
+        </div>
+      )}
     </header>
   );
 }
