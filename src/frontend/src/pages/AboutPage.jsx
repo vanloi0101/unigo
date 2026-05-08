@@ -28,38 +28,22 @@ const CORE_VALUES = [
 
 const PHASES = [
   {
-    phase: 'Giai đoạn 1',
-    title: 'Xây dựng nền móng',
-    items: [
-      'Xây dựng hình ảnh thương hiệu',
-      'Tạo tệp khách hàng đầu tiên',
-      'Tăng độ phủ trên TikTok & Facebook',
-      'Hoàn thiện quy trình bán hàng',
-    ],
-    color: 'bg-brand-purple',
-    active: true,
+    icon: '🌱',
+    title: 'Những ngày đầu',
+    subtitle: 'Bắt đầu từ vài chiếc vòng nhỏ và thật nhiều sự chân thành.',
+    color: 'bg-green-100 text-green-800',
   },
   {
-    phase: 'Giai đoạn 2',
-    title: 'Mở rộng cộng đồng',
-    items: [
-      'Mở rộng danh mục sản phẩm',
-      'Xây dựng cộng đồng khách hàng trung thành',
-      'Hợp tác KOL/KOC nhỏ',
-      'Kết nối với sinh viên toàn quốc',
-    ],
-    color: 'bg-brand-pink',
-    active: false,
+    icon: '💌',
+    title: 'Những người đồng hành',
+    subtitle: 'Mỗi lượt follow, mỗi đơn hàng đều giúp Món Nhỏ lớn lên từng ngày.',
+    color: 'bg-pink-100 text-pink-800',
   },
   {
-    phase: 'Giai đoạn 3',
-    title: 'Phát triển dài hạn',
-    items: [
-      'Mở rộng mô hình quà tặng handmade',
-      'Phát triển thương hiệu dài hạn tại Việt Nam',
-    ],
-    color: 'bg-brand-dark',
-    active: false,
+    icon: '✨',
+    title: 'Chặng đường phía trước',
+    subtitle: 'Hy vọng một ngày nào đó, Món Nhỏ sẽ xuất hiện trong những khoảnh khắc đẹp nhất của bạn.',
+    color: 'bg-purple-100 text-purple-800',
   },
 ];
 
@@ -222,31 +206,19 @@ export default function AboutPage() {
         <div className="max-w-5xl mx-auto">
           <div className="text-center mb-12 fade-up">
             <h2 className="font-serif text-3xl md:text-4xl font-bold text-brand-dark mb-4">
-              Hành trình phía trước
+              Hành trình chúng mình cùng nhau
             </h2>
-            <p className="text-gray-500 text-lg">Từng bước xây dựng thương hiệu bền vững</p>
+            <p className="text-gray-500 text-lg">Từng bước nhỏ để tạo nên một thương hiệu đầy cảm xúc</p>
           </div>
           <div className="flex flex-col md:flex-row gap-6">
             {PHASES.map((p, i) => (
               <div
                 key={i}
-                className={`fade-up flex-1 rounded-2xl p-8 text-white ${p.color} ${p.active ? 'ring-4 ring-offset-2 ring-brand-purple/30 shadow-lg' : 'opacity-80'}`}
+                className={`fade-up flex-1 rounded-2xl p-8 ${p.color}`}
               >
-                {p.active && (
-                  <span className="inline-block text-xs font-bold uppercase tracking-widest bg-white/20 px-3 py-1 rounded-full mb-4">
-                    Đang triển khai
-                  </span>
-                )}
-                <p className="text-xs uppercase tracking-widest opacity-70 mb-1">{p.phase}</p>
-                <h3 className="font-bold text-xl mb-5">{p.title}</h3>
-                <ul className="space-y-2">
-                  {p.items.map((item, j) => (
-                    <li key={j} className="flex items-start gap-2 text-sm opacity-90">
-                      <span className="mt-1">✓</span>
-                      <span>{item}</span>
-                    </li>
-                  ))}
-                </ul>
+                <div className="text-4xl mb-4">{p.icon}</div>
+                <h3 className="font-bold text-xl mb-3 font-serif">{p.title}</h3>
+                <p className="text-sm leading-relaxed opacity-90">{p.subtitle}</p>
               </div>
             ))}
           </div>
