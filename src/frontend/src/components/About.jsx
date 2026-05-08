@@ -5,8 +5,8 @@ import logoImg from '../assets/logo_unigo.png';
 const FALLBACK = {
   title: 'Món Nhỏ không chỉ\nlà vòng tay.',
   paragraphs: [
-    'Chúng tôi bắt đầu từ những ngày còn là sinh viên, khi việc tìm một chiếc vòng tay giá rẻ nhưng vẫn có ý nghĩa và cá tính không hề dễ. Những sản phẩm đẹp thường quá đắt, còn những chiếc vòng đơn giản lại thiếu câu chuyện.',
-    'Vì vậy, Món Nhỏ ra đời – những chiếc vòng tay handmade mang phong cách trẻ trung, dành cho học sinh và sinh viên, với mức giá phù hợp nhưng vẫn đủ tinh tế để làm người nhận cảm động.',
+    'Chúng tôi bắt đầu từ một niềm đam mê đơn giản: tìm những chiếc vòng tay giá rẻ nhưng vẫn có ý nghĩa và cá tính. Những sản phẩm đẹp thường quá đắt, còn những chiếc vòng đơn giản lại thiếu câu chuyện. Vì vậy, Món Nhỏ ra đời.',
+    'Vì vậy, Món Nhỏ ra đời – những chiếc vòng tay handmade mang phong cách trẻ trung, dành cho giới trẻ, với mức giá phù hợp nhưng vẫn đủ tinh tế để làm người nhận cảm động.',
     'Không đơn thuần là một chiếc vòng tay, mỗi sản phẩm của Món Nhỏ đều đại diện cho một câu chuyện, một cảm xúc hoặc một lời nhắn gửi dành cho người nhận.',
     '"Không cần quá lớn lao, chỉ cần đúng lúc và đúng người — một Món Nhỏ thôi cũng đủ tạo nên kỷ niệm."',
   ],
