@@ -52,20 +52,30 @@ const BlogPreview = () => {
     );
   }
 
-  if (posts.length === 0) {
-    return (
-      <section className="py-10 sm:py-12 md:py-16 bg-brand-cream">
-        <div className="max-w-7xl mx-auto px-3 sm:px-4 md:px-6">
-          <div className="flex items-baseline justify-between mb-6 fade-up">
-            <h2 className="text-2xl sm:text-3xl font-serif font-bold text-brand-dark">Tin tức & Bài viết</h2>
-          </div>
-          <p className="text-brand-text/60 text-sm fade-up">
-            Chưa có bài viết nào. Ghé lại sớm nhé.
-          </p>
-        </div>
-      </section>
-    );
-  }
+  // Fallback placeholder posts if no data
+  const displayPosts = posts.length > 0 ? posts : [
+    {
+      id: 'temp-1',
+      title: 'Cách chọn vòng tay phù hợp với kiểu thời trang',
+      excerpt: 'Khám phá những mẹo để chọn chiếc vòng tay hoàn hảo cho từng tình huống.',
+      slug: 'cach-chon-vong-tay',
+      thumbnail: 'https://placehold.co/400x250/FFE5DD/9B7BAE?text=Blog+Post',
+    },
+    {
+      id: 'temp-2',
+      title: 'Câu chuyện đằng sau mỗi sản phẩm Món Nhỏ',
+      excerpt: 'Tìm hiểu ý nghĩa và câu chuyện sáng tạo phía sau từng chiếc vòng tay.',
+      slug: 'cau-chuyen-mon-nho',
+      thumbnail: 'https://placehold.co/400x250/FFE5DD/9B7BAE?text=Our+Story',
+    },
+    {
+      id: 'temp-3',
+      title: 'Hướng dẫn bảo quản trang sức handmade',
+      excerpt: 'Những cách giữ chiếc vòng tay của bạn bền đẹp theo thời gian.',
+      slug: 'huong-dan-bao-quan',
+      thumbnail: 'https://placehold.co/400x250/FFE5DD/9B7BAE?text=Care+Guide',
+    },
+  ];
 
   return (
     <section className="py-10 sm:py-12 md:py-16 bg-brand-cream">
@@ -85,7 +95,7 @@ const BlogPreview = () => {
 
         {/* Posts Grid */}
         <div className="grid grid-cols-2 md:grid-cols-3 gap-3 sm:gap-4 md:gap-6 fade-up">
-          {posts.map((post) => (
+          {displayPosts.map((post) => (
             <BlogCard key={post.id} post={post} />
           ))}
         </div>

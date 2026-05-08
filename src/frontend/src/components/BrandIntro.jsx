@@ -15,7 +15,7 @@ const VALUES = [
   {
     icon: '🤝',
     title: 'Kết nối',
-    desc: 'Người bán là cựu sinh viên FPT. Bọn mình hiểu bạn, vì bọn mình cũng từng là bạn.',
+    desc: 'Xây dựng cộng đồng khách hàng gần gũi, hiểu được tâm lý và nhu cầu của giới trẻ.',
   },
   {
     icon: '🌿',

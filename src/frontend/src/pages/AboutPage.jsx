@@ -17,7 +17,7 @@ const CORE_VALUES = [
   {
     icon: '🤝',
     title: 'Kết nối',
-    desc: 'Xây dựng cộng đồng khách hàng gần gũi. Người bán là cựu sinh viên FPT — hiểu văn hoá, gắn bó thật sự.',
+    desc: 'Xây dựng cộng đồng khách hàng gần gũi, hiểu được tâm lý và nhu cầu của giới trẻ.',
   },
   {
     icon: '🌿',
@@ -46,7 +46,7 @@ const PHASES = [
       'Mở rộng danh mục sản phẩm',
       'Xây dựng cộng đồng khách hàng trung thành',
       'Hợp tác KOL/KOC nhỏ',
-      'Mở rộng ra nhiều trường đại học khác',
+      'Kết nối với sinh viên toàn quốc',
     ],
     color: 'bg-brand-pink',
     active: false,
@@ -55,7 +55,6 @@ const PHASES = [
     phase: 'Giai đoạn 3',
     title: 'Phát triển dài hạn',
     items: [
-      'Xây dựng website thương hiệu riêng',
       'Mở rộng mô hình quà tặng handmade',
       'Phát triển thương hiệu dài hạn tại Việt Nam',
     ],
