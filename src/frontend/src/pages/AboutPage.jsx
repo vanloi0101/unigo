@@ -225,6 +225,98 @@ export default function AboutPage() {
         </div>
       </section>
 
+      {/* ── SOCIAL MEDIA & PLATFORMS ─────────────────────── */}
+      <section className="py-20 px-6 bg-white">
+        <div className="max-w-5xl mx-auto">
+          <div className="text-center mb-12 fade-up">
+            <h2 className="font-serif text-3xl md:text-4xl font-bold text-brand-dark mb-4">
+              Theo dõi Món Nhỏ
+            </h2>
+            <p className="text-gray-500 text-lg max-w-2xl mx-auto">
+              Kết nối với chúng mình trên các nền tảng khác để nhận cập nhật sản phẩm mới, khuyến mãi và câu chuyện độc quyền
+            </p>
+          </div>
+          
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 fade-up">
+            {/* Facebook */}
+            <a
+              href="https://www.facebook.com/monnhohandmade"
+              target="_blank"
+              rel="noreferrer"
+              className="group flex flex-col items-center justify-center p-8 bg-gradient-to-br from-blue-50 to-blue-100 rounded-2xl border-2 border-blue-200 hover:shadow-lg hover:-translate-y-2 transition-all duration-300"
+            >
+              <div className="text-6xl mb-4 group-hover:scale-110 transition-transform">
+                f
+              </div>
+              <h3 className="font-bold text-brand-dark text-lg mb-2">Facebook</h3>
+              <p className="text-gray-600 text-sm text-center mb-4">
+                monnhohandmade
+              </p>
+              <span className="inline-block bg-blue-500 text-white font-bold px-4 py-2 rounded-full text-xs group-hover:bg-blue-600 transition-colors">
+                Theo dõi ngay
+              </span>
+            </a>
+
+            {/* Instagram */}
+            <a
+              href="https://www.instagram.com/monnhohandmade/"
+              target="_blank"
+              rel="noreferrer"
+              className="group flex flex-col items-center justify-center p-8 bg-gradient-to-br from-pink-50 to-purple-100 rounded-2xl border-2 border-pink-200 hover:shadow-lg hover:-translate-y-2 transition-all duration-300"
+            >
+              <div className="text-6xl mb-4 group-hover:scale-110 transition-transform">
+                📷
+              </div>
+              <h3 className="font-bold text-brand-dark text-lg mb-2">Instagram</h3>
+              <p className="text-gray-600 text-sm text-center mb-4">
+                monnhohandmade
+              </p>
+              <span className="inline-block bg-gradient-to-r from-pink-500 to-purple-500 text-white font-bold px-4 py-2 rounded-full text-xs hover:shadow-lg transition-all">
+                Theo dõi ngay
+              </span>
+            </a>
+
+            {/* TikTok */}
+            <a
+              href="https://www.tiktok.com/@mon_nho_unigo"
+              target="_blank"
+              rel="noreferrer"
+              className="group flex flex-col items-center justify-center p-8 bg-gradient-to-br from-gray-50 to-gray-100 rounded-2xl border-2 border-gray-300 hover:shadow-lg hover:-translate-y-2 transition-all duration-300"
+            >
+              <div className="text-6xl mb-4 group-hover:scale-110 transition-transform">
+                🎵
+              </div>
+              <h3 className="font-bold text-brand-dark text-lg mb-2">TikTok</h3>
+              <p className="text-gray-600 text-sm text-center mb-4">
+                mon_nho_unigo
+              </p>
+              <span className="inline-block bg-black text-white font-bold px-4 py-2 rounded-full text-xs hover:bg-gray-800 transition-colors">
+                Theo dõi ngay
+              </span>
+            </a>
+
+            {/* Shopee */}
+            <a
+              href="https://vn.shp.ee/qZ7pkfa4"
+              target="_blank"
+              rel="noreferrer"
+              className="group flex flex-col items-center justify-center p-8 bg-gradient-to-br from-orange-50 to-red-100 rounded-2xl border-2 border-orange-300 hover:shadow-lg hover:-translate-y-2 transition-all duration-300"
+            >
+              <div className="text-6xl mb-4 group-hover:scale-110 transition-transform">
+                🛍️
+              </div>
+              <h3 className="font-bold text-brand-dark text-lg mb-2">Shopee</h3>
+              <p className="text-gray-600 text-sm text-center mb-4">
+                Món Nhỏ
+              </p>
+              <span className="inline-block bg-orange-500 text-white font-bold px-4 py-2 rounded-full text-xs hover:bg-orange-600 transition-colors">
+                Mua ngay
+              </span>
+            </a>
+          </div>
+        </div>
+      </section>
+
       {/* ── CTA ───────────────────────────────────────────── */}
       <section className="py-20 px-6 bg-gradient-to-br from-brand-purple to-brand-dark text-white text-center">
         <div className="max-w-2xl mx-auto fade-up">
