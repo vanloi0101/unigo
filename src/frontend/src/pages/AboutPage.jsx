@@ -1,6 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import QRCode from 'qrcode.react';
+import monNhoLogo from '../assets/mon-nho-logo.png';
 import { FaFacebook, FaInstagram, FaTiktok } from 'react-icons/fa';
 import { SiShopee } from 'react-icons/si';
 import SEO from '../components/common/SEO';
@@ -84,21 +84,18 @@ export default function AboutPage() {
       <section className="py-16 px-6 bg-gradient-to-r from-brand-purple/5 via-transparent to-brand-pink/5 border-y-2 border-brand-purple/20">
         <div className="max-w-5xl mx-auto">
           <div className="flex flex-col md:flex-row items-center justify-center gap-12">
-            {/* QR Code */}
+            {/* Logo */}
             <div className="flex flex-col items-center fade-up">
-              <p className="text-sm font-bold uppercase tracking-widest text-brand-purple/70 mb-4">Quét mã QR</p>
+              <p className="text-sm font-bold uppercase tracking-widest text-brand-purple/70 mb-4">Món Nhỏ</p>
               <div className="bg-white p-6 rounded-2xl shadow-lg border-2 border-brand-purple/20 hover:shadow-xl transition-all">
-                <QRCode
-                  value={`${window.location.origin}/about`}
-                  size={180}
-                  level="H"
-                  includeMargin={true}
-                  fgColor="#7C3AED"
-                  bgColor="#FFFFFF"
+                <img 
+                  src={monNhoLogo} 
+                  alt="Món Nhỏ Logo" 
+                  className="w-[180px] h-[180px] object-contain hover:scale-105 transition-transform"
                 />
               </div>
               <p className="text-xs text-gray-500 mt-4 text-center max-w-[180px]">
-                Quét để truy cập trang Về Món Nhỏ
+                Handmade Jewelry
               </p>
             </div>
 
