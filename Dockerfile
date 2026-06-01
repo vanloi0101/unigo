@@ -22,15 +22,16 @@ FROM node:18-alpine
 
 WORKDIR /app
 
-# Install dumb-init and openssl for proper signal handling and Prisma
-RUN apk add --no-cache dumb-init openssl
+# Install openssl for Prisma
+RUN apk add --no-cache openssl
 
 # Copy from builder
 COPY --from=builder /app/node_modules ./node_modules
 COPY --from=builder /app/prisma ./prisma
 
-# Copy application code from backend src
-COPY src/backend/src ./src
+# Copy application code - maintain structure for root package.json
+COPY src ./src
+COPY package*.json ./
 
 # Set environment
 ENV NODE_ENV=production
@@ -39,4 +40,4 @@ ENV NODE_ENV=production
 EXPOSE 3000
 
 # Start application
-CMD ["node", "src/index.js"]
+CMD ["node", "src/backend/src/index.js"]
