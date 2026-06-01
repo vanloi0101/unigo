@@ -1,0 +1,4 @@
+{
+  "buildCommand": "cd src/backend && yarn install",
+  "startCommand": "cd src/backend && yarn start"
+}
