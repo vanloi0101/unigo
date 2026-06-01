@@ -63,9 +63,22 @@ app.use(
     origin: (origin, callback) => {
       // Allow requests with no origin (mobile apps, curl, etc.)
       if (!origin) return callback(null, true);
+      
+      // Check exact match in allowedOrigins
       if (allowedOrigins.includes(origin)) {
         return callback(null, true);
       }
+      
+      // Allow any Vercel deployment/preview domain
+      if (origin.endsWith('.vercel.app') || origin === 'https://vercel.com') {
+        return callback(null, true);
+      }
+      
+      // Allow any subdomain of unigo.id.vn
+      if (origin.endsWith('.unigo.id.vn')) {
+        return callback(null, true);
+      }
+      
       return callback(new Error('Not allowed by CORS'));
     },
     credentials: true,
