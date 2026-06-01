@@ -51,10 +51,24 @@ export default function BraceletLogo({ size = 48, className = '' }) {
         </g>
       ))}
 
-      {/* Hạt charm trung tâm nhỏ – điểm nhấn */}
-      <circle cx={cx} cy={cy} r={6} fill="#9B7BAE" opacity="0.15" />
-      <circle cx={cx} cy={cy} r={3.5} fill="#9B7BAE" opacity="0.6" />
-      <circle cx={cx - 1.2} cy={cy - 1.2} r={1.2} fill="white" opacity="0.7" />
+      {/* Chữ M cách điệu dạng ribbon nghệ thuật ở trung tâm */}
+      <path
+        d="M 34 68 C 28 50, 32 30, 43 30 C 50 30, 54 48, 50 60 C 46 70, 42 60, 46 48 C 50 36, 54 30, 61 30 C 72 30, 68 50, 66 68"
+        stroke="#9B7BAE"
+        strokeWidth="6.5"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+        fill="none"
+      />
+      {/* Đường nét nhỏ màu sáng chạy dọc ở giữa để tạo hiệu ứng 3D ribbon */}
+      <path
+        d="M 34 68 C 28 50, 32 30, 43 30 C 50 30, 54 48, 50 60 C 46 70, 42 60, 46 48 C 50 36, 54 30, 61 30 C 72 30, 68 50, 66 68"
+        stroke="#E8D5F5"
+        strokeWidth="2"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+        fill="none"
+      />
     </svg>
   );
 }
