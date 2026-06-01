@@ -3,7 +3,7 @@ import axios from 'axios';
 const rawApiBase =
   import.meta.env.VITE_API_BASE_URL ||
   import.meta.env.VITE_API_URL ||
-  'https://positive-reprieve-production-f197.up.railway.app/api';
+  'https://monnho.onrender.com/api';
 
 // Normalize API base URL so requests always target backend routes under /api.
 const normalizedApiBase = rawApiBase.replace(/\/+$/, '').endsWith('/api')
