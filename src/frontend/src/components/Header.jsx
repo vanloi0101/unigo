@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { FaUser, FaSignOutAlt, FaShoppingCart, FaQuestionCircle, FaBars, FaTimes } from 'react-icons/fa';
+import { FaUser, FaSignOutAlt, FaShoppingCart, FaBars, FaTimes } from 'react-icons/fa';
 import { Link, useNavigate } from 'react-router-dom';
 import BraceletLogo from './BraceletLogo';
 import useAuthStore from '../store/useAuthStore';
@@ -15,7 +15,8 @@ export default function Header() {
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 50);
-    window.addEventListener('scroll', onScroll);
+    onScroll();
+    window.addEventListener('scroll', onScroll, { passive: true });
     return () => window.removeEventListener('scroll', onScroll);
   }, []);
 
@@ -25,13 +26,19 @@ export default function Header() {
 
   useEffect(() => {
     if (cartCount > 0) {
-      setBounceKey(prev => prev + 1);
+      setBounceKey((prev) => prev + 1);
     }
   }, [cartCount]);
+
+  useEffect(() => {
+    document.body.classList.toggle('no-scroll', mobileMenuOpen);
+    return () => document.body.classList.remove('no-scroll');
+  }, [mobileMenuOpen]);
 
   const handleLogout = () => {
     logout();
     clearCartState();
+    setMobileMenuOpen(false);
     navigate('/');
   };
 
@@ -46,150 +53,151 @@ export default function Header() {
   ];
 
   return (
-    <header className={`fixed w-full top-0 z-40 transition-all duration-300 ${scrolled ? 'shadow-md glass-nav py-3' : 'bg-transparent py-5'}`}>
-      <div className="max-w-7xl mx-auto px-4 md:px-6 flex justify-between items-center">
-
-        {/* Logo */}
-        <Link to="/" className="flex items-center gap-2 md:gap-2.5 hover:opacity-85 transition-opacity group" onClick={closeMobileMenu}>
-          <BraceletLogo size={36} className="md:hidden" />
-          <BraceletLogo size={44} className="hidden md:block" />
-          <div className="flex flex-col leading-tight">
-            <span className="font-serif font-bold text-lg md:text-xl text-brand-purple group-hover:text-brand-pink transition-colors">Món Nhỏ</span>
-            <span className="hidden sm:block text-[9px] md:text-[10px] tracking-widest text-gray-400 uppercase">Handmade Jewelry</span>
-          </div>
-        </Link>
-
-        {/* Desktop nav */}
-        <nav className="hidden md:flex items-center gap-8 font-medium text-brand-dark" aria-label="Điều hướng chính">
-          {navLinks.map((link) => (
-            <Link key={link.path} to={link.path} className="hover:text-brand-pink transition-colors">
-              {link.label}
-            </Link>
-          ))}
-        </nav>
-
-        {/* Desktop actions */}
-        <div className="hidden md:flex items-center gap-3">
-          <Link
-            to="/cart"
-            className="relative flex items-center gap-2 text-brand-purple px-4 py-2.5 rounded-full font-medium border-2 border-brand-purple hover:bg-brand-purple hover:text-white transition-all"
-          >
-            <FaShoppingCart />
-            Giỏ hàng
-            {cartCount > 0 && (
-              <span
-                key={bounceKey}
-                className="absolute -top-2 -right-2 bg-red-500 text-white text-xs font-bold w-6 h-6 rounded-full flex items-center justify-center animate-bounce-pop"
-              >
-                {cartCount}
-              </span>
-            )}
-          </Link>
-          {isAuthenticated ? (
-            <>
-              <div className="flex items-center gap-2 px-3 py-2 bg-purple-50 rounded-full">
-                <FaUser className="text-brand-purple text-sm" />
-                <span className="text-sm font-medium text-gray-700">{user?.name || 'Admin'}</span>
+    <header className="fixed inset-x-0 top-0 z-40">
+      <div className={`mx-auto max-w-7xl px-4 md:px-6 transition-all duration-300 ${scrolled || mobileMenuOpen ? 'pt-2 md:pt-3' : 'pt-3 md:pt-5'}`}>
+        <div className={`rounded-[1.75rem] transition-all duration-300 ${scrolled || mobileMenuOpen ? 'glass-nav shadow-md' : 'bg-white/70 shadow-sm backdrop-blur-md'} ${mobileMenuOpen ? 'rounded-b-[1.25rem]' : ''}`}>
+          <div className="flex h-20 items-center justify-between px-4 md:h-24 md:px-6">
+            <Link to="/" className="flex items-center gap-2 md:gap-2.5 hover:opacity-85 transition-opacity group" onClick={closeMobileMenu}>
+              <BraceletLogo size={36} className="md:hidden" />
+              <BraceletLogo size={44} className="hidden md:block" />
+              <div className="flex flex-col leading-tight">
+                <span className="font-serif text-lg font-bold text-brand-purple transition-colors group-hover:text-brand-pink md:text-xl">Món Nhỏ</span>
+                <span className="hidden text-[9px] uppercase tracking-widest text-gray-400 sm:block md:text-[10px]">Handmade Jewelry</span>
               </div>
-              <button
-                onClick={handleLogout}
-                className="flex items-center gap-2 bg-red-100 text-red-600 px-4 py-2.5 rounded-full font-medium hover:bg-red-200 transition-colors"
-              >
-                <FaSignOutAlt className="text-sm" />
-                Đăng Xuất
-              </button>
-            </>
-          ) : (
-            <>
+            </Link>
+
+            <nav className="hidden items-center gap-8 font-medium text-brand-dark md:flex" aria-label="Điều hướng chính">
+              {navLinks.map((link) => (
+                <Link key={link.path} to={link.path} className="hover:text-brand-pink transition-colors">
+                  {link.label}
+                </Link>
+              ))}
+            </nav>
+
+            <div className="hidden items-center gap-3 md:flex">
               <Link
-                to="/login"
-                className="flex items-center gap-2 text-brand-purple px-4 py-2.5 rounded-full font-medium border-2 border-brand-purple hover:bg-brand-purple hover:text-white transition-all"
+                to="/cart"
+                className="relative flex items-center gap-2 rounded-full border-2 border-brand-purple px-4 py-2.5 font-medium text-brand-purple transition-all hover:bg-brand-purple hover:text-white"
               >
-                <FaUser />
-                Đăng Nhập
+                <FaShoppingCart />
+                Giỏ hàng
+                {cartCount > 0 && (
+                  <span
+                    key={bounceKey}
+                    className="absolute -right-2 -top-2 flex h-6 w-6 items-center justify-center rounded-full bg-red-500 text-xs font-bold text-white animate-bounce-pop"
+                  >
+                    {cartCount}
+                  </span>
+                )}
               </Link>
-              <a href="https://zalo.me/0346450546" target="_blank" rel="noreferrer" className="bg-brand-purple text-white px-5 py-2.5 rounded-full font-medium hover:bg-brand-dark transition-colors shadow-lg shadow-brand-purple/30">
-                Tư vấn Zalo
-              </a>
-            </>
+              {isAuthenticated ? (
+                <>
+                  <div className="flex items-center gap-2 rounded-full bg-purple-50 px-3 py-2">
+                    <FaUser className="text-sm text-brand-purple" />
+                    <span className="text-sm font-medium text-gray-700">{user?.name || 'Admin'}</span>
+                  </div>
+                  <button
+                    onClick={handleLogout}
+                    className="flex items-center gap-2 rounded-full bg-red-100 px-4 py-2.5 font-medium text-red-600 transition-colors hover:bg-red-200"
+                  >
+                    <FaSignOutAlt className="text-sm" />
+                    Đăng Xuất
+                  </button>
+                </>
+              ) : (
+                <>
+                  <Link
+                    to="/login"
+                    className="flex items-center gap-2 rounded-full border-2 border-brand-purple px-4 py-2.5 font-medium text-brand-purple transition-all hover:bg-brand-purple hover:text-white"
+                  >
+                    <FaUser />
+                    Đăng Nhập
+                  </Link>
+                  <a
+                    href="https://zalo.me/0346450546"
+                    target="_blank"
+                    rel="noreferrer"
+                    className="rounded-full bg-brand-purple px-5 py-2.5 font-medium text-white transition-colors hover:bg-brand-dark shadow-lg shadow-brand-purple/30"
+                  >
+                    Tư vấn Zalo
+                  </a>
+                </>
+              )}
+            </div>
+
+            <div className="flex items-center gap-2 md:hidden">
+              <Link to="/cart" className="relative p-2 text-brand-purple transition-colors hover:text-brand-pink">
+                <FaShoppingCart className="text-xl" />
+                {cartCount > 0 && (
+                  <span
+                    key={bounceKey}
+                    className="absolute right-0 top-0 flex h-4 min-w-[16px] items-center justify-center rounded-full bg-red-500 px-0.5 text-[10px] font-bold text-white animate-bounce-pop"
+                  >
+                    {cartCount}
+                  </span>
+                )}
+              </Link>
+              <button
+                onClick={() => setMobileMenuOpen((open) => !open)}
+                className="p-2 text-brand-purple transition-colors hover:text-brand-pink"
+                aria-label="Mở menu điều hướng"
+                aria-expanded={mobileMenuOpen}
+              >
+                {mobileMenuOpen ? <FaTimes className="text-2xl" /> : <FaBars className="text-2xl" />}
+              </button>
+            </div>
+          </div>
+
+          {mobileMenuOpen && (
+            <div className="border-t border-gray-100 px-4 pb-4 pt-2 md:hidden">
+              <nav className="flex flex-col space-y-1">
+                {navLinks.map((link) => (
+                  <Link
+                    key={link.path}
+                    to={link.path}
+                    onClick={closeMobileMenu}
+                    className="rounded-lg px-4 py-3 font-medium text-brand-dark transition-colors hover:bg-brand-cream hover:text-brand-purple"
+                  >
+                    {link.label}
+                  </Link>
+                ))}
+                <hr className="my-2" />
+                <a
+                  href="https://zalo.me/0346450546"
+                  target="_blank"
+                  rel="noreferrer"
+                  onClick={closeMobileMenu}
+                  className="rounded-lg bg-brand-purple px-4 py-3 text-center font-medium text-white transition-colors hover:bg-brand-dark"
+                >
+                  Tư vấn Zalo
+                </a>
+                {isAuthenticated ? (
+                  <>
+                    <div className="flex items-center gap-2 rounded-lg bg-purple-50 px-4 py-3">
+                      <FaUser className="text-sm text-brand-purple" />
+                      <span className="text-sm font-medium text-gray-700">{user?.name || 'Admin'}</span>
+                    </div>
+                    <button
+                      onClick={handleLogout}
+                      className="flex items-center gap-2 rounded-lg px-4 py-3 font-medium text-red-600 transition-colors hover:bg-red-50"
+                    >
+                      <FaSignOutAlt className="text-sm" /> Đăng Xuất
+                    </button>
+                  </>
+                ) : (
+                  <Link
+                    to="/login"
+                    onClick={closeMobileMenu}
+                    className="flex items-center justify-center gap-2 rounded-lg border-2 border-brand-purple px-4 py-3 font-medium text-brand-purple transition-colors hover:bg-brand-purple hover:text-white"
+                  >
+                    <FaUser /> Đăng Nhập
+                  </Link>
+                )}
+              </nav>
+            </div>
           )}
         </div>
-
-        {/* Mobile: hamburger menu */}
-        <div className="md:hidden flex items-center gap-2">
-          <Link to="/cart" className="relative p-2 text-brand-purple hover:text-brand-pink transition-colors">
-            <FaShoppingCart className="text-xl" />
-            {cartCount > 0 && (
-              <span
-                key={bounceKey}
-                className="absolute top-0 right-0 bg-red-500 text-white text-[10px] font-bold min-w-[16px] h-4 rounded-full flex items-center justify-center px-0.5 animate-bounce-pop"
-              >
-                {cartCount}
-              </span>
-            )}
-          </Link>
-          <button
-            onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-            className="p-2 text-brand-purple hover:text-brand-pink transition-colors"
-            aria-label="Mở menu điều hướng"
-          >
-            {mobileMenuOpen ? <FaTimes className="text-2xl" /> : <FaBars className="text-2xl" />}
-          </button>
-        </div>
       </div>
-
-      {/* Mobile Menu */}
-      {mobileMenuOpen && (
-        <div className="md:hidden absolute top-full left-0 w-full bg-white shadow-lg border-t border-gray-100 animate-slide-down">
-          <nav className="flex flex-col p-4 space-y-1">
-            {navLinks.map((link) => (
-              <Link
-                key={link.path}
-                to={link.path}
-                onClick={closeMobileMenu}
-                className="px-4 py-3 rounded-lg text-brand-dark hover:bg-brand-cream hover:text-brand-purple font-medium transition-colors"
-              >
-                {link.label}
-              </Link>
-            ))}
-            <hr className="my-2" />
-            <a
-              href="https://zalo.me/0346450546"
-              target="_blank"
-              rel="noreferrer"
-              onClick={closeMobileMenu}
-              className="px-4 py-3 rounded-lg bg-brand-purple text-white font-medium hover:bg-brand-dark transition-colors text-center"
-            >
-              💬 Tư vấn Zalo
-            </a>
-            {isAuthenticated ? (
-              <>
-                <div className="px-4 py-3 flex items-center gap-2 bg-purple-50 rounded-lg">
-                  <FaUser className="text-brand-purple text-sm" />
-                  <span className="text-sm font-medium text-gray-700">{user?.name || 'Admin'}</span>
-                </div>
-                <button
-                  onClick={() => {
-                    handleLogout();
-                    closeMobileMenu();
-                  }}
-                  className="px-4 py-3 rounded-lg text-red-600 hover:bg-red-50 font-medium transition-colors flex items-center gap-2"
-                >
-                  <FaSignOutAlt className="text-sm" /> Đăng Xuất
-                </button>
-              </>
-            ) : (
-              <Link
-                to="/login"
-                onClick={closeMobileMenu}
-                className="px-4 py-3 rounded-lg border-2 border-brand-purple text-brand-purple hover:bg-brand-purple hover:text-white font-medium transition-colors flex items-center gap-2 justify-center"
-              >
-                <FaUser /> Đăng Nhập
-              </Link>
-            )}
-          </nav>
-        </div>
-      )}
     </header>
   );
 }

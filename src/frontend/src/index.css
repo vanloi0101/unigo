@@ -3,10 +3,12 @@
 @tailwind utilities;
 
 /* Custom styles from original HTML */
-html { scroll-behavior: smooth; }
+html { scroll-behavior: smooth; scroll-padding-top: 7rem; }
 body { min-height: 100vh; }
-.glass-nav { background: oklch(98% 0.008 310); border-bottom: 1px solid oklch(88% 0.04 340 / 0.35); }
+.glass-nav { background: rgb(255 255 255 / 0.92); border: 1px solid oklch(88% 0.04 340 / 0.35); backdrop-filter: blur(14px); -webkit-backdrop-filter: blur(14px); }
 .text-gradient { color: #9b7bae; }
+.hero-frame { transform: translateZ(0); }
+.hero-media img { height: 100%; }
 .product-card { transition: all 0.4s cubic-bezier(0.2, 0, 0, 1); }
 .product-card:hover { transform: translateY(-8px); box-shadow: 0 25px 30px -15px rgba(155, 123, 174, 0.15); }
 .img-zoom { transition: transform 0.6s cubic-bezier(0.2, 0, 0, 1); }
